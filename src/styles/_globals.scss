@@ -1,0 +1,3 @@
+// this SCSS file is to be referenced by external compoments
+@import 'settings'; // local config
+@import './node_modules/angular-base-apps/scss/base'; // ref to global
