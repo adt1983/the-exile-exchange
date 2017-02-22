@@ -1,3 +1,28 @@
 // this SCSS file is to be referenced by external compoments
 @import 'settings'; // local config
 @import './node_modules/angular-base-apps/scss/base'; // ref to global
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl,
+li,
+label,
+span,
+a,
+sup,
+sub,
+small,
+th,
+td,
+address {
+    // help smooth out `font-smoothing: antialiased`
+    text-shadow: rem-calc(1) rem-calc(1) rem-calc(1) rgba(0, 0, 0, 0.004);
+}
+

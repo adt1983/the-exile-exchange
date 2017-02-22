@@ -1,134 +1,70 @@
 <template>
-  <ul v-once class="no-bullet">
-    <li v-for="(item, index) in items">
+  <transition-group 
+    class="no-bullet business-items"
+    tag="ul"
+  >
+    <li v-for="(item, index) in items" v-bind:key="item.company">
         <em v-html="item.title"></em>
         <br />
         <strong v-html="item.company">
             The University of the Arts
         </strong>
-        (<a v-bind:href="item.url" target="_blank" :title="item.company">{{item.shortUrl}}</a>)
+        ( <a v-bind:href="item.url" target="_blank" :title="item.company">{{item.shortUrl}}&nbsp;<div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="32" viewBox="0 0 30 32">
+          <path d="M26 21.714q0-0.714-0.5-1.214l-3.714-3.714q-0.5-0.5-1.214-0.5-0.75 0-1.286 0.571 0.054 0.054 0.339 0.33t0.384 0.384 0.268 0.339 0.232 0.455 0.063 0.491q0 0.714-0.5 1.214t-1.214 0.5q-0.268 0-0.491-0.063t-0.455-0.232-0.339-0.268-0.384-0.384-0.33-0.339q-0.589 0.554-0.589 1.304 0 0.714 0.5 1.214l3.679 3.696q0.482 0.482 1.214 0.482 0.714 0 1.214-0.464l2.625-2.607q0.5-0.5 0.5-1.196zM13.446 9.125q0-0.714-0.5-1.214l-3.679-3.696q-0.5-0.5-1.214-0.5-0.696 0-1.214 0.482l-2.625 2.607q-0.5 0.5-0.5 1.196 0 0.714 0.5 1.214l3.714 3.714q0.482 0.482 1.214 0.482 0.75 0 1.286-0.554-0.054-0.054-0.339-0.33t-0.384-0.384-0.268-0.339-0.232-0.455-0.063-0.491q0-0.714 0.5-1.214t1.214-0.5q0.268 0 0.491 0.063t0.455 0.232 0.339 0.268 0.384 0.384 0.33 0.339q0.589-0.554 0.589-1.304zM29.429 21.714q0 2.143-1.518 3.625l-2.625 2.607q-1.482 1.482-3.625 1.482-2.161 0-3.643-1.518l-3.679-3.696q-1.482-1.482-1.482-3.625 0-2.196 1.571-3.732l-1.571-1.571q-1.536 1.571-3.714 1.571-2.143 0-3.643-1.5l-3.714-3.714q-1.5-1.5-1.5-3.643t1.518-3.625l2.625-2.607q1.482-1.482 3.625-1.482 2.161 0 3.643 1.518l3.679 3.696q1.482 1.482 1.482 3.625 0 2.196-1.571 3.732l1.571 1.571q1.536-1.571 3.714-1.571 2.143 0 3.643 1.5l3.714 3.714q1.5 1.5 1.5 3.643z"></path>
+          </svg></div></a> )
         <strong class="location">
             {{item.location}}
         </strong>
         <br />
         <span v-html="item.desc"></span>
         <br />
-        <span v-if="item.tech" v-html="item.tech">
+        <span class="info-color" v-if="item.tech" v-html="item.tech">
         </span>
     </li>
-  </ul>
+  </transition-group>
 </template>
 
 <script>
+import json from '../../../../static/data/business.json'
 export default {
   name: 'business',
   data () {
-    return {
-      items: [
-        {
-          title: 'Principal, 2/07 &#8211; current',
-          company: 'BOOM.BANG.MEDIA LLC',
-          url: 'http://boombangmedia.com/',
-          shortUrl: 'boombangmedia.com',
-          location: 'Philadelphia',
-          desc: 'Interactive design and development consultation services for hire.'
-        },
-        {
-          title: 'UX Lead, 11/16 &#8211; current<br /> Interactive Consultant, 8/14 &#8211; 11/16',
-          company: 'Viridity Energy',
-          url: 'http://viridityenergy.com/',
-          shortUrl: 'viridityenergy.com',
-          location: 'Philadelphia',
-          desc: 'Responsive design architecture and development of single page applications, automated email templating system and brochure site.',
-          tech: '[ZURB Foundation 5, AngularJS 1.4, CSS3, Flexbox, SVG, Gulp]'
-        },
-        {
-          title: 'Interactive Consultant, 12/13 &#8211; 4/14',
-          company: 'EPAM Empathy Lab',
-          url: 'http://www.epam.com/empathylab.html',
-          shortUrl: 'epam.com/empathylab',
-          location: 'Conshohocken, PA',
-          desc: 'Responsive design architecture and development.',
-          tech: '[ZURB Foundation 4, HTML5, CSS3, jQuery]'
-        },
-        {
-          title: 'Interactive Consultant, 12/12 &#8211; 3/13',
-          company: 'MRM Worldwide',
-          url: 'http://mrmworldwide.com',
-          shortUrl: 'mrmworldwide.com',
-          location: 'Princeton, NJ',
-          desc: 'Template development for both desktop and mobile devices that incorporate responsive design.',
-          tech: '[HTML5, CSS3, JQuery, Mobile]'
-        },
-        {
-          title: 'Interactive Consultant, 6/09 &#8211; 10/12',
-          company: 'True Action, an eBay Inc Company',
-          url: 'http://trueaction.com',
-          shortUrl: 'trueaction.com',
-          location: 'King of Prussia',
-          desc: 'Responsible for production support and enhancements for many online retail and corporate brochure sites. Managed projects and resources.',
-          tech: '[HTML5, CSS3, JQuery, JSP, JSTL. PHP]'
-        },
-        {
-          title: 'Interactive Consultant, 5/07 &#8211; 10/11',
-          company: 'Sentient Interactive',
-          url: 'http://sentientinteractive.com',
-          shortUrl: 'sentientinteractive.com',
-          location: 'Morristown, NJ & Los Angelas',
-          desc: 'Authored front-end implementation guide for contracted developers.  Developed templates to be integrated into the content management system.',
-          tech: '[HTML5, CSS3, JQuery, PHP]'
-        },
-        {
-          title: 'Interactive Consultant, 07/08 &#8211; 9/09',
-          company: 'Seso Media Group',
-          url: 'http://seso.net',
-          shortUrl: 'seso.net',
-          location: 'Los Angeles',
-          desc: 'Worked with a design team to develop projects within client budgets, administered technical training to site content managers, created video and PDF tutorials for product maintenance, and was the lead developer on brochure site projects.',
-          tech: '[XHTML, CSS, PHP, JQuery, XML/RSS, ActionScript 2.0 &amp; 3.0 &#8211; Expression Engine, Wordpress, Tumblr, video streaming, and integration of third party systems]'
-        },
-        {
-          title: 'Interactive Consultant, 10/07 &#8211; 8/09',
-          company: 'Weill Medical College at Cornell University',
-          url: 'http://med.cornell.edu',
-          shortUrl: 'med.cornell.edu',
-          location: 'New York City',
-          desc: 'Developed site content from provided PSDs for projects including <em>nyp.org/columbiarobotics</em>, <em>nyp.org</em>, and <em>med.cornell.edu</em>. Integrated third party email management system. Provided technical direction to marketing team.',
-          tech: '[XHTML, CSS, JavaScript]'
-        },
-        {
-          title: 'Interactive Consultant, 8/08 &#8211; 9/08',
-          company: 'WhittmanHart Interactive',
-          url: 'http://whittmanhart.com',
-          shortUrl: 'whittmanhart.com',
-          location: 'Philadelphia',
-          desc: 'Responsible for adding site content and expansion of site functionality for <em>standup2cancer.org</em>.',
-          tech: '[XHTML, CSS, PHP, Drupal]'
-        },
-        {
-          title: 'Interactive Consultant, 1/08 &#8211; 5/08',
-          company: 'The University of the Arts',
-          url: 'http://uarts.edu',
-          shortUrl: 'uarts.edu',
-          location: 'Philadelphia',
-          desc: 'Development of presidential inauguration site, and design and development of photo gallery application with content management system.',
-          tech: '[XHTML, CSS, JavaScript, PHP]'
-        }
-      ]
-    }
+    // items: [...]
+    return json
   }
 }
-</script>
+</script>004
 
 <style lang="scss" scoped>
 // call settings for global SCSS access
 @import '../../../styles/settings';
 
+  // .location {
+  //   font-size: $small-font-size;
+  // }
+  // 
+  .business-items {
+    .svg-icon {
+      // top: 0.125em;
+      top: 0.25em;
+      color: $secondary-color;
+      svg {
+        height: $small-font-size;
+        width: $small-font-size;
+        fill: $anchor-font-color;
+      }
+    }
+    // a {
+    //   @include hovershadow;
+    // }
+  }
+  .info-color {
+    color: $info-color;
+  }
+  .info-color,
   .location {
     font-size: $small-font-size;
-    // color: red;
   }
-
   li {
     padding-bottom: $global-padding*2;
   }

@@ -35,6 +35,12 @@
 
 @import './node_modules/angular-base-apps/scss/helpers/functions';
 
+// adding for component use 
+@import './node_modules/angular-base-apps/scss/helpers/breakpoints';
+
+// access to local mixins 
+@import 'tools';
+
 // 1. CSS Exports
 // --------------
 
@@ -47,7 +53,7 @@ $include-css: (
   card: false,
   compatibility: false,
   coloring: false,
-  extras: false,
+  extras: true,
   forms: false,
   grid: true,
   icon: false,
@@ -86,7 +92,7 @@ $body-antialiased: true;
 $primary-color: #2173a6;
 $secondary-color: #f1f1f1;
 $alert-color: #F04124;
-$info-color: #A0D3E8;
+$info-color: #999;
 $success-color: #43AC6A;
 $warning-color: #F08A24;
 $dark-color: #232323;

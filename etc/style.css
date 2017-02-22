@@ -1,0 +1,1124 @@
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+/* ==========================================
+Single-colored icons can be modified like so:
+.icon-name {
+  font-size: 32px;
+  color: red;
+}
+========================================== */
+
+.icon-glass {
+  width: 0.9999999701976776em;
+}
+
+.icon-music {
+  width: 0.8571395426988602em;
+}
+
+.icon-search {
+  width: 0.9285703003406525em;
+}
+
+.icon-envelope-o {
+  width: 1.000000972300768em;
+}
+
+.icon-heart {
+  width: 0.9999999646097422em;
+}
+
+.icon-star {
+  width: 0.9285712447017431em;
+}
+
+.icon-star-o {
+  width: 0.9285712447017431em;
+}
+
+.icon-user {
+  width: 0.785713866353035em;
+}
+
+.icon-film {
+  width: 1.071429569274187em;
+}
+
+.icon-th-large {
+  width: 0.928571306169033em;
+}
+
+.icon-th {
+  width: 1.0000000521540642em;
+}
+
+.icon-th-list {
+  width: 1.0000000521540642em;
+}
+
+.icon-close {
+  width: 0.7857148498296738em;
+}
+
+.icon-search-plus {
+  width: 0.9285703003406525em;
+}
+
+.icon-search-minus {
+  width: 0.9285703003406525em;
+}
+
+.icon-power-off {
+  width: 0.8571455180644989em;
+}
+
+.icon-signal {
+  width: 0.9999999916180968em;
+}
+
+.icon-cog {
+  width: 0.8571446221321821em;
+}
+
+.icon-trash-o {
+  width: 0.7857138803228736em;
+}
+
+.icon-home {
+  width: 0.9285723995417356em;
+}
+
+.icon-file-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-clock-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-road {
+  width: 1.0714228972792625em;
+}
+
+.icon-download {
+  width: 0.9285712763667107em;
+}
+
+.icon-arrow-circle-o-down {
+  width: 0.8571425080299377em;
+}
+
+.icon-arrow-circle-o-up {
+  width: 0.8571425080299377em;
+}
+
+.icon-inbox {
+  width: 0.8571455143392086em;
+}
+
+.icon-play-circle-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-repeat {
+  width: 0.8571445643901825em;
+}
+
+.icon-refresh {
+  width: 0.8571435660123825em;
+}
+
+.icon-list-alt {
+  width: 1.000000972300768em;
+}
+
+.icon-lock {
+  width: 0.6428594514727592em;
+}
+
+.icon-flag {
+  width: 1.0357158780097961em;
+}
+
+.icon-headphones {
+  width: 0.9285683408379555em;
+}
+
+.icon-volume-off {
+  width: 0.42857229337096214em;
+}
+
+.icon-volume-down {
+  width: 0.642858412116766em;
+}
+
+.icon-volume-up {
+  width: 0.9285732768476009em;
+}
+
+.icon-qrcode {
+  width: 0.7857138514518738em;
+}
+
+.icon-tag {
+  width: 0.8454238213598728em;
+}
+
+.icon-tags {
+  width: 1.0597098506987095em;
+}
+
+.icon-book {
+  width: 0.9302450586110353em;
+}
+
+.icon-bookmark {
+  width: 0.7142851911485195em;
+}
+
+.icon-print {
+  width: 0.9285733308643103em;
+}
+
+.icon-camera {
+  width: 1.0714287459850311em;
+}
+
+.icon-font {
+  width: 0.9285733103752136em;
+}
+
+.icon-bold {
+  width: 0.7857098281383514em;
+}
+
+.icon-italic {
+  width: 0.5714278221130371em;
+}
+
+.icon-text-height {
+  width: 1.0016768500208855em;
+}
+
+.icon-text-width {
+  width: 0.857142724096775em;
+}
+
+.icon-align-left {
+  width: 0.9999999664723873em;
+}
+
+.icon-align-center {
+  width: 1.0000009797513485em;
+}
+
+.icon-align-right {
+  width: 1.0000009797513485em;
+}
+
+.icon-align-justify {
+  width: 1.0000009797513485em;
+}
+
+.icon-list {
+  width: 0.9999999906867743em;
+}
+
+.icon-dedent {
+  width: 0.9999989476054907em;
+}
+
+.icon-indent {
+  width: 0.9999989476054907em;
+}
+
+.icon-video-camera {
+  width: 0.9999980032444em;
+}
+
+.icon-image {
+  width: 1.071429569274187em;
+}
+
+.icon-pencil {
+  width: 0.8454248607158661em;
+}
+
+.icon-map-marker {
+  width: 0.571431715041399em;
+}
+
+.icon-adjust {
+  width: 0.8571425080299377em;
+}
+
+.icon-tint {
+  width: 0.5714316815137863em;
+}
+
+.icon-edit {
+  width: 0.9955341517925262em;
+}
+
+.icon-share-square-o {
+  width: 0.9285692870616913em;
+}
+
+.icon-check-square-o {
+  width: 0.9280096590518951em;
+}
+
+.icon-arrows {
+  width: 0.9999999888241291em;
+}
+
+.icon-step-backward {
+  width: 0.5714307241141796em;
+}
+
+.icon-fast-backward {
+  width: 1.000000935047865em;
+}
+
+.icon-backward {
+  width: 0.9966524094343185em;
+}
+
+.icon-play {
+  width: 0.7851562518626451em;
+}
+
+.icon-pause {
+  width: 0.8571436069905758em;
+}
+
+.icon-stop {
+  width: 0.857143547385931em;
+}
+
+.icon-forward {
+  width: 0.8604901600629091em;
+}
+
+.icon-fast-forward {
+  width: 0.9999990034848452em;
+}
+
+.icon-step-forward {
+  width: 0.571426646783948em;
+}
+
+.icon-eject {
+  width: 0.8582557998597622em;
+}
+
+.icon-chevron-left {
+  width: 0.7500009983778em;
+}
+
+.icon-chevron-right {
+  width: 0.6785712540149689em;
+}
+
+.icon-plus-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-minus-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-times-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-check-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-question-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-info-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-crosshairs {
+  width: 0.857143547385931em;
+}
+
+.icon-times-circle-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-check-circle-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-ban {
+  width: 0.8571425527334213em;
+}
+
+.icon-arrow-left {
+  width: 0.8928574472665787em;
+}
+
+.icon-arrow-right {
+  width: 0.8214277103543282em;
+}
+
+.icon-arrow-up {
+  width: 0.9285692870616913em;
+}
+
+.icon-arrow-down {
+  width: 0.9285712018609047em;
+}
+
+.icon-compress {
+  width: 0.8571445886045694em;
+}
+
+.icon-plus {
+  width: 0.785714827477932em;
+}
+
+.icon-minus {
+  width: 0.7857138440012932em;
+}
+
+.icon-asterisk {
+  width: 0.9285712391138077em;
+}
+
+.icon-exclamation-circle {
+  width: 0.8571425080299377em;
+}
+
+.icon-gift {
+  width: 0.8571445485576987em;
+}
+
+.icon-leaf {
+  width: 0.9999980080174282em;
+}
+
+.icon-fire {
+  width: 0.7857128586620092em;
+}
+
+.icon-eye {
+  width: 0.9999980051070452em;
+}
+
+.icon-eye-slash {
+  width: 1.000001983717084em;
+}
+
+.icon-exclamation-triangle {
+  width: 0.9999998845160007em;
+}
+
+.icon-plane {
+  width: 0.7918545010033995em;
+}
+
+.icon-calendar {
+  width: 0.9285702928900719em;
+}
+
+.icon-key {
+  width: 0.9391737729310989em;
+}
+
+.icon-comments {
+  width: 1.0000030547380447em;
+}
+
+.icon-thumbs-o-up {
+  width: 0.8571465983986855em;
+}
+
+.icon-thumbs-o-down {
+  width: 0.8571434989571571em;
+}
+
+.icon-thumb-tack {
+  width: 0.6428603790700436em;
+}
+
+.icon-trophy {
+  width: 0.9285703003406525em;
+}
+
+.icon-lemon-o {
+  width: 0.8565869312733412em;
+}
+
+.icon-bookmark-o {
+  width: 0.7142851911485195em;
+}
+
+.icon-unlock {
+  width: 0.928573302924633em;
+}
+
+.icon-credit-card {
+  width: 1.0714279003441334em;
+}
+
+.icon-hdd-o {
+  width: 0.8571435399353504em;
+}
+
+.icon-bullhorn {
+  width: 1.000001911073923em;
+}
+
+.icon-bell-o {
+  width: 0.9999990165233612em;
+}
+
+.icon-certificate {
+  width: 0.8571425192058086em;
+}
+
+.icon-chain {
+  width: 0.9285722523927689em;
+}
+
+.icon-paperclip {
+  width: 0.7857148349285126em;
+}
+
+.icon-floppy-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-bars {
+  width: 0.857143547385931em;
+}
+
+.icon-list-ul {
+  width: 1.0000010132789612em;
+}
+
+.icon-list-ol {
+  width: 1.0083701331168413em;
+}
+
+.icon-magic {
+  width: 0.9436386581510305em;
+}
+
+.icon-caret-down {
+  width: 0.571429718285799em;
+}
+
+.icon-caret-up {
+  width: 0.5714296959340572em;
+}
+
+.icon-caret-left {
+  width: 0.3928574174642563em;
+}
+
+.icon-caret-right {
+  width: 0.32142969965934753em;
+}
+
+.icon-envelope {
+  width: 1.0000021047890186em;
+}
+
+.icon-comments-o {
+  width: 1.0000030547380447em;
+}
+
+.icon-umbrella {
+  width: 0.9285702798515558em;
+}
+
+.icon-lightbulb-o {
+  width: 0.5714296922087669em;
+}
+
+.icon-user-md {
+  width: 0.785713866353035em;
+}
+
+.icon-stethoscope {
+  width: 0.7857138067483902em;
+}
+
+.icon-suitcase {
+  width: 0.9999999403953552em;
+}
+
+.icon-bell {
+  width: 0.9999990165233612em;
+}
+
+.icon-fighter-jet {
+  width: 1.0714295953512192em;
+}
+
+.icon-beer {
+  width: 0.9642851203680038em;
+}
+
+.icon-h-square {
+  width: 0.8571415841579437em;
+}
+
+.icon-angle-left {
+  width: 0.3750009909272194em;
+}
+
+.icon-angle-right {
+  width: 0.3392861280590296em;
+}
+
+.icon-angle-up {
+  width: 0.642861433327198em;
+}
+
+.icon-angle-down {
+  width: 0.6428574100136757em;
+}
+
+.icon-quote-left {
+  width: 0.9285712987184525em;
+}
+
+.icon-quote-right {
+  width: 0.9285712689161301em;
+}
+
+.icon-mail-reply {
+  width: 1.0000029690563679em;
+}
+
+.icon-folder-open-o {
+  width: 1.0652891993522644em;
+}
+
+.icon-smile-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-frown-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-meh-o {
+  width: 0.8571425080299377em;
+}
+
+.icon-gamepad {
+  width: 1.071429580450058em;
+}
+
+.icon-keyboard-o {
+  width: 1.0714286640286446em;
+}
+
+.icon-flag-o {
+  width: 1.0357158929109573em;
+}
+
+.icon-mail-reply-all {
+  width: 0.9999999292194843em;
+}
+
+.icon-rocket {
+  width: 0.9419638309627771em;
+}
+
+.icon-anchor {
+  width: 0.9999980125576258em;
+}
+
+.icon-compass {
+  width: 0.8571425080299377em;
+}
+
+.icon-eur {
+  width: 0.5658466508612037em;
+}
+
+.icon-gbp {
+  width: 0.5691952919587493em;
+}
+
+.icon-dollar {
+  width: 0.5664073005318642em;
+}
+
+.icon-inr {
+  width: 0.5011180695146322em;
+}
+
+.icon-cny {
+  width: 0.5731016378849745em;
+}
+
+.icon-rouble {
+  width: 0.7142852460965514em;
+}
+
+.icon-krw {
+  width: 1.0000009899958968em;
+}
+
+.icon-bitcoin {
+  width: 0.7393964976072311em;
+}
+
+.icon-sort-alpha-asc {
+  width: 0.9414073210209608em;
+}
+
+.icon-sort-alpha-desc {
+  width: 0.9414073210209608em;
+}
+
+.icon-sort-amount-asc {
+  width: 1.0145088415592909em;
+}
+
+.icon-sort-amount-desc {
+  width: 1.0145088415592909em;
+}
+
+.icon-sort-numeric-asc {
+  width: 0.8437500577419996em;
+}
+
+.icon-sort-numeric-desc {
+  width: 0.8437500577419996em;
+}
+
+.icon-thumbs-up {
+  width: 0.8928594551980495em;
+}
+
+.icon-thumbs-down {
+  width: 0.8928584419190884em;
+}
+
+.icon-youtube-square {
+  width: 0.8571415841579437em;
+}
+
+.icon-youtube {
+  width: 0.8571435324847698em;
+}
+
+.icon-xing {
+  width: 0.7862734645605087em;
+}
+
+.icon-youtube-play {
+  width: 1.0000000302679837em;
+}
+
+.icon-stack-overflow {
+  width: 0.8571415841579437em;
+}
+
+.icon-instagram {
+  width: 0.8571425420232117em;
+}
+
+.icon-long-arrow-left {
+  width: 1.0357138589024544em;
+}
+
+.icon-long-arrow-right {
+  width: 0.9642861699685454em;
+}
+
+.icon-apple {
+  width: 0.7773427665233612em;
+}
+
+.icon-windows {
+  width: 0.9285712838172913em;
+}
+
+.icon-female {
+  width: 0.7142941057682037em;
+}
+
+.icon-male {
+  width: 0.5714317113161087em;
+}
+
+.icon-gittip {
+  width: 0.8571425080299377em;
+}
+
+.icon-sun-o {
+  width: 1.0000000186264515em;
+}
+
+.icon-moon-o {
+  width: 0.8219862282276154em;
+}
+
+.icon-archive {
+  width: 1.0000019967556em;
+}
+
+.icon-bug {
+  width: 0.9285741671919823em;
+}
+
+.icon-weibo {
+  width: 1.008928656578064em;
+}
+
+.icon-renren {
+  width: 0.8571415841579437em;
+}
+
+.icon-pagelines {
+  width: 0.7823682948946953em;
+}
+
+.icon-stack-exchange {
+  width: 0.7142871618270874em;
+}
+
+.icon-wheelchair {
+  width: 0.9090400338172913em;
+}
+
+.icon-space-shuttle {
+  width: 1.214285247027874em;
+}
+
+.icon-slack {
+  width: 0.9285693094134331em;
+}
+
+.icon-envelope-square {
+  width: 0.8571436107158661em;
+}
+
+.icon-openid {
+  width: 0.9999980330467224em;
+}
+
+.icon-graduation-cap {
+  width: 1.2857187371701002em;
+}
+
+.icon-stumbleupon {
+  width: 1.0714266896247864em;
+}
+
+.icon-pied-piper-alt {
+  width: 1.1372744292020798em;
+}
+
+.icon-joomla {
+  width: 0.8571425527334213em;
+}
+
+.icon-child {
+  width: 0.7142871618270874em;
+}
+
+.icon-paw {
+  width: 0.9285703301429749em;
+}
+
+.icon-spoon {
+  width: 0.42857423424720764em;
+}
+
+.icon-recycle {
+  width: 1.0022324323654175em;
+}
+
+.icon-automobile {
+  width: 1.1428605308756232em;
+}
+
+.icon-cab {
+  width: 1.1428585043177009em;
+}
+
+.icon-deviantart {
+  width: 0.5714287161827087em;
+}
+
+.icon-soundcloud {
+  width: 1.2857149858027697em;
+}
+
+.icon-database {
+  width: 0.8571425601840019em;
+}
+
+.icon-file-pdf-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-word-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-excel-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-powerpoint-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-image-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-archive-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-audio-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-movie-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-file-code-o {
+  width: 0.8571445867419243em;
+}
+
+.icon-circle-o-notch {
+  width: 0.9999980032444em;
+}
+
+.icon-ra {
+  width: 0.9988797008991241em;
+}
+
+.icon-qq {
+  width: 1.0000017955899239em;
+}
+
+.icon-wechat {
+  width: 1.142860472202301em;
+}
+
+.icon-paper-plane {
+  width: 1.0016748600173742em;
+}
+
+.icon-paper-plane-o {
+  width: 1.0011162436567247em;
+}
+
+.icon-paragraph {
+  width: 0.7265684753656387em;
+}
+
+.icon-sliders {
+  width: 0.8571425676345825em;
+}
+
+.icon-share-alt {
+  width: 0.8571425974369049em;
+}
+
+.icon-bomb {
+  width: 1.0000009685754776em;
+}
+
+.icon-tty {
+  width: 1.0000020181760192em;
+}
+
+.icon-binoculars {
+  width: 1.0000019930303097em;
+}
+
+.icon-plug {
+  width: 0.9999989569187164em;
+}
+
+.icon-slideshare {
+  width: 1.0000059809535742em;
+}
+
+.icon-calculator {
+  width: 0.928571306169033em;
+}
+
+.icon-paypal {
+  width: 0.8610487654805183em;
+}
+
+.icon-cc-visa {
+  width: 1.2857130393385887em;
+}
+
+.icon-cc-mastercard {
+  width: 1.2857130393385887em;
+}
+
+.icon-cc-discover {
+  width: 1.2857129871845245em;
+}
+
+.icon-cc-amex {
+  width: 1.285718947649002em;
+}
+
+.icon-cc-paypal {
+  width: 1.2857130393385887em;
+}
+
+.icon-cc-stripe {
+  width: 1.2857130393385887em;
+}
+
+.icon-bell-slash {
+  width: 1.1428564991801977em;
+}
+
+.icon-bell-slash-o {
+  width: 1.1428564991801977em;
+}
+
+.icon-trash {
+  width: 0.7857138803228736em;
+}
+
+.icon-copyright {
+  width: 0.8571425080299377em;
+}
+
+.icon-connectdevelop {
+  width: 1.1428584707900882em;
+}
+
+.icon-ship {
+  width: 1.142856314778328em;
+}
+
+.icon-user-secret {
+  width: 0.7857178598642349em;
+}
+
+.icon-motorcycle {
+  width: 1.290737271308899em;
+}
+
+.icon-venus {
+  width: 0.6372763812541962em;
+}
+
+.icon-mars {
+  width: 0.8571415841579437em;
+}
+
+.icon-neuter {
+  width: 0.6428564637899399em;
+}
+
+.icon-genderless {
+  width: 0.6428574621677399em;
+}
+
+.icon-battery-4 {
+  width: 1.2857148237526417em;
+}
+
+.icon-battery-3 {
+  width: 1.2857164926826954em;
+}
+
+.icon-battery-2 {
+  width: 1.2857164926826954em;
+}
+
+.icon-battery-1 {
+  width: 1.2857164926826954em;
+}
+
+.icon-battery-0 {
+  width: 1.2857164926826954em;
+}
+
+.icon-mouse-pointer {
+  width: 0.6495536901056767em;
+}
+
+.icon-hourglass-o {
+  width: 0.8571415757760406em;
+}
+
+.icon-hourglass-1 {
+  width: 0.8571415757760406em;
+}
+
+.icon-hourglass-2 {
+  width: 0.8571415757760406em;
+}
+
+.icon-hourglass-3 {
+  width: 0.8571415757760406em;
+}
+
+.icon-hourglass {
+  width: 0.8571436023339629em;
+}
+
+.icon-hand-grab-o {
+  width: 0.8571436107158661em;
+}
+
+.icon-hand-paper-o {
+  width: 0.9107128493487835em;
+}
+
+.icon-hand-scissors-o {
+  width: 0.9999980628490448em;
+}
+
+.icon-hand-lizard-o {
+  width: 1.1428582593798637em;
+}
+
+.icon-hand-spock-o {
+  width: 1.0714277178049088em;
+}
+
+.icon-hand-pointer-o {
+  width: 0.9285682551562786em;
+}
+
+.icon-hand-peace-o {
+  width: 0.8571435604244471em;
+}
+
+.icon-trademark {
+  width: 1.10100301168859em;
+}
+
+.icon-wheelchair-alt {
+  width: 0.859375037252903em;
+}

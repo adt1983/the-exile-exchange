@@ -1,0 +1,28 @@
+@import 'settings'; // local config
+
+.svg-icon {
+  &.prefix {
+    margin-right: $global-padding;
+  }
+  &.postfix {
+    margin-left: $global-padding;
+  }
+
+  display: inline-flex;
+  align-self: center;
+  position: relative;
+  height: 1em;
+  width: 1em;
+  svg,
+  img {
+    height:1em;
+    width:1em;
+  }
+  &.svg-baseline {
+    svg,
+    img {
+    bottom: -(1em/8);
+    position: absolute;
+    }
+  }
+}
