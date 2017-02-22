@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Home from 'components/views/Home'
 import Resume from 'components/views/Resume'
+import NotFound from 'components/views/NotFound'
 
 Vue.use(Router)
 
@@ -20,6 +21,12 @@ export default new Router({
       path: '/resume',
       name: 'resume',
       component: Resume
+    },
+
+    {
+      path: '*',
+      name: 'notfound',
+      component: NotFound
     }
   ]
 })
