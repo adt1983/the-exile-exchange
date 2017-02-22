@@ -45,8 +45,8 @@ export default {
   // 
   .business-items {
     .svg-icon {
-      // top: 0.125em;
-      top: 0.25em;
+      top: 0.125em;
+      // top: 0.25em;
       color: $secondary-color;
       svg {
         height: $small-font-size;
