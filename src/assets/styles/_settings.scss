@@ -66,7 +66,7 @@ $include-css: (
   motion: false,
   notification: false,
   off-canvas: false,
-  panel: false,
+  panel: true,
   popup: false,
   switch: false,
   tabs: false,
@@ -83,21 +83,23 @@ $base-line-height: 1.5;
 $headers: "h1,h2,h3,h4,h5,h6";
 $font-weight-normal: normal;
 $font-weight-bold: bold;
-$body-background: #f1f5fa;
-$body-font-color: #464646;
+$body-background: #0f0f0f;
+$body-font-color: #DCD3C3;
 $body-font-family: "Century Gothic", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$alt-font-family: 'breathe_fireregular', $body-font-family;
 $body-font-weight: $font-weight-normal;
 $body-font-style: normal;
 $body-antialiased: true;
 $primary-color: #2173a6;
 $secondary-color: #f1f1f1;
 $alert-color: #F04124;
+$alert-dark: darken($alert-color, 60);
 $info-color: #999;
 $success-color: #43AC6A;
 $warning-color: #F08A24;
 $dark-color: #232323;
 $gray: #dfdfdf;
-$gray-dark: darken($gray, 8);
+$gray-dark: darken($gray, 60);
 $gray-light: lighten($gray, 8);
 $global-radius: rem-calc(8);
 $global-rounded: 1000px;
@@ -105,6 +107,7 @@ $global-padding: 1rem;
 $global-spacing: rem-calc(15);
 $icon-classes: ('iconic', 'ionicons', 'material-icons', 'open-iconic');
 $loader-classes: ('sk-loader');
+$default-animation-speed: 0.15s;
 
 // 3. Breakpoints
 // --------------
@@ -124,7 +127,7 @@ $breakpoint-classes: (small medium large);
 $header-font-family: $body-font-family;
 $header-font-weight: $font-weight-normal;
 $header-font-style: $font-weight-normal;
-$header-font-color: #222;
+$header-font-color: #ececec;
 $header-line-height: 1.4;
 $header-top-margin: .2rem;
 $header-bottom-margin: .5rem;
@@ -500,7 +503,7 @@ $offcanvas-frame-selector: '.grid-frame';
 $panel-size-horizontal: 300px;
 $panel-size-vertical: 300px;
 $panel-padding: 0;
-$panel-background: #fff;
+$panel-background: $dark-color;
 $panel-shadow: 3px 0 10px rgba(black, 0.25);
 
 // 24. Popup

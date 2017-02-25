@@ -75,7 +75,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 // call settings for global SCSS access
-@import '../styles/settings';
+@import '../assets/styles/settings';
 
 .footer {
   display: flex;

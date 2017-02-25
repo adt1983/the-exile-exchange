@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'notfound',
+  name: 'not-found',
   data () {
     return {
       msg: 'Page Not Found'
@@ -21,7 +21,7 @@ export default {
 
 <style lang="scss" scoped>
 // call settings for global SCSS access
-@import '../../styles/settings';
+@import '../assets/styles/settings';
 
 .not-found {
   width: 100%;

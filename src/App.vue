@@ -1,23 +1,23 @@
 <!-- App view -->
 <template>
 
-  <div id="app" class="grid-frame vertical">
+  <div id="app" class="grid-frame">
     <!-- <article class="grid-container"> -->
-        <section class="grid-block align-left">
+        <!-- <section class="grid-block align-left"> -->
             <!-- <div class="grid-container vertical medium-horizontal"> -->
-          <div class="grid-block small-2 medium-3">
-              <page-header class="grid-content noscroll"></page-header>
-          </div>
-          <div class="grid-block medium-9 align-left">
+          <!-- <div class="grid-block small-2 medium-3"> -->
+              <!-- <page-header class="grid-content noscroll"></page-header> -->
+          <!-- </div> -->
+          <!-- <div class="grid-block medium-9 align-left"> -->
             <transition name="slide-fade">
               <!-- <keep-alive> -->
                 <router-view class="grid-content stage"></router-view>
               <!-- </keep-alive> -->
             </transition>
-          </div>
+          <!-- </div> -->
             <!-- </div> -->
-        </section>
-        <page-footer class="grid-block shrink align-center"></page-footer>
+        <!-- </section> -->
+        <!-- <page-footer class="grid-block shrink align-center"></page-footer> -->
     <!-- </article> -->
   </div>
 
@@ -25,17 +25,15 @@
 
 <!-- App Ctrl -->
 <script>
-
-import pageHeader from './components/Header'
-import pageFooter from './components/Footer'
-
+// import pageHeader from './components/Header'
+// import Exchange from './components/Exchange'
 export default {
-  name: 'app',
-  data () {
-    return {
-      transitionName: 'slide-left'
-    }
-  },
+  name: 'app'
+  // data () {
+  //   return {
+  //     transitionName: 'slide-left'
+  //   }
+  // },
   // beforeRouteUpdate (to, from, next) {
   //   const toDepth = to.path.split('/').length
   //   const fromDepth = from.path.split('/').length
@@ -44,21 +42,19 @@ export default {
   //   this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
   //   next()
   // },
-  components: {
-    pageHeader,
-    pageFooter
-  }
-
+  // components: {
+  //   // pageHeader,
+  //   Exchange
+  // }
 }
-
 </script>
 
 <!-- App syles -->
 <style lang="scss">
 // do NOT add `scoped` to this <style> !!
 // call `globals` to define the base styles globally
-@import 'styles/globals';
-@import 'styles/svg-icon';
+@import './assets/styles/globals';
+@import './assets/styles/svg-icon';
 
 
 

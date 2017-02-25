@@ -1,4 +1,5 @@
 // this SCSS file is to be referenced by external compoments
+@import 'fonts';
 @import 'settings'; // local config
 @import './node_modules/angular-base-apps/scss/base'; // ref to global
 
@@ -24,5 +25,8 @@ td,
 address {
     // help smooth out `font-smoothing: antialiased`
     text-shadow: rem-calc(1) rem-calc(1) rem-calc(1) rgba(0, 0, 0, 0.004);
+    &.alt-font {
+    	font-family: $alt-font-family;
+    }
 }
 

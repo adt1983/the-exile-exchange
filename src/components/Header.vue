@@ -32,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 
 // call settings for global SCSS access
-@import '../styles/settings';
+@import '../assets/styles/settings';
 
 .page-header {
   overflow: hidden;

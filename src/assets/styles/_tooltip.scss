@@ -1,0 +1,33 @@
+@import '../assets/styles/settings';
+
+.tooltip {
+  display: none;
+  opacity: 0;
+  transition: opacity $default-animation-speed;
+  pointer-events: none;
+  padding: rem-calc(4);
+  z-index: 10000;
+
+  .tooltip-content {
+    background: black;
+    color: white;
+    border-radius: rem-calc(16);
+    padding: rem-calc(5) rem-calc(10) rem-calc(4);
+    transition: transform $default-animation-speed;
+    transform: translateY(0);
+  }
+
+  &.tooltip-open-transitionend {
+    display: block;
+    .tooltip-content {
+      transform: translateY(rem-calc(-20));
+    }
+  }
+
+  &.tooltip-after-open {
+    opacity: 1;
+    .tooltip-content {
+      transform: translateY(0);
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "travismullen-vue",
+  "name": "league-currency-exchange",
   "version": "1.0.0",
-  "description": "Travis Mullen - Interactive Consultant",
+  "description": "League Currency Exchange",
   "author": "Travis Mullen <travis@boombangmedia.com>",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
   "devDependencies": {
     "angular-base-apps": "^2.0.8",
     "autoprefixer": "^6.7.2",
+    "axios": "^0.15.3",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
@@ -72,7 +73,10 @@
     "shelljs": "^0.7.6",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
+    "tether": "^1.4.0",
     "url-loader": "^0.5.7",
+    "v-tooltip": "^1.1.2",
+    "vue-axios": "^1.2.2",
     "vue-loader": "^10.3.0",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.1.10",
