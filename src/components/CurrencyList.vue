@@ -2,16 +2,13 @@
   <div class="currency-list">
     <ol class="grid-block wrap">
       <li class="grid-block shrink" 
-        v-for="item in items">
+        v-for="item in currency" :key="item[keys.id]">
         <div class="grid-block">
           <div class="grid-content text-center">
             <currency-item
               v-on:select="selectItem"
               :input="true"
-              :id="item[keys.id]" 
-              :name="item[keys.name]" 
-              :imgUrl="item[keys.imgUrl]"
-              :value="item[keys.value]"
+              :id="item[keys.id]"
               ></currency-item>
           </div>
         </div>
@@ -36,9 +33,9 @@ export default {
       title: 'List'
     }
   },
-  props: {
-    items: Array
-  },
+  // props: {
+  //   items: Array
+  // },
   components: {
     'currency-item': CurrencyItem
   },

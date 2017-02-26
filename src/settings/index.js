@@ -12,12 +12,20 @@ export const settings = {
     },
     // bids: asks and offers
     exchange: {
-      user: 'name',
+      id: 'lastChar', // since values are unique they will be our ID
+      user: 'accountName',
+      name: 'lastChar',
       ask: 'ask_qty',
       bid: 'bid_qty',
+      askId: 'ask_id',
+      bidId: 'bid_id',
       lastSeenTime: 'lastSeenUTC',
+      time: 'lastSeenUTC',
       // prefixing with $ cause is local only
-      ratio: '$ratio'
+      ratio: '$ratio',
+      // to be prefixed by `ratio`
+      pair: '__pair',
+      key: '__key'
     }
   }
 }

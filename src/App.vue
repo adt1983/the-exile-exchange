@@ -11,7 +11,7 @@
           <!-- <div class="grid-block medium-9 align-left"> -->
             <transition name="slide-fade">
               <!-- <keep-alive> -->
-                <router-view class="grid-content stage"></router-view>
+                <router-view></router-view>
               <!-- </keep-alive> -->
             </transition>
           <!-- </div> -->

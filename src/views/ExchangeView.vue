@@ -1,20 +1,25 @@
 <template>
   <div class="exchange-view">
     <!-- {{currencyMap}} -->
-    <div v-for="askid in getSelectedAsks">
-      <currency-item
-        :input="false"
-        :id="askid" 
-        ></currency-item>
+    <div class="asks-panel">
+      <h2 class="alt-font text-center">Asks</h2>
+      <div v-for="askid in getSelectedAsks">
+        <currency-item
+          :input="false"
+          :id="askid" 
+          ></currency-item>
+      </div>
     </div>
-    <!-- {{getSelectedOffers}} -->
-    <div v-for="offerid in getSelectedOffers">
-      <currency-item
-        :input="false"
-        :id="offerid" 
-        ></currency-item>
+    <div class="offers-panel">
+      <h2 class="alt-font text-center">Offers</h2>
+      <div v-for="offerid in getSelectedOffers">
+        <currency-item
+          :input="false"
+          :id="offerid" 
+          ></currency-item>
+      </div>
     </div>
-    <!-- <exchange 
+ <!--    <exchange 
       :currency-list="currency"
       :ask-list="asks"
       :bid-list="bids"></exchange> -->
@@ -92,6 +97,15 @@ export default {
 //   @include breakpoint(medium) {
 //     align-items: center;
 //   }
+  .currency-item {
+    display: flex-list;
+    flex-direction: row wrap;
+  }
+}
+.asks-panel,
+.offers-panel {
+  border: 1px solid $gray;
+  margin: rem-calc(10) auto;
 }
 // .button {
 //   // white-space: nowrap;

@@ -1,353 +1,218 @@
 [
   {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "BreachTry", 
-    "lastSeenUTC": 1487787686000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "DICK_BENDER", 
-    "lastSeenUTC": 1487787686000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 2, 
-    "bid_id": 4, 
-    "bid_qty": 134, 
-    "lastChar": "ChiefBuddha", 
-    "lastSeenUTC": 1487787468000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "KaomLife", 
-    "lastSeenUTC": 1487787495000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 2, 
-    "bid_id": 4, 
-    "bid_qty": 142, 
-    "lastChar": "MississippiLba", 
-    "lastSeenUTC": 1487787306000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 60, 
-    "lastChar": "MiziajPieronieMiziaj", 
-    "lastSeenUTC": 1487787467000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 72, 
-    "bid_id": 4, 
+    "ask_id": 4, 
+    "ask_qty": 78, 
+    "bid_id": 6, 
     "bid_qty": 1, 
-    "lastChar": "orakvortex", 
-    "lastSeenUTC": 1487787535000, 
+    "lastChar": "Borisempower", 
+    "lastSeenUTC": 1488042796000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "BraceForBV", 
-    "lastSeenUTC": 1487787770000, 
+    "ask_id": 4, 
+    "ask_qty": 7999, 
+    "bid_id": 6, 
+    "bid_qty": 100, 
+    "lastChar": "CreamTeamBreachArounds", 
+    "lastSeenUTC": 1488042379000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 72, 
-    "lastChar": "Keypopstar", 
-    "lastSeenUTC": 1487787006000, 
+    "ask_id": 4, 
+    "ask_qty": 76, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "HawklightEleCoC", 
+    "lastSeenUTC": 1488042230000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 143, 
-    "bid_id": 4, 
-    "bid_qty": 10000, 
-    "lastChar": "CalmCalamity", 
-    "lastSeenUTC": 1487787488000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 2, 
-    "bid_id": 4, 
-    "bid_qty": 142, 
-    "lastChar": "lithium_bf", 
-    "lastSeenUTC": 1487787650000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 4, 
-    "bid_id": 4, 
-    "bid_qty": 280, 
-    "lastChar": "LetsGoBros", 
-    "lastSeenUTC": 1487787681000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "saveofmymind", 
-    "lastSeenUTC": 1487787773000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 72, 
-    "lastChar": "bebejaga", 
-    "lastSeenUTC": 1487787533000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "Vinteequatromiltretas", 
-    "lastSeenUTC": 1487787421000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 5, 
-    "bid_id": 4, 
-    "bid_qty": 350, 
-    "lastChar": "JeyBro", 
-    "lastSeenUTC": 1487787524000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "VoNGuoiTa", 
-    "lastSeenUTC": 1487787625000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 72, 
-    "lastChar": "ZaccoSpinToWin", 
-    "lastSeenUTC": 1487787767000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 72, 
-    "lastChar": "TeaIsGoodForYou", 
-    "lastSeenUTC": 1487787713000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 50, 
-    "lastChar": "pasdinspi", 
-    "lastSeenUTC": 1487787487000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "Licun", 
-    "lastSeenUTC": 1487786994000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "poyektJ", 
-    "lastSeenUTC": 1487787793000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 72, 
-    "lastChar": "PotaMica", 
-    "lastSeenUTC": 1487787784000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "romram", 
-    "lastSeenUTC": 1487787464000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "AmAdeyc_WitcH", 
-    "lastSeenUTC": 1487786938000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 54, 
-    "lastChar": "HoMuchIsInTheBinMalinda", 
-    "lastSeenUTC": 1487787772000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 73, 
-    "lastChar": "Boss_Ram", 
-    "lastSeenUTC": 1487787383000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 66, 
-    "lastChar": "Gars", 
-    "lastSeenUTC": 1487787707000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 67, 
-    "lastChar": "Neovi", 
-    "lastSeenUTC": 1487787417000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "KazeNoYaiba", 
-    "lastSeenUTC": 1487787392000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "ElmBreachShadow", 
-    "lastSeenUTC": 1487787140000, 
-    "league": "Breach"
-  }, 
-  {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 69, 
+    "ask_id": 4, 
+    "ask_qty": 85, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
     "lastChar": "pussyformeat", 
-    "lastSeenUTC": 1487787737000, 
+    "lastSeenUTC": 1488043041000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 61, 
-    "lastChar": "BloodyBreachMeNow", 
-    "lastSeenUTC": 1487787795000, 
+    "ask_id": 4, 
+    "ask_qty": 394, 
+    "bid_id": 6, 
+    "bid_qty": 5, 
+    "lastChar": "smileys_TheJoker", 
+    "lastSeenUTC": 1488042635000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 71, 
-    "lastChar": "\u0416\u0438\u0445\u0430\u0440\u044c", 
-    "lastSeenUTC": 1487787545000, 
+    "ask_id": 4, 
+    "ask_qty": 76, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "mustconstructaddlnecro", 
+    "lastSeenUTC": 1488043047000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 1, 
-    "bid_id": 4, 
-    "bid_qty": 70, 
-    "lastChar": "\u0410\u043b\u043b\u0430\u043d\u0438\u0441", 
-    "lastSeenUTC": 1487787790000, 
+    "ask_id": 4, 
+    "ask_qty": 80, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "MF_Rockland", 
+    "lastSeenUTC": 1488042717000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 2, 
-    "bid_id": 4, 
-    "bid_qty": 143, 
-    "lastChar": "Raidernights", 
-    "lastSeenUTC": 1487787468000, 
+    "ask_id": 4, 
+    "ask_qty": 375, 
+    "bid_id": 6, 
+    "bid_qty": 5, 
+    "lastChar": "OCD_INQUISITOR", 
+    "lastSeenUTC": 1488043042000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 5, 
-    "bid_id": 4, 
-    "bid_qty": 356, 
-    "lastChar": "Dedi_Mar", 
-    "lastSeenUTC": 1487787333000, 
+    "ask_id": 4, 
+    "ask_qty": 147, 
+    "bid_id": 6, 
+    "bid_qty": 2, 
+    "lastChar": "Avandre", 
+    "lastSeenUTC": 1488042447000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 2, 
-    "bid_id": 4, 
-    "bid_qty": 143, 
-    "lastChar": "KOKOBF", 
-    "lastSeenUTC": 1487787544000, 
+    "ask_id": 4, 
+    "ask_qty": 80, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "BraceForBV", 
+    "lastSeenUTC": 1488042685000, 
     "league": "Breach"
   }, 
   {
-    "ask_id": 6, 
-    "ask_qty": 2, 
-    "bid_id": 4, 
-    "bid_qty": 143, 
-    "lastChar": "FredGorgeRota", 
-    "lastSeenUTC": 1487787634000, 
+    "ask_id": 4, 
+    "ask_qty": 80, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "CYC_NUEGUEM", 
+    "lastSeenUTC": 1488042891000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 80, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "Nightmare_Creatures", 
+    "lastSeenUTC": 1488042981000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 76, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "QueenLeodo", 
+    "lastSeenUTC": 1488042877000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 78, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "LetsGoBros", 
+    "lastSeenUTC": 1488043003000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 74, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "BABA_sutu", 
+    "lastSeenUTC": 1488042698000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 80, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "SobrietyAnxiety", 
+    "lastSeenUTC": 1488043011000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 77, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "PotaMica", 
+    "lastSeenUTC": 1488042953000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 72, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "Test_BuildplsIgnore", 
+    "lastSeenUTC": 1488042747000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 78, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "WaitMeSec", 
+    "lastSeenUTC": 1488042364000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 78, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "SolangeAracelli", 
+    "lastSeenUTC": 1488042775000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 90, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "WITCH_ELEMENTAL_BREACH", 
+    "lastSeenUTC": 1488042375000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 80, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "NeverMorse", 
+    "lastSeenUTC": 1488042740000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 79, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "Samsonkneppedemigengang", 
+    "lastSeenUTC": 1488042598000, 
+    "league": "Breach"
+  }, 
+  {
+    "ask_id": 4, 
+    "ask_qty": 75, 
+    "bid_id": 6, 
+    "bid_qty": 1, 
+    "lastChar": "RobikLab", 
+    "lastSeenUTC": 1488042401000, 
     "league": "Breach"
   }
 ]

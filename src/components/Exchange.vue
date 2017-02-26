@@ -1,10 +1,13 @@
 <template>
   <div class="grid-block vertical">
-    <div class="grid-block">
-      <div class="grid-block text-center">
+    <loader v-if="!renderView()"></loader>
+
+    <div class="grid-block" v-if="renderView()">
+      <div class="grid-block text-center justify-center">
         <div class="grid-content">
-          <h3 class="inline-block">Asking</h3><h2 class="inline-block">{{currencyMap[params.alpha].name}}</h2><!-- <strong>{{currencyMap[params.alpha].id}}</strong> -->
-          <img v-bind:src="currencyMap[params.alpha].icon" v-bind:alt="currencyMap[params.alpha].name">
+          <h3 class="inline-block">Asking</h3><h2 class="inline-block">
+          {{currencyMap[askId][settings.keys.currency.name]}}</h2>
+          <img v-bind:src="currencyMap[askId][settings.keys.currency.imgUrl]" v-bind:alt="currencyMap[askId][settings.keys.currency.name]">
         </div>
       </div>
       <div class="grid-block text-center shrink">
@@ -16,37 +19,46 @@
       </div>
       <div class="grid-block text-center">
         <div class="grid-content">
-          <h3 class="inline-block">Offering</h3><h2 class="inline-block">{{currencyMap[params.beta].name}}</h2><!-- <strong>{{currencyMap[params.beta].id}}</strong> -->
-          <img v-bind:src="currencyMap[params.beta].icon" v-bind:alt="currencyMap[params.beta].name">
+          <h3 class="inline-block">Offering</h3><h2 class="inline-block">{{currencyMap[bidId][settings.keys.currency.name]}}</h2>
+          <img v-bind:src="currencyMap[bidId][settings.keys.currency.imgUrl]" v-bind:alt="currencyMap[bidId][settings.keys.currency.name]">
         </div>
       </div>
     </div>
-    <div class="grid-block vertical nowrap">
-      <ul class="grid-block vertical">
-        <li class="grid-block tier" 
-          v-bind:class="{ 'has-trade': (biddingIndex[key].offers.length && biddingIndex[key].asks.length) }" 
-          v-show="showWithOffersOnly === false || biddingIndex[key].offers.length" 
-          v-if="biddingIndex[key].asks.length" v-for="(key, increments) in biddingIndex.orderBy" 
-          v-bind:key="biddingIndex.orderBy">
-          <div class="grid-block">
-            <div class="grid-content text-center">
-              <span>Asks</span>
-              <strong class="large">{{biddingIndex[key].asks.length}}</strong>
+    <div class="grid-block vertical nowrap" v-if="renderView()">
+      <ul class="grid-block vertical align-center">
+        <li class="grid-block tier"
+          v-show="showKeyRow(key)" 
+          v-if="renderKeyRow(key)" 
+          v-for="(key, increments) in orderBy" 
+          :key="key">
+          <div class="grid-block align-center shrink vertical middle-block">
+            <div class="grid-block noscroll align-center vertical middle-block">
+              <div class="grid-content text-center">
+                <span>Asks</span>
+                <span class="badge secondary">{{biddingIndex[key].asks.length}}</span>
+              </div>
+            </div>
+            <div class="grid-block noscroll align-center">
+              <div class="grid-content text-center">
+                <h1>
+                  <span class="body-font" 
+                  :class="{ 'has-trade': hasTrade(key) }">{{key}}</span>
+                <!-- <span><span class="badge" :class="{'success':hasTrade(key)}">{{biddingIndex[key].offers.length}}</span></span> -->
+                </h1>
+              </div>
+            </div>
+            <div class="grid-block noscroll align-center">
+              <div class="grid-content text-center">
+                <span>Offers</span>
+                <span class="badge">{{biddingIndex[key].offers.length}}</span>
+              </div>
             </div>
           </div>
-          <div class="grid-block shrink">
-            <div class="grid-content text-center">
-              <span>Rate</span>
-              <strong>{{key}}</strong>
-              <span class="large">{{biddingIndex[key].$ratio_base}}</span>
-            </div>
-          </div>
-          <div class="grid-block">
-            <div class="grid-content text-center" v-show="biddingIndex[key].offers.length">
+          <div class="grid-block noscroll align-center middle-block">
+            <div class="grid-content noscroll">
               <offers-list
+                :ratio="key"
                 :items="biddingIndex[key].offers"></offers-list>
-              <!-- <span>Offers</span>
-              <strong>{{biddingIndex[key].offers.length}}</strong> -->
             </div>
           </div>
         </li>
@@ -59,22 +71,18 @@
 import { settings } from '../settings'
 import * as filters from '../filters'
 import OffersList from './OffersList'
-// to be mapped to ports (external component bindings)
-const params = {
-  alpha: 4, // ask
-  beta: 6 // bid
-}
+import Loader from './Loader'
 
 const stats = {
   byExchangeRatio: {},
-  setStats (items, key, askKey, bidKey) {
+  setStats (items, key, askKey, bidKey, askId, askIdKey) {
     let t = []
     // console.log('baseRatio items', items)
     // do all manipulation here
     // in one loop!
     t = items.map(function (item) {
       item = stats.addRatio(item, key, askKey, bidKey)
-      stats.addItemToIndex(item, key, askKey, item[key + '_key'])
+      stats.addItemToIndex(item, key, askKey, item[key + '_key'], askId, askIdKey)
       return item
     })
     return t
@@ -90,7 +98,7 @@ const stats = {
     item[key + '_base'] = (item[askKey] < item[bidKey]) ? (item[bidKey] / item[askKey]) : (item[askKey] / item[bidKey])
     return item
   },
-  addItemToIndex: function (item, key, askKey, index) {
+  addItemToIndex: function (item, key, askKey, index, askId, askIdKey) {
     if (!stats.byExchangeRatio[index]) {
       stats.byExchangeRatio[index] = {
         offers: [],
@@ -101,11 +109,14 @@ const stats = {
     // if no asks, define them
     if (stats.byExchangeRatio[index].asks.length) {
       // assumes that the first in index is ask
-      if (item[askKey] === stats.byExchangeRatio[index].asks[0][askKey]) {
-        // console.log('is a ask!!', item)
+      console.log('askKey', askId)
+      console.log('item[askIdKey]', item[askIdKey])
+      console.log('stats.byExchangeRatio[index].asks[0][askKey]', stats.byExchangeRatio[index].asks[0][askIdKey])
+      if (item[askIdKey] === askId) {
+        console.log('is a ask!!', item)
         stats.byExchangeRatio[index].asks.push(item)
       } else {
-        // console.log('is a offer!!', item)
+        console.log('is a offer!!', item)
         stats.byExchangeRatio[index].offers.push(item)
       }
     } else {
@@ -118,34 +129,40 @@ const stats = {
 export default {
   name: 'exchange',
   props: {
-    currencyList: Array,
+    currencyMap: Object,
     askList: Array,
-    bidList: Array
+    bidList: Array,
+    askId: [String, Number],
+    bidId: [String, Number]
   },
   data () {
     return {
       showWithOffersOnly: true,
-      params,
-      currency: this.currencyList,
+      settings,
+      keys: settings.keys.exchange,
+      orderBy: [],
+      // currencyMap: this.currencyMap,
       // collection: stats.byExchangeRatio,
-      ask: this.askList,
-      bid: this.bidList,
+      // ask: this.askListList,
+      // bid: this.bidList,
       title: 'Breach Currency Exchange'
     }
   },
   computed: {
     isCurrentAsk: function () {
       let items
-      if (this.ask) {
-        items = stats.setStats(this.ask, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid)
+      console.log('this.askId', this.askId)
+      if (this.askList) {
+        items = stats.setStats(this.askList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid, this.askId, settings.keys.exchange.askId)
         return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
         // return items
       }
     },
     isCurrentBid: function () {
       let items
+      console.log('this.bidId', this.bidId)
       if (this.bid) {
-        items = stats.setStats(this.bid, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid)
+        items = stats.setStats(this.bidList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid)
         return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
         // return items
       }
@@ -167,25 +184,33 @@ export default {
       // instead of being writting in external funtions?
       // bad scope here?
       items = stats.byExchangeRatio
-
+      console.log('items', items)
       console.log('before ordering by 1:X weight', Object.keys(stats.byExchangeRatio))
-      items.orderBy = Object.keys(stats.byExchangeRatio).sort(function (a, b) {
+      this.orderBy = Object.keys(stats.byExchangeRatio).sort(function (a, b) {
         return stats.byExchangeRatio[b][settings.keys.exchange.ratio + '_base'] - stats.byExchangeRatio[a][settings.keys.exchange.ratio + '_base']
       })
-      console.log('after ordering by weight', items.orderBy)
-      return items
-    },
-    currencyMap: function () {
-      // currency hash (make this global)
-      let items = {}
-      this.currency.forEach(function (a) {
-        items[a.id] = a
-      })
+      console.log('after ordering by weight', this.orderBy)
       return items
     }
   },
+  methods: {
+    // keep the template clean
+    hasTrade: function (key) {
+      return this.biddingIndex[key].offers && this.biddingIndex[key].offers.length && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
+    },
+    showKeyRow: function (key) {
+      return this.showWithOffersOnly === false || (this.biddingIndex[key].offers && this.biddingIndex[key].offers.length)
+    },
+    renderKeyRow: function (key) {
+      return this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
+    },
+    renderView: function () {
+      return Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length && Object.keys(this.biddingIndex) && Object.keys(this.biddingIndex).length
+    }
+  },
   components: {
-    'offers-list': OffersList
+    'offers-list': OffersList,
+    Loader
   }
 }
 </script>
@@ -196,12 +221,23 @@ export default {
 
 .tier {
   border-top: rem-calc(1) solid $primary-color;
-  &.has-trade {
-    color: $gray-light;
+  padding: $global-padding 0;
+  .has-trade {
+    color: $success-color;
   }
 }
 .large {
   font-size: rem-calc(20)
 }
 
+svg path,
+svg rect{
+  fill: $secondary-color;
+}
+.grid-block {
+  &.middle-block {
+    align-self: center;
+    vertical-align: middle;
+  }
+}
 </style>

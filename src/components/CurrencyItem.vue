@@ -1,28 +1,45 @@
 <template>
-  <div class="glrid-block shell">
-    <div v-if="preloader === false">
-      Loading...
-    </div>
-    <figure v-if="input && preloader"
-      class="currency-item grid-block vertical nowrap is-input"
-      v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection }"
-      v-on:mouseleave="activeSelection = false"
-      v-on:click="selectItem">
-       <img 
-        class="show-for-medium"
-        :src="imgUrl" :alt="name"
-        v-tooltip.top-center="ttmsg">
-       <img 
-        class="show-for-small-only"
-        :src="imgUrl" :alt="name">
-      <small class="show-for-small-only grid-block currency-name" v-html="ttmsg"></small>
-    </figure>
-    <figure 
-      v-if="!input && preloader"
-      class="currency-item grid-block vertical nowrap">
-       <img :src="imgUrl" :alt="name"
-        v-tooltip.top-center="ttmsg">
-    </figure>
+  <div class="grid-block">
+    <transition name="fade-in">
+<!--       <div v-if="preloader === false" class="currency-item grid-block vertical nowrap align-center justify-center">
+        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         width="78px" height="78px" viewBox="0 0 78 78" enable-background="new 0 0 78 78" xml:space="preserve">
+        <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+          s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+          c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+        <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+          C22.32,8.481,24.301,9.057,26.013,10.047z">
+          <animateTransform attributeType="xml"
+            attributeName="transform"
+            type="rotate"
+            from="0 34 34"
+            to="360 34 34"
+            dur="0.5s"
+            repeatCount="indefinite"/>
+          </path>
+        </svg>
+      </div> -->
+      <figure v-if="input && preloader"
+        class="currency-item grid-block vertical nowrap is-input"
+        v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection }"
+        v-on:mouseleave="activeSelection = false"
+        v-on:click="selectItem">
+         <img 
+          class="show-for-medium"
+          :src="imgUrl" :alt="name"
+          v-tooltip.top-center="ttmsg">
+         <img 
+          class="show-for-small-only"
+          :src="imgUrl" :alt="name">
+        <small class="show-for-small-only grid-block currency-name" v-html="ttmsg"></small>
+      </figure>
+      <figure 
+        v-if="!input && preloader"
+        class="currency-item grid-block vertical nowrap">
+         <img :src="imgUrl" :alt="name"
+          v-tooltip.top-center="ttmsg">
+      </figure>
+    </transition>
   </div>
 </template>
 
@@ -125,18 +142,19 @@ export default {
 @import '../assets/styles/settings';
 @import '../assets/styles/tooltip';
 .shell {
-  width: rem-calc(78);
+  // width: rem-calc(78);
   // height: rem-calc(78);
 }
-// figcaption,
-// figure {
-//   display: block;
-// }
+.fade-in-enter-active, .fade-in-leave-active {
+  transition: opacity $default-animation-speed*2;
+}
+.fade-in-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
 .currency-item {
   transition: border-color $default-animation-speed;
   background-color: $dark-color;
   border: solid 1px $gray-dark;
-  // margin: rem-calc(2);
   // padding: rem-calc(2);
   &.is-input {
     cursor: pointer;
@@ -169,11 +187,27 @@ export default {
   // margin-right: .2em;
   // margin-bottom: .2em;
   img {
+    margin: rem-calc(2);
     width: rem-calc(78);
     height: rem-calc(78);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+    .small-icon & {
+      width: rem-calc(36);
+      height: rem-calc(36);
+    }
   }
+  svg path,
+  svg rect {
+    margin: auto;
+    width: rem-calc(78);
+    height: rem-calc(78);
+    fill: $primary-color;
+    .small-icon & {
+
+    }
+  }
+  
 }
 .currency-name {
   margin: $global-padding/4 auto $global-padding;

@@ -47,7 +47,7 @@
 $include-css: (
   accordion: false,
   action-sheet: false,
-  block-list: false,
+  block-list: true,
   button: true,
   button-group: false,
   card: false,
@@ -58,7 +58,7 @@ $include-css: (
   grid: true,
   icon: false,
   label: false,
-  badge: false,
+  badge: true,
   list: true,
   menu-bar: false,
   loader: false,
@@ -124,7 +124,7 @@ $breakpoint-classes: (small medium large);
 // 4. Typography
 // -------------
 
-$header-font-family: $body-font-family;
+$header-font-family: $alt-font-family;
 $header-font-weight: $font-weight-normal;
 $header-font-style: $font-weight-normal;
 $header-font-color: #ececec;
