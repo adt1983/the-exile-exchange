@@ -1,10 +1,11 @@
 <template>
   <div class="exchange-view">
     <div 
+      class=" grid-block wrap"
       v-if="renderView()"
       v-for="item in getSelectedAsks">
       <exchange 
-        class="exchange-list-item"
+        class="exchange-list-item medium-5 grid-block"
         :league-map="leagueMap"
         :currency-map="currencyMap"
         :ask-id="item.asks"

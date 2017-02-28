@@ -25,9 +25,9 @@
       </div>
     </div>
     <div class="grid-block vertical nowrap" v-if="renderView()">
-      <div class="grid-block vertical align-center text-center">
-        <h1 v-if="orderBy">No Results</h1>
-      </div>
+    <!--   <div class="grid-block vertical align-center text-center">
+        <h1 v-if="orderBy.length">No Results</h1>
+      </div> -->
       <ul class="grid-block vertical align-center">
         <li class="grid-block tier"
           v-show="showKeyRow(key)" 

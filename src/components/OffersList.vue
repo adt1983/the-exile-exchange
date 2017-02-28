@@ -14,7 +14,7 @@
         </button>
       </div>
     </div> -->
-<!--     <section class="block-list">
+    <section class="block-list">
       <header>Offers <span class="badge" :class="{'success':items.length}">{{items.length}}</span></header>
       <ul>
         <li class="with-chevron"
@@ -24,7 +24,7 @@
             <strong>{{ratio}}</strong>&nbsp;&bullet;&nbsp;<small>{{item[keys.time] | lastSeen}}</small>
         </li>
       </ul>
-    </section> -->
+    </section>
     <ul class="inline-list text-center">
       <li v-for="item in items">
         <!-- <div class="grid-block horizontal">
