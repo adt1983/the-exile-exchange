@@ -1,59 +1,71 @@
 <template>
   <div class="exchange-view">
-    <!-- {{currencyMap}} -->
-    <div class="asks-panel">
-      <h2 class="alt-font text-center">Asks</h2>
-      <div v-for="askid in getSelectedAsks">
-        <currency-item
-          :input="false"
-          :id="askid" 
-          ></currency-item>
-      </div>
+    <div 
+      v-if="renderView()"
+      v-for="item in getSelectedAsks">
+      <exchange 
+        class="exchange-list-item"
+        :league-map="leagueMap"
+        :currency-map="currencyMap"
+        :ask-id="item.asks"
+        :bid-id="item.bids"></exchange>
     </div>
-    <div class="offers-panel">
-      <h2 class="alt-font text-center">Offers</h2>
-      <div v-for="offerid in getSelectedOffers">
-        <currency-item
-          :input="false"
-          :id="offerid" 
-          ></currency-item>
-      </div>
-    </div>
- <!--    <exchange 
-      :currency-list="currency"
-      :ask-list="asks"
-      :bid-list="bids"></exchange> -->
+    
   </div>
 </template>
 
 <script>
 import { settings } from '../settings'
-// import { currency } from '../api/currency'
-// import asks from '../../static/breach.4.6.json'
-// import bids from '../../static/breach.6.4.json'
-import Exchange from '../components/Exchange'
-import CurrencyItem from '../components/CurrencyItem'
+// import { http } from '../api'
+import { league } from '../api/league'
+import { currency } from '../api/currency'
 
-function cleanParams (dirty) {
+import Exchange from '../components/Exchange'
+// import CurrencyItem from '../components/CurrencyItem'
+
+function cleanPairs (dirty, keyChar) {
   let clean
-  // let ids = this.askids.slice(0)
-  if (dirty.indexOf(settings.paramDiv) >= 0) {
-    clean = dirty.split(settings.paramDiv)
+  if (dirty.indexOf(keyChar) >= 0) {
+    clean = dirty.split(keyChar)
   } else {
     clean = dirty
   }
+  console.log('cleanPairs', clean)
   return clean
+}
+
+function parseParams (ids) {
+  let params = cleanPairs(ids, settings.paramSubDiv)
+  let item
+  let items = []
+  if (params && params.forEach) {
+    params.forEach(function (a) {
+      let temp = {}
+      item = cleanPairs(a, settings.paramDiv)
+      temp.asks = item[0]
+      temp.bids = item[1]
+      items.push(temp)
+    })
+  } else {
+    items = params
+  }
+  console.log('createParams', items)
+  return items
 }
 
 export default {
   name: 'exchange-view',
-  props: ['askids', 'offerids'],
+  props: ['leagueid', 'askids'],
   data () {
     return {
-      keys: settings.keys.exchange,
-      currencyKeys: settings.keys.currency,
-      // currency: [],
-      // currencyMap: {},
+      settings,
+      // keys: settings.keys.exchange,
+      // currencyKeys: settings.keys.currency,
+      // league,
+      selected: {},
+      leagueMap: {},
+      currency: [],
+      currencyMap: {},
       asks: [],
       bids: []
 
@@ -61,24 +73,34 @@ export default {
   },
   computed: {
     getSelectedAsks: function () {
-      return cleanParams(this.askids)
-    },
-    getSelectedOffers: function () {
-      return cleanParams(this.offerids)
+      let params = parseParams(this.askids)
+      // parseParams(params, this.selected)
+      return params
     }
+    // getSelectedOffers: function () {
+    //   return cleanParams(this.offerids)
+    // }
   },
   components: {
-    Exchange,
-    CurrencyItem
+    Exchange
+  },
+  beforeCreate: function () {
+    const that = this
+    currency
+      .then((response) => {
+        that.currencyMap = response.collection
+        // this.currency = response.items
+      })
+    league
+      .then((response) => {
+        that.leagueMap = response.collection
+      })
+  },
+  methods: {
+    renderView: function () {
+      return Object.keys(this.leagueMap) && Object.keys(this.leagueMap).length && Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length
+    }
   }
-  // beforeCreate: function () {
-  //   console.log('beforeCreate getSelectedAsks', this.getSelectedAsks)
-  //   currency
-  //     .then((response) => {
-  //       this.currencyMap = response.collection
-  //       this.currency = response.items
-  //     })
-  // }
 }
 </script>
 
@@ -89,7 +111,7 @@ export default {
 .exchange-view {
   width: 100%;
   overflow-y: scroll;
-// 	display: flex;
+//  display: flex;
 //   flex-direction: row nowrap;
 //   justify-content: flex-start;
 //   align-content: flex-start;
@@ -106,6 +128,10 @@ export default {
 .offers-panel {
   border: 1px solid $gray;
   margin: rem-calc(10) auto;
+}
+.exchange-list-item {
+  padding-top: $global-padding;
+  border-bottom: 1px solid $secondary-color;
 }
 // .button {
 //   // white-space: nowrap;

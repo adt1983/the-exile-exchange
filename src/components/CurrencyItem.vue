@@ -106,7 +106,9 @@ export default {
     ttmsg: function () {
       let msg = ''
       if (this.selected) {
-        msg = this.name + '<em>checked</em>'
+        // todo // add better styles
+        // create checkbox component
+        msg = '<strong>' + this.name + '</strong>'
       } else {
         msg = this.name
       }

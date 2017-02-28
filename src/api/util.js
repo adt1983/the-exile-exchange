@@ -1,6 +1,47 @@
 // // this is aliased in webpack config based on server/client build
 // import api from 'create-api'
+export function storageAvailable (type) {
+  try {
+    const storage = window[type]
+    const x = '__storage_test__'
 
+    storage.setItem(x, x)
+    storage.removeItem(x)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+export function setItemMap (arr, key) {
+  let obj = {}
+  arr.forEach(function (a) {
+    obj[a[key]] = a
+  })
+  console.log('setItemMap', obj)
+  return obj
+}
+
+export function buildSlug (name) {
+  let key = ''
+  if (name !== undefined) {
+    key = name
+    key = key.replace(/ /g, '-') // purge spaces
+    key = key.replace(/&/g, 'and') // clean ampersand
+    key = key.replace(/[^a-zA-Z0-9-]/g, '') // remove all non-alphas and non-number and non-dashes
+    key = key.toLowerCase()
+  }
+  return key
+}
+
+export function buildKey (name) {
+  let key = ''
+  if (name !== undefined) {
+    key = name
+    key = key.replace(/ /g, '') // purge spaces
+  }
+  return key
+}
 // // warm the front page cache every 15 min
 // // make sure to do this only once across all requests
 // if (api.onServer && !api.warmCacheStarted) {

@@ -1,4 +1,5 @@
 import { http } from 'api'
+import { storageAvailable, setItemMap } from 'api/util'
 import { settings } from 'settings'
 
 const keys = settings.keys.exchange
@@ -11,73 +12,23 @@ const storageId = 'breachCurrency'
 let items = []
 let collection = {}
 
-// function transform (data) {
-//   // const k = keys
-//   // add `$slug` so `name` can be `id`
-//   console.log('data[keys]', keys)
-//   if (data && data[keys]) {
-//     data[keys.slug] = buildKey(data[keys])
+// function setItems (value) {
+//   collection = setItemMap(value, mapId)
+//   items = value
+//   if (storageAvailable(storageType)) {
+//     localStorage.setItem(storageId + ':list', JSON.stringify(value))
+//     // localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
 //   }
-//   // if (data.name) {
-//   //   data.$slug = buildKey(data.name)
-//   // }
-//   console.log(transformResponse, data)
-//   return data
+//   return items
 // }
 
-// const transformResponse = [transform]
-
-// function buildKey (name) {
-//   let key = ''
-//   if (name !== undefined) {
-//     key = name
-//     key = key.replace(/ /g, '-') // purge spaces
-//     key = key.replace(/&/g, 'and') // clean ampersand
-//     key = key.replace(/[^a-zA-Z0-9-]/g, '') // remove all non-alphas and non-number and non-dashes
-//     key = key.toLowerCase()
+// function getItems (uniqueId) {
+//   if (storageAvailable(storageType) && localStorage[storageId + ':list']) {
+//     items = JSON.parse(localStorage[storageId + ':list'])
+//     // collection = JSON.parse(localStorage[storageId + ':collection'])
 //   }
-//   return key
+//   return items
 // }
-
-// function storageAvailable (type) {
-//   try {
-//     const storage = window[type]
-//     const x = '__storage_test__'
-
-//     storage.setItem(x, x)
-//     storage.removeItem(x)
-//     return true
-//   } catch (e) {
-//     return false
-//   }
-// }
-
-function setItemMap (arr, key) {
-  let obj = {}
-  arr.forEach(function (a) {
-    obj[a[key]] = a
-  })
-  console.log(obj)
-  return obj
-}
-
-function setItems (value) {
-  collection = setItemMap(value, mapId)
-  items = value
-  if (storageAvailable(storageType)) {
-    localStorage.setItem(storageId + ':list', JSON.stringify(value))
-    // localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
-  }
-  return items
-}
-
-function getItems (uniqueId) {
-  if (storageAvailable(storageType) && localStorage[storageId + ':list']) {
-    items = JSON.parse(localStorage[storageId + ':list'])
-    // collection = JSON.parse(localStorage[storageId + ':collection'])
-  }
-  return items
-}
 
 // function clearItems (uniqueId) {
 //   if (storageAvailable(storageType)) {
@@ -87,18 +38,16 @@ function getItems (uniqueId) {
 // }
 
 export const exchange = new Promise(function (resolve, reject) {
-  let items = getItems()
-  // console.log(''data'', items)
-  console.log('items.length', items.length)
-  if (items && items.length) {
-    console.log('items from browser MEMORY', items)
-    resolve({
-      items,
-      collection
-    })
-  } else {
+  // let items = getItems()
+  // if (items && items.length) {
+  //   console.log('items from browser MEMORY', items)
+  //   resolve({
+  //     items,
+  //     collection
+  //   })
+  // } else {
     http
-      .get('/Currency'
+      .get('/CurrencyOrder'
       .then((response) => {
         console.log('items fresh from API!', response.data)
         items = setItems(response.data)
@@ -107,7 +56,7 @@ export const exchange = new Promise(function (resolve, reject) {
           collection
         })
       })
-  }
+  // }
 })
 
 // soft clear storage

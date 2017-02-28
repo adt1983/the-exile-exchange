@@ -26,10 +26,21 @@ address {
     // help smooth out `font-smoothing: antialiased`
     text-shadow: rem-calc(1) rem-calc(1) rem-calc(1) rgba(0, 0, 0, 0.004);
     &.alt-font {
-    	font-family: $alt-font-family;
+        font-family: $alt-font-family;
     }
     &.body-font {
-    	font-family: $body-font-family;
+        font-family: $body-font-family;
     }
 }
 
+ul, ol {
+    &.grid-block {
+        margin-left: 0;
+    }
+}
+.grid-block {
+  &.middle-block {
+    align-self: center;
+    vertical-align: middle;
+  }
+}

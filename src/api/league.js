@@ -1,12 +1,14 @@
 import { http } from 'api'
-import { storageAvailable, setItemMap, buildSlug } from 'api/util'
+import { storageAvailable, setItemMap, buildSlug, buildKey } from 'api/util'
 import { settings } from 'settings'
 
-const keys = settings.keys.currency
-const mapId = keys.id
+const keys = settings.keys.league
+// using slug instead of ID cause its a clean route
+// id is used for API route
+const mapId = keys.slug
 
 const storageType = 'localStorage'
-const storageId = 'breachCurrency'
+const storageId = 'league'
 // const 'data' = 'global'
 
 let items = []
@@ -16,7 +18,7 @@ function transform (data) {
   data.forEach(function (a) {
     if (a && a[keys.name]) {
       a[keys.slug] = buildSlug(a[keys.name])
-      a[keys.preset] = settings.presets.getSearch(keys.id)
+      a[keys.id] = buildKey(a[keys.name])
     }
   })
   return data
@@ -25,10 +27,10 @@ function transform (data) {
 const transformResponse = [transform]
 
 function setItems (value) {
-  collection = setItemMap(value, mapId)
-  items = value
+  items = transform(value)
+  collection = setItemMap(items, mapId)
   if (storageAvailable(storageType)) {
-    localStorage.setItem(storageId + ':list', JSON.stringify(value))
+    localStorage.setItem(storageId + ':list', JSON.stringify(items))
     localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
   }
   return items
@@ -49,7 +51,7 @@ function getItems (uniqueId) {
 //   }
 // }
 
-export const currency = new Promise(function (resolve, reject) {
+export const league = new Promise(function (resolve, reject) {
   let items = getItems()
   // console.log(''data'', items)
   console.log('items.length', items.length)
@@ -61,7 +63,7 @@ export const currency = new Promise(function (resolve, reject) {
     })
   } else {
     http
-      .get('/Currency',
+      .get('/League',
       {
         transformResponse
       })
@@ -75,45 +77,3 @@ export const currency = new Promise(function (resolve, reject) {
       })
   }
 })
-
-// soft clear storage
-// makes new external request to override data
-// export function refresh () {
-//   return new Promise(function (resolve, reject) {
-//     http
-//       .get('/Currency',
-//       {
-//         transformResponse
-//       })
-//       .then((response) => {
-//         console.log('SOFT REFRESH items fresh from API!', response.data)
-//         items = setItems('data', response.data)
-//         resolve({
-//           items,
-//           collection
-//         })
-//       })
-//   })
-// }
-
-// hard clear storage
-// removes old data
-// then makes new external request to override data
-// export function reset () {
-//   return new Promise(function (resolve, reject) {
-//     clearItems('data')
-//     http
-//       .get('/Currency',
-//       {
-//         transformResponse
-//       })
-//       .then((response) => {
-//         console.log('HARD REFRESH items fresh from API!', response.data)
-//         items = setItems('data', response.data)
-//         resolve({
-//           items,
-//           collection
-//         })
-//       })
-//   })
-// }

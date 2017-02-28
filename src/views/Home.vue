@@ -1,31 +1,47 @@
 <template>
   <div class="home">
-<!--     <ul class="grid shrink no-bullets">
-      <li v-for="item in currency">
-        <img :src="item.icon" :alt="item.name">
-        <strong>{{item.name}}</strong>
+    <div class="header">
+      <h1>{{msg}}</h1>
+    </div>
+    <ul class="grid shrink no-bullet">
+      <li>
+        <loader v-if="loading"></loader>
       </li>
-    </ul> -->
-  <!-- {{currency}} -->
-    <!-- <exchange currency="currency"></exchange> -->
-    <router-link to="/exchange" class="button">exchange</router-link>
+      <li v-for="leag in league">
+        <router-link 
+          :to="{ name: 'currency', params: { leagueid: leag.$slug }}" 
+          tag="button" 
+          type="button" 
+          class="button large"><h3>{{leag.name}}</h3></router-link>
+      </li>
+    </ul>
+
+    <!-- <router-link to="/exchange" class="button">exchange</router-link> -->
   </div>
 </template>
 
 <script>
-import currency from '../../static/currency.json'
-import Exchange from '../components/Exchange'
+import { league } from '../api/league'
+import Loader from '../components/Loader'
+
 export default {
   name: 'home',
   data () {
     return {
-      currency,
-      msg: 'Welcome'
+      league,
+      loading: true,
+      msg: 'Select League.'
     }
   },
+  mounted: function () {
+    league
+      .then((response) => {
+        this.league = response.items
+        this.loading = false
+      })
+  },
   components: {
-    // pageHeader,
-    Exchange
+    Loader
   }
 
 }
@@ -37,26 +53,13 @@ export default {
 
 .home {
   width: 100%;
-  overflow-y: scroll;
-// 	display: flex;
-//   flex-direction: row nowrap;
-//   justify-content: flex-start;
-//   align-content: flex-start;
-//   align-items: flex-start;
-//   @include breakpoint(medium) {
-//     align-items: center;
-//   }
+  margin: auto;
+  // overflow-y: scroll;
+  text-align: center;
+  .header {
+    padding-bottom: $global-padding*3;
+  }
 }
-// .button {
-//   // white-space: nowrap;
-//   margin: $global-padding*3;
-//   filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.3));
-//   &:hover {
-//     filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.4));
-//   }
-//   svg {
-//     fill: #fff;
-//   }
-// }
+
 
 </style>

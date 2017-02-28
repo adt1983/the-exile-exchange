@@ -25,6 +25,9 @@
       </div>
     </div>
     <div class="grid-block vertical nowrap" v-if="renderView()">
+      <div class="grid-block vertical align-center text-center">
+        <h1 v-if="orderBy">No Results</h1>
+      </div>
       <ul class="grid-block vertical align-center">
         <li class="grid-block tier"
           v-show="showKeyRow(key)" 
@@ -43,7 +46,6 @@
                 <h1>
                   <span class="body-font" 
                   :class="{ 'has-trade': hasTrade(key) }">{{key}}</span>
-                <!-- <span><span class="badge" :class="{'success':hasTrade(key)}">{{biddingIndex[key].offers.length}}</span></span> -->
                 </h1>
               </div>
             </div>
@@ -69,6 +71,9 @@
 
 <script>
 import { settings } from '../settings'
+import { http } from '../api'
+// import { league } from '../api/league'
+// import { currency } from '../api/currency'
 import * as filters from '../filters'
 import OffersList from './OffersList'
 import Loader from './Loader'
@@ -77,7 +82,7 @@ const stats = {
   byExchangeRatio: {},
   setStats (items, key, askKey, bidKey, askId, askIdKey) {
     let t = []
-    // console.log('baseRatio items', items)
+    console.log('baseRatio items', items)
     // do all manipulation here
     // in one loop!
     t = items.map(function (item) {
@@ -129,11 +134,11 @@ const stats = {
 export default {
   name: 'exchange',
   props: {
-    currencyMap: Object,
-    askList: Array,
-    bidList: Array,
+    leagueId: [String, Number],
     askId: [String, Number],
-    bidId: [String, Number]
+    bidId: [String, Number],
+    leagueMap: Object,
+    currencyMap: Object
   },
   data () {
     return {
@@ -141,10 +146,10 @@ export default {
       settings,
       keys: settings.keys.exchange,
       orderBy: [],
-      // currencyMap: this.currencyMap,
-      // collection: stats.byExchangeRatio,
-      // ask: this.askListList,
-      // bid: this.bidList,
+      // leagueMap: {},
+      // currencyMap: {},
+      askList: [],
+      bidList: [],
       title: 'Breach Currency Exchange'
     }
   },
@@ -152,21 +157,22 @@ export default {
     isCurrentAsk: function () {
       let items
       console.log('this.askId', this.askId)
-      if (this.askList) {
+      console.log('this.askId', this.askList)
+      if (this.askList && this.askList.length) {
         items = stats.setStats(this.askList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid, this.askId, settings.keys.exchange.askId)
         return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
         // return items
       }
     },
-    isCurrentBid: function () {
-      let items
-      console.log('this.bidId', this.bidId)
-      if (this.bid) {
-        items = stats.setStats(this.bidList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid)
-        return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
-        // return items
-      }
-    },
+    // isCurrentBid: function () {
+    //   let items
+    //   console.log('this.bidId', this.bidId)
+    //   if (this.bidList && this.bidList.length) {
+    //     items = stats.setStats(this.bidList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid)
+    //     return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
+    //     // return items
+    //   }
+    // },
     // get only, just need a function
     // highestAsk: function () {
     //   return filters.highest(this.isCurrentAsk, settings.keys.exchange.ask)
@@ -205,12 +211,43 @@ export default {
       return this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
     },
     renderView: function () {
-      return Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length && Object.keys(this.biddingIndex) && Object.keys(this.biddingIndex).length
+      return Object.keys(this.leagueMap) && Object.keys(this.leagueMap).length && Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length && Object.keys(this.biddingIndex) && (Object.keys(this.biddingIndex).length || Object.keys(this.biddingIndex).length === 0)
     }
   },
   components: {
     'offers-list': OffersList,
     Loader
+  },
+  // beforeCreate: function () {
+  //   currency
+  //     .then((response) => {
+  //       this.currencyMap = response.collection
+  //       // this.currencyMap = response.items
+  //     })
+  //   league
+  //     .then((response) => {
+  //       this.leagueMap = response.collection
+  //       // this.currencyMap = response.items
+  //     })
+  // },
+  created: function () {
+    console.log('this.currencyMap', this.currencyMap)
+    let league = this.leagueMap[this.leagueid] || 'Standard'
+    const askReq = '/CurrencyOrder' + '/' + league + '/' + this.askId + '/' + this.currencyMap[this.askId].$preset
+    const bidReq = '/CurrencyOrder' + '/' + league + '/' + this.currencyMap[this.askId].$preset + '/' + this.askId
+    const that = this
+    http
+      .get(askReq)
+      .then((response) => {
+        console.log('items fresh from API!', response.data)
+        that.askList = response.data
+      })
+    http
+      .get(bidReq)
+      .then((response) => {
+        console.log('items fresh from API!', response.data)
+        that.bidList = response.data
+      })
   }
 }
 </script>
@@ -233,11 +270,5 @@ export default {
 svg path,
 svg rect{
   fill: $secondary-color;
-}
-.grid-block {
-  &.middle-block {
-    align-self: center;
-    vertical-align: middle;
-  }
 }
 </style>

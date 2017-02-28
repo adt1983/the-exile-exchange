@@ -4,11 +4,10 @@ import Router from 'vue-router'
 // import { settings } from 'settings'
 
 import Home from 'views/Home'
+// import ContactInfoView from 'views/ContactInfoView'
 import CurrencyView from 'views/CurrencyView'
 import ExchangeView from 'views/ExchangeView'
 import NotFound from 'views/NotFound'
-
-import ExchangeViewExample from 'views/ExchangeViewExample'
 
 Vue.use(Router)
 
@@ -38,27 +37,20 @@ export default new Router({
       name: 'home',
       component: Home
     },
-
     {
-      path: '/exchange/:askids/:offerids',
-      props: true,
-      name: 'exchange-view',
-      component: ExchangeView
-    },
-    {
-      path: '/exchange-example/:askids/:offerids',
-      props: true,
-      name: 'exchange-view-example',
-      component: ExchangeViewExample
-    },
-    {
-      path: '/currency',
+      path: '/currency/:leagueid',
       props: true,
       // path: '/currency/:askids',
-      name: 'currency-view',
+      name: 'currency',
       component: CurrencyView
     },
-
+    {
+      // todo ;; add route for pre-programmed offer match
+      path: '/exchange/:leagueid/:askids',
+      props: true,
+      name: 'exchange',
+      component: ExchangeView
+    },
     {
       path: '*',
       name: 'not-found',

@@ -1,7 +1,7 @@
 <template>
-  <div class="grid-block align-center loader">
+  <div class="grid-block align-center loader middle-block">
     <div class="grid-content text-center hover-shadow">
-      <h1>Loading...
+      <h1>{{displayMsg}}
         <div class="svg-icon">
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
@@ -27,12 +27,21 @@
 
 <script>
 export default {
-  name: 'loader'
-  // data () {
-  //   return {
-  //     show: true
-  //   }
-  // }
+  name: 'loader',
+  props: {
+    msg: String
+  },
+  data () {
+    return {
+      defaultMsg: 'Loading ',
+      show: true
+    }
+  },
+  computed: {
+    displayMsg: function () {
+      return this.props || this.defaultMsg
+    }
+  }
 }
 </script>
 
@@ -40,6 +49,12 @@ export default {
 <style lang="scss" scoped>
 // call settings for global SCSS access
 @import '../assets/styles/settings';
+
+.loader {
+  h1 {
+    color: $warning-color;
+  }
+}
 
 svg path,
 svg rect{
