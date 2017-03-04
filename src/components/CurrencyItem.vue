@@ -45,7 +45,7 @@
 
 <script>
 import { settings } from '../settings'
-import { currency } from '../api/currency'
+import { currency } from '../services/currency'
 
 export default {
   name: 'currency-item',

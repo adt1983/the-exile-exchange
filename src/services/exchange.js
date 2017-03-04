@@ -1,8 +1,8 @@
-import { http } from 'api'
-import { storageAvailable, setItemMap, buildSlug } from 'api/util'
+import { http } from 'services'
+import { storageAvailable, setItemMap } from 'services/util'
 import { settings } from 'settings'
 
-const keys = settings.keys.currency
+const keys = settings.keys.exchange
 const mapId = keys.id
 
 const storageType = 'localStorage'
@@ -12,35 +12,23 @@ const storageId = 'breachCurrency'
 let items = []
 let collection = {}
 
-function transform (data) {
-  data.forEach(function (a) {
-    if (a && a[keys.name]) {
-      a[keys.slug] = buildSlug(a[keys.name])
-      a[keys.preset] = settings.presets.getSearch(keys.id)
-    }
-  })
-  return data
-}
+// function setItems (value) {
+//   collection = setItemMap(value, mapId)
+//   items = value
+//   if (storageAvailable(storageType)) {
+//     localStorage.setItem(storageId + ':list', JSON.stringify(value))
+//     // localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
+//   }
+//   return items
+// }
 
-const transformResponse = [transform]
-
-function setItems (value) {
-  collection = setItemMap(value, mapId)
-  items = value
-  if (storageAvailable(storageType)) {
-    localStorage.setItem(storageId + ':list', JSON.stringify(value))
-    localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
-  }
-  return items
-}
-
-function getItems (uniqueId) {
-  if (storageAvailable(storageType) && localStorage[storageId + ':list']) {
-    items = JSON.parse(localStorage[storageId + ':list'])
-    collection = JSON.parse(localStorage[storageId + ':collection'])
-  }
-  return items
-}
+// function getItems (uniqueId) {
+//   if (storageAvailable(storageType) && localStorage[storageId + ':list']) {
+//     items = JSON.parse(localStorage[storageId + ':list'])
+//     // collection = JSON.parse(localStorage[storageId + ':collection'])
+//   }
+//   return items
+// }
 
 // function clearItems (uniqueId) {
 //   if (storageAvailable(storageType)) {
@@ -49,22 +37,17 @@ function getItems (uniqueId) {
 //   }
 // }
 
-export const currency = new Promise(function (resolve, reject) {
-  let items = getItems()
-  // console.log(''data'', items)
-  console.log('items.length', items.length)
-  if (items && items.length) {
-    console.log('items from browser MEMORY', items)
-    resolve({
-      items,
-      collection
-    })
-  } else {
+export const exchange = new Promise(function (resolve, reject) {
+  // let items = getItems()
+  // if (items && items.length) {
+  //   console.log('items from browser MEMORY', items)
+  //   resolve({
+  //     items,
+  //     collection
+  //   })
+  // } else {
     http
-      .get('/Currency',
-      {
-        transformResponse
-      })
+      .get('/CurrencyOrder'
       .then((response) => {
         console.log('items fresh from API!', response.data)
         items = setItems(response.data)
@@ -73,7 +56,7 @@ export const currency = new Promise(function (resolve, reject) {
           collection
         })
       })
-  }
+  // }
 })
 
 // soft clear storage

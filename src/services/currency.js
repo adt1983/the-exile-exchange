@@ -1,8 +1,8 @@
-import { http } from 'api'
-import { storageAvailable, setItemMap } from 'api/util'
+import { http } from 'services'
+import { storageAvailable, setItemMap, buildSlug } from 'services/util'
 import { settings } from 'settings'
 
-const keys = settings.keys.exchange
+const keys = settings.keys.currency
 const mapId = keys.id
 
 const storageType = 'localStorage'
@@ -12,23 +12,41 @@ const storageId = 'breachCurrency'
 let items = []
 let collection = {}
 
-// function setItems (value) {
-//   collection = setItemMap(value, mapId)
-//   items = value
-//   if (storageAvailable(storageType)) {
-//     localStorage.setItem(storageId + ':list', JSON.stringify(value))
-//     // localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
-//   }
-//   return items
-// }
+function getSearch (id) {
+  let preset = settings.presets.currencySearch['default']
+  if (settings.presets.currencySearch[ id ]) {
+    preset = settings.presets.currencySearch[ id ]
+  }
+  return preset
+}
 
-// function getItems (uniqueId) {
-//   if (storageAvailable(storageType) && localStorage[storageId + ':list']) {
-//     items = JSON.parse(localStorage[storageId + ':list'])
-//     // collection = JSON.parse(localStorage[storageId + ':collection'])
-//   }
-//   return items
-// }
+function transform (data) {
+  data.forEach(function (a) {
+    if (a && a[keys.name]) {
+      a[keys.slug] = buildSlug(a[keys.name])
+      a[keys.preset] = getSearch(a[keys.id])
+    }
+  })
+  return data
+}
+
+function setItems (value) {
+  collection = setItemMap(value, mapId)
+  items = value
+  if (storageAvailable(storageType)) {
+    localStorage.setItem(storageId + ':list', JSON.stringify(value))
+    localStorage.setItem(storageId + ':collection', JSON.stringify(collection))
+  }
+  return items
+}
+
+function getItems (uniqueId) {
+  if (storageAvailable(storageType) && localStorage[storageId + ':list']) {
+    items = JSON.parse(localStorage[storageId + ':list'])
+    collection = JSON.parse(localStorage[storageId + ':collection'])
+  }
+  return items
+}
 
 // function clearItems (uniqueId) {
 //   if (storageAvailable(storageType)) {
@@ -37,17 +55,24 @@ let collection = {}
 //   }
 // }
 
-export const exchange = new Promise(function (resolve, reject) {
-  // let items = getItems()
-  // if (items && items.length) {
-  //   console.log('items from browser MEMORY', items)
-  //   resolve({
-  //     items,
-  //     collection
-  //   })
-  // } else {
+const transformResponse = [transform]
+
+export const currency = new Promise(function (resolve, reject) {
+  let items = getItems()
+  // console.log(''data'', items)
+  console.log('items.length', items.length)
+  if (items && items.length) {
+    console.log('items from browser MEMORY', items)
+    resolve({
+      items,
+      collection
+    })
+  } else {
     http
-      .get('/CurrencyOrder'
+      .get('/Currency',
+      {
+        transformResponse
+      })
       .then((response) => {
         console.log('items fresh from API!', response.data)
         items = setItems(response.data)
@@ -56,7 +81,7 @@ export const exchange = new Promise(function (resolve, reject) {
           collection
         })
       })
-  // }
+  }
 })
 
 // soft clear storage

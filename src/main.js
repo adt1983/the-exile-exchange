@@ -6,7 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { VTooltip } from 'v-tooltip'
-// import { http } from './api' // instace of axios
+// import { http } from './services' // instace of axios
 // import axios from 'axios'
 
 // Vue.prototype.$http = http // axios

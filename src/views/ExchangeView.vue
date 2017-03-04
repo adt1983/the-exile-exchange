@@ -1,11 +1,11 @@
 <template>
-  <div class="exchange-view">
+  <div class="exchange-view grid-block wrap">
     <div 
-      class=" grid-block wrap"
+      class="medium-4 grid-block"
       v-if="renderView()"
       v-for="item in getSelectedAsks">
       <exchange 
-        class="exchange-list-item medium-5 grid-block"
+        class="exchange-list-item"
         :league-map="leagueMap"
         :currency-map="currencyMap"
         :ask-id="item.asks"
@@ -17,9 +17,9 @@
 
 <script>
 import { settings } from '../settings'
-// import { http } from '../api'
-import { league } from '../api/league'
-import { currency } from '../api/currency'
+// import { http } from '../services'
+import { league } from '../services/league'
+import { currency } from '../services/currency'
 
 import Exchange from '../components/Exchange'
 // import CurrencyItem from '../components/CurrencyItem'

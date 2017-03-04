@@ -1,5 +1,5 @@
-import { http } from 'api'
-import { storageAvailable, setItemMap, buildSlug, buildKey } from 'api/util'
+import { http } from 'services'
+import { storageAvailable, setItemMap, buildSlug, buildKey } from 'services/util'
 import { settings } from 'settings'
 
 const keys = settings.keys.league

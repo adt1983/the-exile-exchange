@@ -17,28 +17,28 @@
     <section class="block-list">
       <header>Offers <span class="badge" :class="{'success':items.length}">{{items.length}}</span></header>
       <ul>
-        <li class="with-chevron"
+        <li class="offer"
           @click="showModal = true"
           v-for="item in items">
-            <h5 class="body-font">{{item[keys.name]}}</h5>
+            <!-- <h5 class="body-font">{{item[keys.name]}}</h5> -->
             <strong>{{ratio}}</strong>&nbsp;&bullet;&nbsp;<small>{{item[keys.time] | lastSeen}}</small>
         </li>
       </ul>
     </section>
-    <ul class="inline-list text-center">
+    <ul class="inline-list text-center" v-if="showModal">
       <li v-for="item in items">
         <!-- <div class="grid-block horizontal">
           <div class="grid-content text-center"> -->
-            <button 
+            <!-- <button 
               @click="showModal = true"
               type="button"
               class="button tiny">
               <h5 class="body-font">{{item[keys.name]}}</h5>
               <strong>{{ratio}}</strong>&nbsp;&bullet;&nbsp;<small>{{item[keys.time] | lastSeen}}</small>
-            </button>
+            </button> -->
           <!-- </div>
         </div> -->
-        <modal v-if="showModal" 
+        <modal 
           :exchange="item" 
           @close="showModal = false">
             <!--
@@ -102,13 +102,9 @@ export default {
 // call settings for global SCSS access
 @import '../assets/styles/settings';
 
-// .offers-list {
-  .offerer {
-    border-top: rem-calc(1) solid $secondary-color;
-  }
-  // &.has-trade {
-  //   background-color: $primary-color;
-  // }
-// }
+.offer {
+  cursor: pointer;
+  @include hovershadow($secondary-color);
 
+}
 </style>

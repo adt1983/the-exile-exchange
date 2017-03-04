@@ -3,11 +3,15 @@
     <loader v-if="!renderView()"></loader>
 
     <div class="grid-block" v-if="renderView()">
-      <div class="grid-block text-center justify-center">
-        <div class="grid-content">
-          <h3 class="inline-block">Asking</h3><h2 class="inline-block">
-          {{currencyMap[askId][settings.keys.currency.name]}}</h2>
-          <img v-bind:src="currencyMap[askId][settings.keys.currency.imgUrl]" v-bind:alt="currencyMap[askId][settings.keys.currency.name]">
+      <div class="grid-block text-center justify-center noscroll">
+        <div class="grid-content noscroll">
+          <!-- <h3 class="inline-block">Asking</h3><h2 class="inline-block">
+          {{currencyMap[askId][settings.keys.currency.name]}}</h2> -->
+          <div>
+            <img 
+              :src="currencyMap[askId][settings.keys.currency.imgUrl]" 
+              :alt="currencyMap[askId][settings.keys.currency.name]">
+          </div>
         </div>
       </div>
       <div class="grid-block text-center shrink">
@@ -17,10 +21,14 @@
           <label for="Offers">Offers Only</label>
         </div>
       </div>
-      <div class="grid-block text-center">
-        <div class="grid-content">
-          <h3 class="inline-block">Offering</h3><h2 class="inline-block">{{currencyMap[bidId][settings.keys.currency.name]}}</h2>
-          <img v-bind:src="currencyMap[bidId][settings.keys.currency.imgUrl]" v-bind:alt="currencyMap[bidId][settings.keys.currency.name]">
+      <div class="grid-block text-center noscroll">
+        <div class="grid-content noscroll">
+          <!-- <h3 class="inline-block">Offering</h3><h2 class="inline-block">{{currencyMap[bidId][settings.keys.currency.name]}}</h2> -->
+          <div>
+            <img 
+              :src="currencyMap[bidId][settings.keys.currency.imgUrl]" 
+              :alt="currencyMap[bidId][settings.keys.currency.name]">
+          </div>
         </div>
       </div>
     </div>
@@ -37,18 +45,22 @@
           <div class="grid-block align-center shrink vertical middle-block">
             <div class="grid-block noscroll align-center vertical middle-block">
               <div class="grid-content text-center">
-                <span>Asks</span>
-                <span class="badge secondary">{{biddingIndex[key].asks.length}}</span>
+                <!-- <span>Asks</span>
+                <span class="badge secondary">{{biddingIndex[key].asks.length}}</span> -->
+                
+              <offers-list
+                :ratio="key"
+                :items="biddingIndex[key].asks"></offers-list>
               </div>
             </div>
-            <div class="grid-block noscroll align-center">
+       <!--      <div class="grid-block noscroll align-center">
               <div class="grid-content text-center">
                 <h1>
                   <span class="body-font" 
                   :class="{ 'has-trade': hasTrade(key) }">{{key}}</span>
                 </h1>
               </div>
-            </div>
+            </div> -->
             <div class="grid-block noscroll align-center">
               <div class="grid-content text-center">
                 <span>Offers</span>
@@ -71,9 +83,9 @@
 
 <script>
 import { settings } from '../settings'
-import { http } from '../api'
-// import { league } from '../api/league'
-// import { currency } from '../api/currency'
+import { http } from '../services'
+// import { league } from '../services/league'
+// import { currency } from '../services/currency'
 import * as filters from '../filters'
 import OffersList from './OffersList'
 import Loader from './Loader'

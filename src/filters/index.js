@@ -11,13 +11,11 @@ export function highest (items, key) {
 }
 
 export function current (items, key, age) {
-  // const date = ((new Date()) - age)
-  // console.log('no bids older than', new Date(date))
-  // console.log('before', items.length)
-  // items.filter(function (a) {
-  //   return a[key] > date
-  // })
-  // console.log('after', items.length)
+  const date = ((new Date()) - age)
+  items.filter(function (a) {
+    return a[key] > date
+  })
+  console.log('after', items.length)
   return items
 }
 

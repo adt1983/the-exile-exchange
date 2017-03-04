@@ -32,8 +32,8 @@ export const settings = {
     },
     league: {
       name: 'name',
-      slug: '$slug',
-      id: '$id'
+      slug: '$slug', // used for UI routes
+      id: '$id' // use for API routes
     }
   },
   presets: {
@@ -46,13 +46,6 @@ export const settings = {
       '25': '6',
       '4': '6',
       'default': '4'
-    },
-    getSearch: function (id) {
-      let preset = settings.presets.currencySearch['default']
-      if (settings.presets.currencySearch[ id ]) {
-        preset = settings.presets.currencySearch[ id ]
-      }
-      return preset
     }
   }
 }

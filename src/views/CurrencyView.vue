@@ -86,8 +86,8 @@
 
 <script>
 import { settings } from '../settings'
-import { league } from '../api/league'
-import { currency } from '../api/currency'
+import { league } from '../services/league'
+import { currency } from '../services/currency'
 // import router from 'vue-router'
 import CurrencyList from '../components/CurrencyList'
 import CurrencyItem from '../components/CurrencyItem'
@@ -108,7 +108,7 @@ import CurrencyItem from '../components/CurrencyItem'
 // console.log(res);
 export default {
   name: 'currency-view',
-  props: ['leagueid', 'askids', 'offerids'],
+  props: ['leagueid'],
   data () {
     return {
       settings,

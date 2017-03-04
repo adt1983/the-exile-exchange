@@ -20,7 +20,7 @@
 <script>
 import { settings } from '../settings'
 // import { timeAgo } from '../filters'
-import { currency } from '../api/currency'
+import { currency } from '../services/currency'
 import CurrencyItem from './CurrencyItem'
 
 export default {

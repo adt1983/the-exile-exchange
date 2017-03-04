@@ -14,6 +14,7 @@
             <div class="modal-body">
               <slot name="body">
                 {{exchange.lastChar}}
+                todo // text input with mulyiplyer
               </slot>
             </div>
 
@@ -34,7 +35,7 @@
 
 <script>
 import { settings } from '../settings'
-import { currency } from '../api/currency'
+import { currency } from '../services/currency'
 
 // function cleanParams (dirty) {
 //   let clean

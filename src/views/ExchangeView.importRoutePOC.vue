@@ -28,7 +28,7 @@
 
 <script>
 import { settings } from '../settings'
-// import { currency } from '../api/currency'
+// import { currency } from '../services/currency'
 // import asks from '../../static/breach.4.6.json'
 // import bids from '../../static/breach.6.4.json'
 import Exchange from '../components/Exchange'

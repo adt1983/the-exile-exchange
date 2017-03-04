@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { league } from '../api/league'
+import { league } from '../services/league'
 import Loader from '../components/Loader'
 
 export default {
@@ -37,7 +37,6 @@ export default {
     league
       .then((response) => {
         this.league = response.items
-        this.loading = false
       })
   },
   components: {

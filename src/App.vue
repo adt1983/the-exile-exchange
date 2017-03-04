@@ -92,13 +92,13 @@ export default {
 }
 .slide-fade-enter
 /* .slide-fade-leave-active for <2.1.8 */ {
-  transform: translateX(100%);
+  transform: translateY(100%);
 }
 .slide-fade-leave-to {
   opacity: 0;
   overflow: hidden;
 
-  transform: translateX(-80%);
+  transform: translateY(-80%);
 }
 // .slide-fade-leave {
 //   transform: translateX(0);
