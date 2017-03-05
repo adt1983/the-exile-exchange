@@ -70,6 +70,8 @@ export default {
 @import '../assets/styles/settings';
 
 .currency-list {
+  @include base-panel;
+  // padding: 0 $global-padding*3;
   ol {
     list-style: none;
   }

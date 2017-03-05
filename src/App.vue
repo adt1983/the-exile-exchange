@@ -2,12 +2,18 @@
 <template>
 
   <div id="app" class="grid-frame vertical">
+      <!-- <modal></modal> -->
     <!-- <article class="grid-container"> -->
         <!-- <section class="grid-block align-left"> -->
             <!-- <div class="grid-container vertical medium-horizontal"> -->
           <!-- <div class="grid-block small-2 medium-3"> -->
               <!-- <page-header class="grid-content noscroll"></page-header> -->
           <!-- </div> -->
+   <!--        <div class="grid-block">
+            <div class="grid-content">
+              <h1>App Layer</h1>
+            </div>
+          </div> -->
           <div class="grid-block">
             <transition name="slide-fade">
               <!-- <keep-alive> -->
@@ -15,10 +21,12 @@
               <!-- </keep-alive> -->
             </transition>
           </div>
+          <!-- <modal></modal> -->
             <!-- </div> -->
         <!-- </section> -->
         <page-footer class="grid-block shrink align-center"></page-footer>
     <!-- </article> -->
+
   </div>
 
 </template>
@@ -27,6 +35,7 @@
 <script>
 // import pageHeader from './components/Header'
 import pageFooter from './components/Footer'
+// import Modal from './components/Modal'
 // import Exchange from './components/Exchange'
 export default {
   name: 'app',
@@ -45,6 +54,7 @@ export default {
   },
   components: {
     // pageHeader,
+    // Modal,
     pageFooter
   },
   methods: {
@@ -69,6 +79,16 @@ export default {
 // call `globals` to define the base styles globally
 @import './assets/styles/globals';
 @import './assets/styles/svg-icon';
+
+body {
+  background: repeating-linear-gradient(
+    -55deg,
+    #222,
+    #222 rem-calc(10),
+    #333 rem-calc(10),
+    #333 rem-calc(20)
+  );
+}
 
 #app {
   border-top: rem-calc(3) solid $primary-color;
@@ -103,4 +123,6 @@ export default {
 // .slide-fade-leave {
 //   transform: translateX(0);
 // }
+
+
 </style>

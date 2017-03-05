@@ -1,100 +1,119 @@
 <template>
-  <div class="grid-block vertical">
-    <loader v-if="!renderView()"></loader>
-
-    <div class="grid-block" v-if="renderView()">
-      <div class="grid-block text-center justify-center noscroll">
+  <div class="wrapper grid-block vertical">
+    <!-- accountName: {{accountName}} {{selected}} -->
+    <header class="grid-block">
+      <div class="grid-block text-center noscroll">
         <div class="grid-content noscroll">
-          <!-- <h3 class="inline-block">Asking</h3><h2 class="inline-block">
-          {{currencyMap[askId][settings.keys.currency.name]}}</h2> -->
-          <div>
-            <img 
-              :src="currencyMap[askId][settings.keys.currency.imgUrl]" 
-              :alt="currencyMap[askId][settings.keys.currency.name]">
-          </div>
+          <currency-item
+            :input="false"
+            :id="askId" 
+            class="ask-icon"
+            ></currency-item>
+          <!-- <img
+            class="primary-shadow"
+            :src="currencyMap[askId][settings.keys.currency.imgUrl]" 
+            :alt="currencyMap[askId][settings.keys.currency.name]"> -->
         </div>
       </div>
-      <div class="grid-block text-center shrink">
-        <div class="grid-content">
-          <h3>Exchange Rates</h3>
-          <input type="checkbox" id="Offers" v-model="showWithOffersOnly">
-          <label for="Offers">Offers Only</label>
+      <div class="grid-block text-center noscroll shrink">
+        <div class="svg-icon">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
+            <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
+          </svg>
         </div>
       </div>
       <div class="grid-block text-center noscroll">
         <div class="grid-content noscroll">
-          <!-- <h3 class="inline-block">Offering</h3><h2 class="inline-block">{{currencyMap[bidId][settings.keys.currency.name]}}</h2> -->
-          <div>
-            <img 
+            <currency-item
+              :input="false"
+              :id="bidId" 
+              class="ask-icon"
+              ></currency-item>
+            <!-- <img
+              class="primary-shadow"
               :src="currencyMap[bidId][settings.keys.currency.imgUrl]" 
-              :alt="currencyMap[bidId][settings.keys.currency.name]">
-          </div>
+              :alt="currencyMap[bidId][settings.keys.currency.name]"> -->
         </div>
       </div>
+    </header>
+
+    <div class="grid-block noscroll align-center preferences">
+      <input type="checkbox" id="Offers" v-model="filterBids">&nbsp;
+      <label for="Offers">Offers Only</label>
     </div>
-    <div class="grid-block vertical nowrap" v-if="renderView()">
-    <!--   <div class="grid-block vertical align-center text-center">
-        <h1 v-if="orderBy.length">No Results</h1>
-      </div> -->
-      <ul class="grid-block vertical align-center">
-        <li class="grid-block tier"
-          v-show="showKeyRow(key)" 
-          v-if="renderKeyRow(key)" 
+
+    <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader>
+    <!-- {{orderBy}} -->
+    <section class="block-list exchange-list" v-if="loading === 2 && renderView()">
+      <ul>
+          <!-- v-show="showKeyRow(key)"  -->
+          <!-- v-if="renderKeyRow(key)"  -->
+        <li
+          :class="{ 'has-bids': hasBids(key) }"
           v-for="(key, increments) in orderBy" 
+          v-show="showEmptyBids(key)"
           :key="key">
-          <div class="grid-block align-center shrink vertical middle-block">
-            <div class="grid-block noscroll align-center vertical middle-block">
-              <div class="grid-content text-center">
-                <!-- <span>Asks</span>
-                <span class="badge secondary">{{biddingIndex[key].asks.length}}</span> -->
-                
-              <offers-list
-                :ratio="key"
-                :items="biddingIndex[key].asks"></offers-list>
+          <div class="grid-content">
+            
+            <div 
+              class="call-to-action grid-block noscroll"
+              @click="showOffer(key, biddingIndex[key].bids)">
+              <div class="grid-block noscroll text-center">
+                <div class="grid-content noscroll">
+                  <span class="badge"
+                    :class="{ 'warning': (biddingIndex[key].asks && biddingIndex[key].asks.length >= 2) }">{{biddingIndex[key].asks.length}}</span>
+                  
+                </div>
+              </div>
+              <div class="grid-block noscroll text-center shrink">
+                <div class="grid-content noscroll">
+                  <h3 class="secondary-color body-font">{{key}}</h3>
+                </div>
+              </div>
+              <div class="grid-block noscroll text-center">
+                <div class="grid-content noscroll">
+                  <span class="badge success-dark-bg"
+                    v-if="biddingIndex[key].bids && biddingIndex[key].bids.length">{{biddingIndex[key].bids.length}}</span>
+                </div>
               </div>
             </div>
-       <!--      <div class="grid-block noscroll align-center">
-              <div class="grid-content text-center">
-                <h1>
-                  <span class="body-font" 
-                  :class="{ 'has-trade': hasTrade(key) }">{{key}}</span>
-                </h1>
-              </div>
-            </div> -->
-            <div class="grid-block noscroll align-center">
-              <div class="grid-content text-center">
-                <span>Offers</span>
-                <span class="badge">{{biddingIndex[key].offers.length}}</span>
-              </div>
-            </div>
-          </div>
-          <div class="grid-block noscroll align-center middle-block">
-            <div class="grid-content noscroll">
-              <offers-list
-                :ratio="key"
-                :items="biddingIndex[key].offers"></offers-list>
-            </div>
+            <!-- <offers-list
+              v-if="selected[key]"
+              :ratio="key"
+              :items="biddingIndex[key].bids"></offers-list> -->
+            <!-- <modal 
+              v-if="showModal"
+              :ratio="key"
+              :items="biddingIndex[key].bids"
+              slot="modal"
+              @close="showModal = false">
+                  
+                    custom content here to overwrite
+                    default content
+                  
+            </modal> -->
           </div>
         </li>
       </ul>
-    </div>
-  </div>
+    </section>
+  </div> 
 </template>
 
 <script>
 import { settings } from '../settings'
 import { http } from '../services'
+import { bus } from '../services/bus'
 // import { league } from '../services/league'
 // import { currency } from '../services/currency'
 import * as filters from '../filters'
-import OffersList from './OffersList'
+import CurrencyItem from '../components/CurrencyItem'
 import Loader from './Loader'
 
 const stats = {
   byExchangeRatio: {},
   setStats (items, key, askKey, bidKey, askId, askIdKey) {
     let t = []
-    console.log('baseRatio items', items)
+    // console.log('baseRatio items', items)
     // do all manipulation here
     // in one loop!
     t = items.map(function (item) {
@@ -118,7 +137,7 @@ const stats = {
   addItemToIndex: function (item, key, askKey, index, askId, askIdKey) {
     if (!stats.byExchangeRatio[index]) {
       stats.byExchangeRatio[index] = {
-        offers: [],
+        bids: [],
         asks: []
       }
       stats.byExchangeRatio[index][key + '_base'] = item[key + '_base']
@@ -126,20 +145,14 @@ const stats = {
     // if no asks, define them
     if (stats.byExchangeRatio[index].asks.length) {
       // assumes that the first in index is ask
-      console.log('askKey', askId)
-      console.log('item[askIdKey]', item[askIdKey])
-      console.log('stats.byExchangeRatio[index].asks[0][askKey]', stats.byExchangeRatio[index].asks[0][askIdKey])
       if (item[askIdKey] === askId) {
-        console.log('is a ask!!', item)
         stats.byExchangeRatio[index].asks.push(item)
       } else {
-        console.log('is a offer!!', item)
-        stats.byExchangeRatio[index].offers.push(item)
+        stats.byExchangeRatio[index].bids.push(item)
       }
     } else {
       stats.byExchangeRatio[index].asks.push(item)
     }
-    // console.log('stats.byExchangeRatio', stats.byExchangeRatio)
   }
 }
 
@@ -154,45 +167,58 @@ export default {
   },
   data () {
     return {
-      showWithOffersOnly: true,
+      stats,
       settings,
+      selected: {},
+
+      loading: 0,
+      filterBids: true,
+      showModal: false,
+
       keys: settings.keys.exchange,
+
       orderBy: [],
-      // leagueMap: {},
-      // currencyMap: {},
       askList: [],
       bidList: [],
+
       title: 'Breach Currency Exchange'
     }
   },
   computed: {
     isCurrentAsk: function () {
       let items
-      console.log('this.askId', this.askId)
-      console.log('this.askId', this.askList)
       if (this.askList && this.askList.length) {
-        items = stats.setStats(this.askList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid, this.askId, settings.keys.exchange.askId)
-        return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
+        items = stats.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.askId)
+        return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
         // return items
       }
+    },
+    accountName: function () {
+      return this.selected.accountName
     },
     // isCurrentBid: function () {
     //   let items
     //   console.log('this.bidId', this.bidId)
     //   if (this.bidList && this.bidList.length) {
-    //     items = stats.setStats(this.bidList, settings.keys.exchange.ratio, settings.keys.exchange.ask, settings.keys.exchange.bid)
-    //     return filters.current(items, settings.keys.exchange.lastSeenTime, settings.refreshRate)
+    //     items = stats.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid)
+    //     return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
     //     // return items
     //   }
     // },
     // get only, just need a function
     // highestAsk: function () {
-    //   return filters.highest(this.isCurrentAsk, settings.keys.exchange.ask)
+    //   return filters.highest(this.isCurrentAsk, this.keys.ask)
     // },
     // highestBid: function () {
-    //   return filters.highest(this.isCurrentBid, settings.keys.exchange.bid)
+    //   return filters.highest(this.isCurrentBid, this.keys.bid)
     // },
     biddingIndex: function () {
+      // somewhere in the the VIEW
+      // `biddingIndex` must be referenced,
+      // or call a method which refs
+      // otherwise it will never render
+      //
+      const that = this
       let items
       // call other computers to make sure they are compiled
       this.isCurrentAsk // call ask first!
@@ -201,33 +227,83 @@ export default {
       // should stats be passing in `this` values
       // instead of being writting in external funtions?
       // bad scope here?
-      items = stats.byExchangeRatio
-      console.log('items', items)
-      console.log('before ordering by 1:X weight', Object.keys(stats.byExchangeRatio))
-      this.orderBy = Object.keys(stats.byExchangeRatio).sort(function (a, b) {
-        return stats.byExchangeRatio[b][settings.keys.exchange.ratio + '_base'] - stats.byExchangeRatio[a][settings.keys.exchange.ratio + '_base']
+      items = this.stats.byExchangeRatio
+      this.orderBy = Object.keys(this.stats.byExchangeRatio).sort(function (a, b) {
+        const aa = that.stats.byExchangeRatio[a] && that.stats.byExchangeRatio[a][that.keys.ratio + '_base']
+        const bb = that.stats.byExchangeRatio[b] && that.stats.byExchangeRatio[b][that.keys.ratio + '_base']
+        return bb - aa
       })
-      console.log('after ordering by weight', this.orderBy)
       return items
+    },
+    // hasAsks: function (key) {
+    //   return this.biddingIndex && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
+    // },
+    isLoaded: function () {
+      if (this.askList && this.bidList) {
+        if (this.loading > 2) { // 2 reqs
+          return true
+        }
+      }
     }
+    // openModal: function (data) {
+    //   bus.$emit('open-modal', data)
+    // }
   },
   methods: {
+    // toggleOffer: function (key) {
+    //   this.selected[key] = !this.selected[key]
+    // },
+    showOffer: function (key, list) {
+      const settings = { key, list }
+      bus.$emit('modal.offerlist.open', settings)
+    },
     // keep the template clean
-    hasTrade: function (key) {
-      return this.biddingIndex[key].offers && this.biddingIndex[key].offers.length && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
+    // hasTrade: function (key) {
+    //   return this.biddingIndex[key].bids && this.biddingIndex[key].bids.length && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
+    // },
+    // renderKeyRow: function (key) {
+    //   return this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
+    // },
+    hasBids: function (key) {
+      return this.biddingIndex[key].bids && this.biddingIndex[key].bids.length
     },
-    showKeyRow: function (key) {
-      return this.showWithOffersOnly === false || (this.biddingIndex[key].offers && this.biddingIndex[key].offers.length)
-    },
-    renderKeyRow: function (key) {
+    hasAsks: function (key) {
       return this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
     },
+    showEmptyBids: function (key) {
+      return this.filterBids === false || (this.biddingIndex[key].bids && this.biddingIndex[key].bids.length)
+    },
     renderView: function () {
+      // makes ref to this.biddingIndex which start to computes its contents
       return Object.keys(this.leagueMap) && Object.keys(this.leagueMap).length && Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length && Object.keys(this.biddingIndex) && (Object.keys(this.biddingIndex).length || Object.keys(this.biddingIndex).length === 0)
+    },
+    getData: function () {
+      this.loading = 0
+      let league = this.leagueMap[this.leagueId][this.settings.keys.league.id] || 'Standard'
+      const askReq = '/CurrencyOrder' + '/' + league + '/' + this.askId + '/' + this.currencyMap[this.askId].$preset
+      const bidReq = '/CurrencyOrder' + '/' + league + '/' + this.currencyMap[this.askId].$preset + '/' + this.askId
+      const that = this
+      http
+        .get(askReq)
+        .then((response) => {
+          // console.log('items fresh from API!', response.data)
+          that.askList = response.data
+          ++this.loading
+        })
+      http
+        .get(bidReq)
+        .then((response) => {
+          // console.log('items fresh from API!', response.data)
+          that.bidList = response.data
+          ++this.loading
+        })
+      // will be considered loaded with `loading` = 2
+      this.biddingIndex
     }
   },
   components: {
-    'offers-list': OffersList,
+    // OffersList,
+    CurrencyItem,
     Loader
   },
   // beforeCreate: function () {
@@ -243,23 +319,7 @@ export default {
   //     })
   // },
   created: function () {
-    console.log('this.currencyMap', this.currencyMap)
-    let league = this.leagueMap[this.leagueid] || 'Standard'
-    const askReq = '/CurrencyOrder' + '/' + league + '/' + this.askId + '/' + this.currencyMap[this.askId].$preset
-    const bidReq = '/CurrencyOrder' + '/' + league + '/' + this.currencyMap[this.askId].$preset + '/' + this.askId
-    const that = this
-    http
-      .get(askReq)
-      .then((response) => {
-        console.log('items fresh from API!', response.data)
-        that.askList = response.data
-      })
-    http
-      .get(bidReq)
-      .then((response) => {
-        console.log('items fresh from API!', response.data)
-        that.bidList = response.data
-      })
+    this.getData()
   }
 }
 </script>
@@ -267,17 +327,116 @@ export default {
 <style lang="scss" scoped>
 // call settings for global SCSS access
 @import '../assets/styles/settings';
+@import './node_modules/angular-base-apps/scss/components/block-list';
 
-.tier {
-  border-top: rem-calc(1) solid $primary-color;
-  padding: $global-padding 0;
-  .has-trade {
-    color: $success-color;
+.wrapper {
+  @include base-panel;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  header {
+    padding-bottom: ($global-padding/3)*2;
   }
 }
-.large {
-  font-size: rem-calc(20)
+
+.exchange-list {
+  filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.7));
+  .badge {
+    margin-top: ($global-padding/3)*2;
+
+  }
+  // This gets you basic styles
+  @include block-list-container(
+    $font-size: 1rem, // Base font size for entire list
+    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
+  );
+
+  margin-bottom: 0;
+  ul {
+    margin-bottom: 0;
+  }
+
+  // This adds support for text fields, dropdowns, and radio/check inputs
+  // @include block-list-inputs(
+  //   $color: #000, // Foreground color
+  //   $background, #fff, // Background color
+  //   $background-hover: #fff, // Background color of elements on hover
+  //   $padding: 1rem, //
+  // );
+
+  // This adds support for icons
+  // &.with-icons {
+  //   @include block-list-icons(
+  //     $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
+  //     $item-selector: 'li' // This should be whatever tag or class your block list uses for items
+  //   );
+  // }
+
+  // Define what tag or class your list items are with this mixin
+  li {
+    /* property name | duration | timing function | delay */
+    transition: background-color $default-animation-speed*2 ease-in-out;
+    @include block-list-item(
+      // $color: #000, // Color of items
+      // $color-hover, // Color of items on hover
+      // $color-disabled, // Color of items when disabled
+      // $background: transparent, // Background color
+      // $background-hover: #ccc, // Background color on hover
+      // $border: 1px solid #ccc, // Top and bottom border of items
+      // $padding: 1rem
+    );
+    &.has-bids {
+      cursor: pointer;
+      background-color: $dark-color;
+      &:hover {
+        background-color: $blocklist-item-background-hover;
+      }
+    }
+    &.has-account {
+      cursor: pointer;
+      background-color: $alert-dark;
+      &:hover {
+        background-color: $blocklist-item-background-hover;
+      }
+    }
+    // &.has-asks {
+    //   background-color: red;
+    // }
+    // Add styles for list items with chevrons
+    // &.with-chevron {
+    //   @include block-list-chevron(
+    //     $color: #000, // Color of chevron
+    //     $padding: 1rem, // Insert the same padding as the block list item here
+    //     $label-class: 'block-list-label' // Insert the class you're using for labels
+    //   );
+    // }
+  }
+
+  // Define what tag or class your headers are with this mixin
+  // header {
+  //   @include block-list-header(
+  //     $color: #000, // Text color
+  //     $font-size: 1rem, // Font size
+  //     $uppercase: true, // If true, the text becomes all-caps
+  //     $offset: 1rem // Left-side offset for text
+  //   );
+  // }
+
+  // Define the class for labels
+  // .block-list-label {
+  //   @include block-list-label(
+  //     $color: #999, // Color of label
+  //     $left-class: 'left', // Define a modifier class for left-aligned labels
+  //     $left-padding: 1rem // Padding to add when a label is left-aligned
+  //   );
+  // }
+
 }
+
+.preferences {
+  background-color: $gray-dark;
+  padding: $global-padding/2 0;
+}
+
 
 svg path,
 svg rect{

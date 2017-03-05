@@ -15,7 +15,7 @@ export function current (items, key, age) {
   items.filter(function (a) {
     return a[key] > date
   })
-  console.log('after', items.length)
+  // console.log('after', items.length)
   return items
 }
 

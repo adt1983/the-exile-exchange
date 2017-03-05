@@ -1,3 +1,11 @@
+// @import '../assets/styles/settings';
+
+@mixin base-panel() {
+  border: rem-calc(2) solid $gray-dark;
+  background-color: $body-background;
+}
+
+
 @mixin hovershadow( $hover-color: $black ) {
   filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba($hover-color, 0.3));
   &:hover {

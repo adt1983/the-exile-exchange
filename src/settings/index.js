@@ -3,6 +3,7 @@ export const settings = {
   refreshRate: 1000 * 60 * 15, // 15 min
   paramDiv: ':',
   paramSubDiv: '~',
+  selected: {}, // active settings
   keys: {
     currency: {
       id: 'id', // since values are unique they will be our ID

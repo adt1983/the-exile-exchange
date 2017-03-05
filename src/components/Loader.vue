@@ -54,6 +54,11 @@ export default {
   h1 {
     color: $warning-color;
   }
+  &.progress-50 {
+    h1 {
+      color: $success-color;
+    }
+  }
 }
 
 svg path,

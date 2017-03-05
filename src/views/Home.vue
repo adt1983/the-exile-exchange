@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <div class="header">
+    <header>
       <h1>{{msg}}</h1>
-    </div>
+    </header>
     <ul class="grid shrink no-bullet">
-      <li>
-        <loader v-if="loading"></loader>
+      <li v-if="!this.league.length">
+        <loader></loader>
       </li>
       <li v-for="leag in league">
         <router-link 
@@ -29,7 +29,6 @@ export default {
   data () {
     return {
       league,
-      loading: true,
       msg: 'Select League.'
     }
   },
@@ -51,12 +50,14 @@ export default {
 @import '../assets/styles/settings';
 
 .home {
-  width: 100%;
+  @include base-panel;
+  padding: 0 $global-padding*3;
+  // width: 100%;
   margin: auto;
   // overflow-y: scroll;
   text-align: center;
-  .header {
-    padding-bottom: $global-padding*3;
+  header {
+    padding: $global-padding*3 0;
   }
 }
 

@@ -1,28 +1,35 @@
 <template>
   <div class="exchange-view grid-block wrap">
+    <!-- <section :html="modalView"></section> -->
     <div 
-      class="medium-4 grid-block"
+      class="grid-block"
       v-if="renderView()"
       v-for="item in getSelectedAsks">
       <exchange 
         class="exchange-list-item"
         :league-map="leagueMap"
         :currency-map="currencyMap"
+        :league-id="leagueid"
         :ask-id="item.asks"
         :bid-id="item.bids"></exchange>
     </div>
-    
+    <offers-list-modal></offers-list-modal>
+    <contact-info-modal></contact-info-modal>
   </div>
 </template>
 
 <script>
+// import { bus } from '../services/bus'
 import { settings } from '../settings'
 // import { http } from '../services'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
 
 import Exchange from '../components/Exchange'
-// import CurrencyItem from '../components/CurrencyItem'
+import CurrencyItem from '../components/CurrencyItem'
+
+import OffersListModal from 'views/OffersListModal'
+import ContactInfoModal from 'views/ContactInfoModal'
 
 function cleanPairs (dirty, keyChar) {
   let clean
@@ -31,7 +38,6 @@ function cleanPairs (dirty, keyChar) {
   } else {
     clean = dirty
   }
-  console.log('cleanPairs', clean)
   return clean
 }
 
@@ -48,9 +54,12 @@ function parseParams (ids) {
       items.push(temp)
     })
   } else {
-    items = params
+    params = cleanPairs(params, settings.paramDiv)
+    items.push({
+      asks: params[0],
+      bids: params[1]
+    })
   }
-  console.log('createParams', items)
   return items
 }
 
@@ -63,10 +72,13 @@ export default {
       // keys: settings.keys.exchange,
       // currencyKeys: settings.keys.currency,
       // league,
+
       selected: {},
+
       leagueMap: {},
       currency: [],
       currencyMap: {},
+
       asks: [],
       bids: []
 
@@ -83,10 +95,14 @@ export default {
     // }
   },
   components: {
-    Exchange
+    OffersListModal,
+    ContactInfoModal,
+    Exchange,
+    CurrencyItem
   },
   beforeCreate: function () {
     const that = this
+
     currency
       .then((response) => {
         that.currencyMap = response.collection

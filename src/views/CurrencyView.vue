@@ -16,9 +16,11 @@
       <div class="grid-block expand">
         <div class="grid-content">
           <h1>{{leagueName}}</h1>
-          <strong>{{this.params.asks}}</strong>
+          <!-- <strong>{{this.params.asks}}</strong> -->
         </div>
       </div>
+
+      
       <div class="grid-block shrink hide-for-small-only">
         <div class="grid-content">
           <ul class="button-group segmented call-to-action">
@@ -31,7 +33,9 @@
           </ul>
         </div>
       </div>
-      <ul class="no-bullet grid-block horizontal shrink">
+
+      <!-- SHOW SELECTED -->
+      <!-- <ul class="no-bullet grid-block horizontal shrink">
         <li class="grid-content" v-for="(v,id) in selectedAsks" :key="id">
           <currency-item
             :input="false"
@@ -44,7 +48,7 @@
             class="small-icon bid-icon"
             ></currency-item>
         </li>
-      </ul>
+      </ul> -->
 
       <div class="grid-block shrink">
         <div class="grid-content text-center" >
@@ -204,6 +208,8 @@ export default {
 @import '../assets/styles/settings';
 
 .currency-view {
+  // @include base-panel;
+  // padding: 0 $global-padding*3;
   .header {
     background-color: $dark-color;
     border-bottom: rem-calc(1) solid $body-font-color;

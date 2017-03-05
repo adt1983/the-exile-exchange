@@ -33,12 +33,15 @@
           :src="imgUrl" :alt="name">
         <small class="show-for-small-only grid-block currency-name" v-html="ttmsg"></small>
       </figure>
-      <figure 
+      <div
         v-if="!input && preloader"
-        class="currency-item grid-block vertical nowrap">
-         <img :src="imgUrl" :alt="name"
-          v-tooltip.top-center="ttmsg">
-      </figure>
+        class="currency-item grid-block text-center align-center nowrap is-display">
+         <figure class="grid-content noscroll">
+          <img :src="imgUrl" :alt="name"
+            v-tooltip.top-center="ttmsg">
+          <!-- <h6 class="show-for-small-only grid-block currency-name text-center" v-html="ttmsg"></h6> -->
+         </figure>
+      </div>
     </transition>
   </div>
 </template>
@@ -188,6 +191,12 @@ export default {
   // float: left;
   // margin-right: .2em;
   // margin-bottom: .2em;
+  &.is-display {
+    border: none;
+    background-color: transparent;
+    // margin: auto;
+    filter: drop-shadow(rem-calc(-1) rem-calc(2) rem-calc(1) rgba($primary-color, 0.6));
+  }
   img {
     margin: rem-calc(2);
     width: rem-calc(78);

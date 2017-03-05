@@ -2,7 +2,8 @@
   <div class="footer wrap">
     <div class="grid-block small-12 medium-6 noscroll contact">
       <small class="grid-content noscroll">
-        {{league}}
+        {{accountName}}
+        <!-- {{league}} --><input v-model="accountName" placeholder="Account Name">
       </small>
     </div>
     <div class="grid-block small-12 medium-6 noscroll copyright medium-text-right end"><small class="grid-content noscroll" v-html="msg"></small></div>
@@ -10,7 +11,7 @@
 </template>
 
 <script>
-
+import { settings } from '../settings'
 function toRoman (num) {
   let result = ''
   const decimal = [
@@ -63,7 +64,15 @@ export default {
   props: ['league'],
   data () {
     return {
+      settings,
+      accountName: '',
+      selected: settings.selected,
       msg: 'copyright &copy; ' + toRoman(new Date().getFullYear()) + ' &bullet; Angelo'
+    }
+  },
+  computed: {
+    setAccount: function () {
+      this.selected.accountName = this.accountName
     }
   }
 }
