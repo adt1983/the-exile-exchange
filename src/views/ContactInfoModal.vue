@@ -24,9 +24,23 @@
           </div>
 
           <div class="modal-body">
-               {{raw}}
-          </div>
+            <h1 class="body-font">Buying {{raw[[keys.bidId]]}} for {{raw[[keys.askId]]}} at {{raw[keys.ask]}}:{{raw[keys.bid]}}</h1>
 
+            <!-- {{raw.lastChar}} -->
+            <!-- todo // text input with mulyiplyer -->
+            <textarea v-model="message"></textarea>
+          </div>
+          Buying {{raw[keys.bid]}}
+            <currency-item
+            :input="false"
+            :id="raw[keys.bidId]" 
+            class="small-icon bid-icon"
+            ></currency-item>
+            for {{raw[keys.ask]}} <currency-item
+            :input="false"
+            :id="raw[keys.askId]" 
+            class="small-icon ask-icon"
+            ></currency-item>. 
         </div>
       </div>
     </div>
@@ -36,6 +50,8 @@
 <script>
 import { bus } from '../services/bus'
 import { settings } from '../settings'
+
+import CurrencyItem from '../components/CurrencyItem'
 
 export default {
   name: 'contact-info-modal',
@@ -49,12 +65,19 @@ export default {
       raw: ''
     }
   },
-  // components: {
-  //   OffersList
-  // },
+  components: {
+    CurrencyItem
+  },
   computed: {
     showOffers: function () {
       return this.raw && this.raw.key && this.raw.list
+    },
+    message: function () {
+      return 'Hi, I\'d like to buy <strong>' + this.raw[this.keys.bid] +
+        '</strong> ' + this.raw[this.keys.askId] +
+        ' for <strong>' + this.raw[this.keys.ask] +
+        '</strong> ' + this.raw[this.keys.bidId] +
+        '.'
     }
   },
   methods: {

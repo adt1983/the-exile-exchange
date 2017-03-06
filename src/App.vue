@@ -84,9 +84,9 @@ body {
   background: repeating-linear-gradient(
     -55deg,
     #222,
-    #222 rem-calc(10),
-    #333 rem-calc(10),
-    #333 rem-calc(20)
+    #222 rem-calc(10)*5,
+    #333 rem-calc(10)*5,
+    #333 rem-calc(20)*5
   );
 }
 

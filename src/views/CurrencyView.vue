@@ -9,14 +9,13 @@
             tag="button" 
             type="button" 
             class="button call-to-action"><div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="32" viewBox="0 0 12 32">
-<path d="M11.196 9.714q0 0.232-0.179 0.411l-7.018 7.018 7.018 7.018q0.179 0.179 0.179 0.411t-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
-</svg></div></router-link>
+              <path d="M11.196 9.714q0 0.232-0.179 0.411l-7.018 7.018 7.018 7.018q0.179 0.179 0.179 0.411t-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
+              </svg></div></router-link>
         </div>
       </div>
       <div class="grid-block expand">
         <div class="grid-content">
           <h1>{{leagueName}}</h1>
-          <!-- <strong>{{this.params.asks}}</strong> -->
         </div>
       </div>
 
@@ -51,18 +50,18 @@
       </ul> -->
 
       <div class="grid-block shrink">
-        <div class="grid-content text-center" >
+        <div class="grid-content text-center">
           <!-- todo // convert asks to string -->
           <router-link 
             v-show="params.asks !== ''"
             :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
             tag="button" 
             type="button" 
-            class="button call-to-action">Search</router-link>
-          <button class="button" 
+            class="button call-to-action">{{searchText}}</router-link>
+          <button class="button call-to-action" 
             v-show="params.asks === ''"
             disabled="disabled">
-            Search
+            {{searchText}}
           </button>
         </div>
       </div>
@@ -75,13 +74,6 @@
         v-on:selected="updateAskSelected"
         class="active grid-block"
         ></currency-list>
-
-      <hr>
-
-      <!-- <currency-list
-        v-on:selected="updateOfferSelected"
-        ></currency-list>
- -->
         
       </div>
     </div>
@@ -92,20 +84,21 @@
 import { settings } from '../settings'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
+import { setSelected } from '../services/selected'
 // import router from 'vue-router'
 import CurrencyList from '../components/CurrencyList'
 import CurrencyItem from '../components/CurrencyItem'
 
 // function createParams (id, map) {
 //   let clean = ''
-//   console.log('createParams', arr)
+  // console.log('createParams', arr)
 //   // let ids = this.askids.slice(0)
 //   if (arr.length) {
 //     clean = arr.join(settings.paramDiv)
 //   // } else if (arr.length === 1) {
 //   //   clean = arr.toString()
 //   }
-//   console.log('createParams', clean)
+  // console.log('createParams', clean)
 //   return clean
 // }
 
@@ -119,6 +112,7 @@ export default {
       // leagKeys: settings.keys.league,
       keys: settings.keys.currency,
       title: 'Currency',
+      search: 'Search',
       // currency: [],
       currencyMap: {},
       leagueMap: {},
@@ -136,15 +130,17 @@ export default {
     currency
       .then((response) => {
         this.currencyMap = response.collection
-        // this.currency = response.items
       })
-  },
-  created: function () {
     league
       .then((response) => {
         this.leagueMap = response.collection
-        // this.currency = response.items
       })
+    // getSelected(id, value)
+  },
+  beforeDestroy: function () {
+    const id = this.keys.id
+    const value = this.askParams()
+    setSelected(id, value)
   },
   components: {
     'currency-list': CurrencyList,
@@ -158,17 +154,14 @@ export default {
         comp[a[that.keys.id]] = true
         comp.bid = a
       })
-      console.log(comp)
       return comp
     },
     selectedOffers: function () {
       const that = this
       let comp = {}
       this.selected.offers.forEach(function (a) {
-        console.log('a', a)
         comp[a[that.keys.id]] = true
       })
-      console.log(comp)
       return comp
     },
     leagueName: function () {
@@ -176,6 +169,9 @@ export default {
       if (Object.keys(this.leagueMap).length && this.leagueid) {
         return this.leagueMap[this.leagueid][nameKey]
       }
+    },
+    searchText: function () {
+      return this.search + ' ' + this.leagueName
     }
   },
   methods: {

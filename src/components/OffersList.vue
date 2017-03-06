@@ -6,7 +6,6 @@
         @click="showContactInfo(item)"
         v-for="item in items">
           <h6 class="body-font title">{{item[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{item[keys.user]}}<!-- </span>&nbsp;<strong>{{ratio}}</strong> --></h6>
-          <!-- &nbsp;&bullet;&nbsp;<small>{{item[keys.time] | lastSeen}}</small> -->
       </li>
     </ul>
   </section>
@@ -16,7 +15,6 @@
 import { bus } from '../services/bus'
 import { settings } from '../settings'
 import moment from 'moment'
-import ContactInfoView from 'views/ContactInfoView'
 // to be mapped to ports (external component bindings)
 export default {
   name: 'offers-list',
@@ -56,9 +54,6 @@ export default {
         return moment(value).fromNow()
       }
     }
-  },
-  components: {
-    'modal': ContactInfoView
   }
 }
 </script>

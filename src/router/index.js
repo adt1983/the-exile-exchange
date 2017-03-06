@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// import { settings } from 'settings'
-
 import Home from 'views/Home'
-// import ContactInfoView from 'views/ContactInfoView'
 import CurrencyView from 'views/CurrencyView'
 import ExchangeView from 'views/ExchangeView'
 import NotFound from 'views/NotFound'
@@ -40,7 +37,6 @@ export default new Router({
     {
       path: '/currency/:leagueid',
       props: true,
-      // path: '/currency/:askids',
       name: 'currency',
       component: CurrencyView
     },

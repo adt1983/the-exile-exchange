@@ -12,11 +12,9 @@
           :to="{ name: 'currency', params: { leagueid: leag.$slug }}" 
           tag="button" 
           type="button" 
-          class="button large"><h3>{{leag.name}}</h3></router-link>
+          class="button large"><h1>{{leag.name}}</h1></router-link>
       </li>
     </ul>
-
-    <!-- <router-link to="/exchange" class="button">exchange</router-link> -->
   </div>
 </template>
 
