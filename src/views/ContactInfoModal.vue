@@ -12,8 +12,9 @@
             </div>
             <div class="grid-block shrink text-right">
               <div class="grid-content">
-                <button class="button tiny info  text-right" @click="closeModal()">
-                  Close&nbsp;<div class="svg-icon">
+                <button class="button tiny hollow info text-right" 
+                  @click="closeModal()">
+                  <div class="svg-icon">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="32" viewBox="0 0 25 32">
                     <path d="M23.179 23.607q0 0.714-0.5 1.214l-2.429 2.429q-0.5 0.5-1.214 0.5t-1.214-0.5l-5.25-5.25-5.25 5.25q-0.5 0.5-1.214 0.5t-1.214-0.5l-2.429-2.429q-0.5-0.5-0.5-1.214t0.5-1.214l5.25-5.25-5.25-5.25q-0.5-0.5-0.5-1.214t0.5-1.214l2.429-2.429q0.5-0.5 1.214-0.5t1.214 0.5l5.25 5.25 5.25-5.25q0.5-0.5 1.214-0.5t1.214 0.5l2.429 2.429q0.5 0.5 0.5 1.214t-0.5 1.214l-5.25 5.25 5.25 5.25q0.5 0.5 0.5 1.214z"></path>
                     </svg>
@@ -24,13 +25,21 @@
           </div>
 
           <div class="modal-body">
-            <h1 class="body-font">Buying {{raw[[keys.bidId]]}} for {{raw[[keys.askId]]}} at {{raw[keys.ask]}}:{{raw[keys.bid]}}</h1>
+            <h1 class="body-font"><h1>Buying</h1> {{raw[[keys.bidId]]}} for {{raw[[keys.askId]]}} at {{raw[keys.ask]}}:{{raw[keys.bid]}}</h1>
 
             <!-- {{raw.lastChar}} -->
             <!-- todo // text input with mulyiplyer -->
-            <textarea v-model="message"></textarea>
+            <span 
+              v-show="isCopied"
+              class="label success">Message Copied!</span>
+            <textarea 
+              onclick="this.focus();this.select()"
+              readonly
+              @keyup.alt.67="isCopied = true"
+              class="trade-text" 
+              v-model="message"></textarea>
           </div>
-          Buying {{raw[keys.bid]}}
+          <h1>Buying</h1> {{raw[keys.bid]}}
             <currency-item
             :input="false"
             :id="raw[keys.bidId]" 
@@ -49,7 +58,7 @@
 
 <script>
 import { bus } from '../services/bus'
-import { settings } from '../settings'
+import settings from '../settings'
 
 import CurrencyItem from '../components/CurrencyItem'
 
@@ -59,6 +68,7 @@ export default {
     return {
       settings,
       // for wrapper not content
+      isCopied: false,
       showModal: false,
       keys: settings.keys.exchange,
       bus,
@@ -89,7 +99,7 @@ export default {
       this.showModal = false
     }
   },
-  created: function () {
+  created () {
     const that = this
     bus.$on('modal.contactinfo.open', function (data) {
       console.log('data', data)
@@ -103,6 +113,7 @@ export default {
     bus.$on('modal.contactinfo.close', function (data) {
       that.closeModal()
     })
+    // this.$refs.trade.focus()
   }
 }
 </script>
@@ -116,6 +127,15 @@ export default {
   svg {
     fill: $white;
   }
+}
+.trade-text {
+  cursor: copy;
+  width: 100%;
+  height: rem-calc(100);
+  background-color: $gray-dark;
+  margin: $global-padding 0;
+  padding: $global-padding/2 $global-padding;
+  line-height: 2
 }
 
 </style>

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { settings } from '../settings'
+import settings from '../settings'
 // import { timeAgo } from '../filters'
 import { currency } from '../services/currency'
 import CurrencyItem from './CurrencyItem'

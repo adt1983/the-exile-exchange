@@ -1,5 +1,5 @@
 // app settings
-export const settings = {
+export default {
   refreshRate: 1000 * 60 * 15, // 15 min
   paramDiv: ':',
   paramSubDiv: '~',

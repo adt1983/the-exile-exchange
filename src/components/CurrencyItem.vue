@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-block">
+  <div class="grid-block ">
     <transition name="fade-in">
 <!--       <div v-if="preloader === false" class="currency-item grid-block vertical nowrap align-center justify-center">
         <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -25,11 +25,11 @@
         v-on:mouseleave="activeSelection = false"
         v-on:click="selectItem">
          <img 
-          class="show-for-medium"
+          class="show-for-medium thumbnail"
           :src="imgUrl" :alt="name"
           v-tooltip.top-center="ttmsg">
          <img 
-          class="show-for-small-only"
+          class="show-for-small-only thumbnail"
           :src="imgUrl" :alt="name">
         <small class="show-for-small-only grid-block currency-name" v-html="ttmsg"></small>
       </figure>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { settings } from '../settings'
+import settings from '../settings'
 import { currency } from '../services/currency'
 
 export default {
@@ -150,7 +150,8 @@ export default {
   // width: rem-calc(78);
   // height: rem-calc(78);
 }
-.fade-in-enter-active, .fade-in-leave-active {
+.fade-in-enter-active, 
+.fade-in-leave-active {
   transition: opacity $default-animation-speed*2;
 }
 .fade-in-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {

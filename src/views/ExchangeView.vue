@@ -20,7 +20,7 @@
 
 <script>
 // import { bus } from '../services/bus'
-import { settings } from '../settings'
+import settings from '../settings'
 // import { http } from '../services'
 import { league } from '../services/league'
 import { currency } from '../services/currency'

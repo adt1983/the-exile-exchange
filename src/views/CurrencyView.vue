@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import { settings } from '../settings'
+import settings from '../settings'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
-import { setSelected } from '../services/selected'
+import saved from '../services/selected'
 // import router from 'vue-router'
 import CurrencyList from '../components/CurrencyList'
 import CurrencyItem from '../components/CurrencyItem'
@@ -138,9 +138,9 @@ export default {
     // getSelected(id, value)
   },
   beforeDestroy: function () {
-    const id = this.keys.id
+    const id = this.title
     const value = this.askParams()
-    setSelected(id, value)
+    saved.set(id, value)
   },
   components: {
     'currency-list': CurrencyList,

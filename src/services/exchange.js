@@ -1,6 +1,6 @@
 import { http } from 'services'
 import { storageAvailable, setItemMap } from 'services/util'
-import { settings } from 'settings'
+import settings from 'settings'
 
 const keys = settings.keys.exchange
 const mapId = keys.id

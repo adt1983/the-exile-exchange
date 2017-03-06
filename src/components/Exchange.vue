@@ -100,9 +100,10 @@
 </template>
 
 <script>
-import { settings } from '../settings'
+import settings from '../settings'
 import { http } from '../services'
 import { bus } from '../services/bus'
+import saved from '../services/selected'
 // import { league } from '../services/league'
 // import { currency } from '../services/currency'
 import * as filters from '../filters'
@@ -306,7 +307,12 @@ export default {
     CurrencyItem,
     Loader
   },
-  // beforeCreate: function () {
+  beforeCreate: function () {
+    let name = saved.get(settings.keys.exchange.user)
+    console.log('items fresh from API!', name)
+    // if (name) {
+    //   this.accountName = name
+    // }
   //   currency
   //     .then((response) => {
   //       this.currencyMap = response.collection
@@ -317,7 +323,7 @@ export default {
   //       this.leagueMap = response.collection
   //       // this.currencyMap = response.items
   //     })
-  // },
+  },
   created: function () {
     this.getData()
   }

@@ -13,7 +13,7 @@
 
 <script>
 import { bus } from '../services/bus'
-import { settings } from '../settings'
+import settings from '../settings'
 import moment from 'moment'
 // to be mapped to ports (external component bindings)
 export default {

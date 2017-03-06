@@ -83,10 +83,10 @@ export default {
 body {
   background: repeating-linear-gradient(
     -55deg,
-    #222,
-    #222 rem-calc(10)*5,
-    #333 rem-calc(10)*5,
-    #333 rem-calc(20)*5
+    $body-background,
+    $body-background rem-calc(10),
+    lighten($body-background, 4) rem-calc(10),
+    lighten($body-background, 4) rem-calc(20)
   );
 }
 
@@ -112,13 +112,13 @@ body {
 }
 .slide-fade-enter
 /* .slide-fade-leave-active for <2.1.8 */ {
-  transform: translateY(100%);
+  transform: translateX(100%);
 }
 .slide-fade-leave-to {
   opacity: 0;
   overflow: hidden;
 
-  transform: translateY(-80%);
+  transform: translateX(-80%);
 }
 // .slide-fade-leave {
 //   transform: translateX(0);

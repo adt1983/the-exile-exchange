@@ -42,6 +42,8 @@ export function buildKey (name) {
   }
   return key
 }
+
+export function selectText () {};
 // // warm the front page cache every 15 min
 // // make sure to do this only once across all requests
 // if (api.onServer && !api.warmCacheStarted) {

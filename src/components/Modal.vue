@@ -31,7 +31,7 @@
 
 <script>
 import { bus } from '../services/bus'
-import { settings } from '../settings'
+import settings from '../settings'
 
 // const evt = {
 //   namespace: 'modal',

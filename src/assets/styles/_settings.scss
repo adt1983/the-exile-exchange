@@ -54,7 +54,7 @@ $include-css: (
   compatibility: false,
   coloring: false,
   extras: true,
-  forms: false,
+  forms: true,
   grid: true,
   icon: false,
   label: false,
@@ -322,10 +322,10 @@ $thumbnail-shadow: 0 3px 15px rgba(black, 0.25);
 
 $form-fontsize: 1rem;
 $form-padding: 0.5rem;
-$input-color: #000;
+$input-color: #fff;
 $input-color-hover: $input-color;
 $input-color-focus: $input-color;
-$input-background: #fff;
+$input-background: #000;
 $input-background-hover: $input-background;
 $input-background-focus: $input-background;
 $input-background-disabled: smartscale($input-background);
@@ -340,8 +340,8 @@ $select-arrow: true;
 $select-arrow-color: $select-color;
 $form-label-fontsize: 0.9rem;
 $form-label-margin: 0.5rem;
-$form-label-color: #333;
-$inlinelabel-color: #333;
+$form-label-color: $gray;
+$inlinelabel-color: $gray;
 $inlinelabel-background: #eee;
 $inlinelabel-border: $input-border;
 $slider-background: #ddd;

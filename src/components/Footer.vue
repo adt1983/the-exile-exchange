@@ -1,17 +1,52 @@
 <template>
   <div class="footer wrap">
     <div class="grid-block small-12 medium-6 noscroll contact">
-      <small class="grid-content noscroll">
-        {{accountName}}
-        <!-- {{league}} --><input v-model="accountName" placeholder="Account Name">
-      </small>
+      <div
+        class="grid-content noscroll">
+        <button
+          v-if="!editName"
+          :class="{'info': (accountName !== '')}"
+          class="tiny button"
+          type="button"
+          @click="editName = true">
+          {{accountName || defaultMsg}}
+        </button>
+        <small 
+          v-if="editName"
+          class="grid-content noscroll">
+<!--           <input 
+            @keyup.enter="submitName" 
+            v-model="accountName" 
+            placeholder="Account Name"> -->
+          <label>
+            <span class="inline-label small">
+              <input 
+                @keyup.enter="submitName" 
+                v-model="accountName" 
+                type="search" 
+                placeholder="Account Name">
+              <a href="#"
+                v-if="accountName !== ''"
+                @click.stop.prevent="submitName"
+                class="button">Save</a>
+              <a href="#"
+                v-if="accountName === ''"
+                @click.stop.prevent="submitName"
+                class="button alert">Close</a>
+            </span>
+          </label>
+        </small>
+      </div>
+          <!-- @click="submitName"  -->
     </div>
     <div class="grid-block small-12 medium-6 noscroll copyright medium-text-right end"><small class="grid-content noscroll" v-html="msg"></small></div>
   </div>
 </template>
 
 <script>
-import { settings } from '../settings'
+import settings from '../settings'
+import saved from '../services/selected'
+
 function toRoman (num) {
   let result = ''
   const decimal = [
@@ -65,14 +100,30 @@ export default {
   data () {
     return {
       settings,
+      editName: false,
+      nameId: settings.keys.exchange.user,
+      defaultMsg: 'Add your account name.',
       accountName: '',
-      selected: settings.selected,
       msg: 'copyright &copy; ' + toRoman(new Date().getFullYear()) + ' &bullet; Angelo'
     }
   },
   computed: {
-    setAccount: function () {
-      this.selected.accountName = this.accountName
+    // setAccount: function () {
+    //   this.selected.accountName = this.accountName
+    // },
+  },
+  beforeCreate () {
+    let name = saved.get(this.nameId)
+    if (name) {
+      this.accountName = name
+    }
+  },
+  methods: {
+    submitName (v) {
+      // if (this.accountName !== '') {
+      saved.set(this.nameId, this.accountName)
+      // }
+      this.editName = false
     }
   }
 }
@@ -104,7 +155,9 @@ export default {
     }
   }
 }
-
+.button {
+  margin: 0;
+}
 small {
   font-weight: normal;
 }

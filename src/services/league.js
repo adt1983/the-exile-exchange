@@ -1,6 +1,6 @@
 import { http } from 'services'
 import { storageAvailable, setItemMap, buildSlug, buildKey } from 'services/util'
-import { settings } from 'settings'
+import settings from 'settings'
 
 const keys = settings.keys.league
 // using slug instead of ID cause its a clean route
