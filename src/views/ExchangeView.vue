@@ -13,7 +13,8 @@
         :bid-id="item.bids"></exchange>
     </div>
     <offers-list-modal></offers-list-modal>
-    <contact-info-modal></contact-info-modal>
+    <contact-info-modal
+      :currency-map="currencyMap"></contact-info-modal>
   </div>
 </template>
 

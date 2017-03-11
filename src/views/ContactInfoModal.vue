@@ -25,31 +25,31 @@
           </div>
 
           <div class="modal-body">
-            <h1 class="body-font"><h1>Buying</h1> {{raw[[keys.bidId]]}} for {{raw[[keys.askId]]}} at {{raw[keys.ask]}}:{{raw[keys.bid]}}</h1>
+            <h2 class="body-font">Buying <strong class="alt-font success">{{bidName}}</strong> for <strong class="alt-font success">{{askName}}</strong> at {{raw[keys.ask]}}:{{raw[keys.bid]}}</h2>
 
             <!-- {{raw.lastChar}} -->
             <!-- todo // text input with mulyiplyer -->
             <span 
-              v-show="isCopied"
+              v-if="isCopied"
               class="label success">Message Copied!</span>
             <textarea 
               onclick="this.focus();this.select()"
               readonly
-              @keyup.alt.67="isCopied = true"
+              @keyup.meta.67="isCopied = true"
               class="trade-text" 
               v-model="message"></textarea>
           </div>
-          <h1>Buying</h1> {{raw[keys.bid]}}
+         <!--  <h1>Buying</h1> {{bidName}}
             <currency-item
             :input="false"
             :id="raw[keys.bidId]" 
             class="small-icon bid-icon"
             ></currency-item>
-            for {{raw[keys.ask]}} <currency-item
+            for {{askName}} <currency-item
             :input="false"
             :id="raw[keys.askId]" 
             class="small-icon ask-icon"
-            ></currency-item>. 
+            ></currency-item>.  -->
         </div>
       </div>
     </div>
@@ -64,6 +64,7 @@ import CurrencyItem from '../components/CurrencyItem'
 
 export default {
   name: 'contact-info-modal',
+  props: ['currencyMap'],
   data () {
     return {
       settings,
@@ -71,6 +72,7 @@ export default {
       isCopied: false,
       showModal: false,
       keys: settings.keys.exchange,
+      currencyKeys: settings.keys.currency,
       bus,
       raw: ''
     }
@@ -83,11 +85,19 @@ export default {
       return this.raw && this.raw.key && this.raw.list
     },
     message: function () {
-      return 'Hi, I\'d like to buy <strong>' + this.raw[this.keys.bid] +
-        '</strong> ' + this.raw[this.keys.askId] +
-        ' for <strong>' + this.raw[this.keys.ask] +
-        '</strong> ' + this.raw[this.keys.bidId] +
+      return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy ' + this.raw[this.keys.bid] +
+        ' ' + this.askName +
+        ' for ' + this.raw[this.keys.ask] +
+        ' ' + this.askName +
         '.'
+    },
+    askName () {
+      const id = this.keys.askId
+      return this.getName(this.raw[ id ])
+    },
+    bidName () {
+      const id = this.keys.bidId
+      return this.getName(this.raw[ id ])
     }
   },
   methods: {
@@ -97,8 +107,17 @@ export default {
     },
     closeModal: function () {
       this.showModal = false
+    },
+    getName (id) {
+      return this.currencyMap[id][this.currencyKeys.name]
     }
   },
+  // filters: {
+  //   name: function (id) {
+  //     if (!this.currencyMap) { return }
+  //     return this.currencyMap[id][this.currencyKeys.name]
+  //   }
+  // },
   created () {
     const that = this
     bus.$on('modal.contactinfo.open', function (data) {
