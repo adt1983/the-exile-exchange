@@ -1,6 +1,5 @@
 <template>
   <div class="exchange-view grid-block wrap">
-    <!-- <section :html="modalView"></section> -->
     <div 
       class="grid-block"
       v-if="renderView()"
@@ -86,6 +85,7 @@ export default {
   },
   computed: {
     getSelectedAsks: function () {
+      console.log('this.askids', this.askids)
       let params = parseParams(this.askids)
       // parseParams(params, this.selected)
       return params

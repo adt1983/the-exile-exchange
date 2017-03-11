@@ -1,30 +1,125 @@
 <template>
-  <div class="page-header" v-once>
-    <router-link class="action-item" :to="{ name: 'home' }">
-      {{initials}}</router-link>&nbsp;
-    <!-- <router-link class="action-item" :to="{ name: 'pdf' }">
-      <div class="svg-icon">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
-<path d="M26.214 6.786q0.5 0.5 0.857 1.357t0.357 1.571v20.571q0 0.714-0.5 1.214t-1.214 0.5h-24q-0.714 0-1.214-0.5t-0.5-1.214v-28.571q0-0.714 0.5-1.214t1.214-0.5h16q0.714 0 1.571 0.357t1.357 0.857zM18.286 2.429v6.714h6.714q-0.179-0.518-0.393-0.732l-5.589-5.589q-0.214-0.214-0.732-0.393zM25.143 29.714v-18.286h-7.429q-0.714 0-1.214-0.5t-0.5-1.214v-7.429h-13.714v27.429h22.857zM15.964 19.125q0.589 0.464 1.5 1 1.054-0.125 2.089-0.125 2.625 0 3.161 0.875 0.286 0.393 0.036 0.929 0 0.018-0.018 0.036l-0.036 0.036v0.018q-0.107 0.679-1.268 0.679-0.857 0-2.054-0.357t-2.321-0.946q-3.946 0.429-7 1.482-2.732 4.679-4.321 4.679-0.268 0-0.5-0.125l-0.429-0.214q-0.018-0.018-0.107-0.089-0.179-0.179-0.107-0.643 0.161-0.714 1-1.634t2.357-1.723q0.25-0.161 0.411 0.107 0.036 0.036 0.036 0.071 0.929-1.518 1.911-3.518 1.214-2.429 1.857-4.679-0.429-1.464-0.545-2.848t0.116-2.277q0.196-0.714 0.75-0.714h0.393q0.411 0 0.625 0.268 0.321 0.375 0.161 1.214-0.036 0.107-0.071 0.143 0.018 0.054 0.018 0.143v0.536q-0.036 2.196-0.25 3.429 0.982 2.929 2.607 4.25zM5.679 26.464q0.929-0.429 2.446-2.821-0.911 0.714-1.563 1.5t-0.884 1.321zM12.786 10.036q-0.268 0.75-0.036 2.357 0.018-0.125 0.125-0.786 0-0.054 0.125-0.768 0.018-0.071 0.071-0.143-0.018-0.018-0.018-0.036t-0.009-0.027-0.009-0.027q-0.018-0.393-0.232-0.643 0 0.018-0.018 0.036v0.036zM10.571 21.839q2.411-0.964 5.071-1.446-0.036-0.018-0.232-0.17t-0.286-0.241q-1.357-1.196-2.268-3.143-0.482 1.536-1.482 3.518-0.536 1-0.804 1.482zM22.107 21.554q-0.429-0.429-2.5-0.429 1.357 0.5 2.214 0.5 0.25 0 0.321-0.018 0-0.018-0.036-0.054z"></path>
-</svg></div></router-link> -->
-    <h1>
-      <span>{{title}}</span>
-    </h1>
-   <!--  <h4>
-        {{subtitle}}
-    </h4> -->
+  <div class="grid-block shrink header">
+    Hello HEader
+    <div class="grid-block shrink show-for-small-only">
+      <div class="grid-content text-center">
+        <!-- todo // convert asks to string -->
+        <router-link 
+          :to="{ name: 'home'}" 
+          tag="button" 
+          type="button" 
+          class="button call-to-action"><div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="32" viewBox="0 0 12 32">
+            <path d="M11.196 9.714q0 0.232-0.179 0.411l-7.018 7.018 7.018 7.018q0.179 0.179 0.179 0.411t-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
+            </svg></div></router-link>
+      </div>
+    </div>
+    <div class="grid-block expand">
+      <div class="grid-content">
+        <h1>{{leagueName}}</h1>
+      </div>
+    </div>
+
+<!--     <div class="grid-block shrink hide-for-small-only">
+      <div class="grid-content">
+        <ul class="button-group segmented call-to-action">
+          leagueMap{{leagueMap}}
+          <li v-for="league in leagueMap">
+            league{{league}}
+            <router-link 
+              active-class="is-active"
+              :to="{ params: { leagueid: league[settings.keys.league.slug] }}" 
+              tag="a">{{league[settings.keys.league.name]}}</router-link>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+
+    <!-- SHOW SELECTED -->
+    <!-- <ul class="no-bullet grid-block horizontal shrink">
+      <li class="grid-content" v-for="(v,id) in selectedAsks" :key="id">
+        <currency-item
+          :input="false"
+          :id="id" 
+          class="small-icon ask-icon"
+          ></currency-item>
+        <currency-item
+          :input="false"
+          :id="v.$preset" 
+          class="small-icon bid-icon"
+          ></currency-item>
+      </li>
+    </ul> -->
+
+    <div class="grid-block shrink">
+      <div class="grid-content text-center">
+        <!-- todo // convert asks to string -->
+        <router-link 
+          v-show="params.asks !== ''"
+          :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
+          tag="button" 
+          type="button" 
+          class="button call-to-action">{{searchText}}</router-link>
+        <button class="button call-to-action" 
+          v-show="params.asks === ''"
+          disabled="disabled">
+          {{searchText}}
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+// import router from 'vue-router'
+import settings from '../settings'
+// import saved from '../services/selected'
+
+import { league } from '../services/league'
+import { currency } from '../services/currency'
+
 export default {
-  name: 'pageHeader',
+  name: 'Header',
+  props: ['params', 'leagueid'],
   data () {
     return {
-      initials: 'tm',
-      title: 'Travis Mullen',
-      subtitle: 'interactive consultant'
+      settings,
+
+      nameId: settings.keys.exchange.user,
+
+      search: 'Search',
+
+      currencyMap: {},
+      leagueMap: {}
     }
+  },
+  computed: {
+    leagueName: function () {
+      const nameKey = settings.keys.league.name
+      if (Object.keys(this.leagueMap).length && this.leagueid) {
+        console.log('this.leagueMap', this.leagueMap)
+        console.log('this.leagueid', this.leagueid)
+        return this.leagueMap[this.leagueid][nameKey]
+      }
+    },
+    searchText: function () {
+      return this.search + ' ' + this.leagueName
+    }
+  },
+  methods: {
+    askParams: function () {
+      console.log('this.params', this.params)
+      return this.params
+    }
+  },
+  beforeCreate: function () {
+    currency
+      .then((response) => {
+        this.currencyMap = response.collection
+      })
+    league
+      .then((response) => {
+        this.leagueMap = response.collection
+      })
   }
 }
 </script>
@@ -34,64 +129,15 @@ export default {
 // call settings for global SCSS access
 @import '../assets/styles/settings';
 
-.page-header {
-  overflow: hidden;
-  position: relative;
-  // display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: nowrap;
-  // display: flex;
-  // flex: 1;
-  padding-top: $global-padding*4;
-//   background-color: green;
-//   border: 2px solid $secondary-color;
-}
-.action-item {
-  // flex: 1 1 auto;
-  // margin: auto 0;
-  padding: $global-padding/2;
-  border: rem-calc(3) solid $body-font-color;
-  border-radius: $global-radius;
-  font-size: rem-calc(20);
-  color: $body-font-color;
-
-  filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.3));
-  &:hover {
-    filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.4));
+.header {
+  background-color: $dark-color;
+  border-bottom: rem-calc(1) solid $body-font-color;
+  .inline-list {
+    margin-bottom: 0;
   }
 }
+.call-to-action {
+  margin-top: $global-spacing;
+}
 
-h1 {
-  width: rem-calc(30);
-  position: absolute;
-  top: rem-calc(130);
-  left: rem-calc(23);
-  // bottom: 0;
-  // flex: 0 0 10px;
-  // padding-top: $global-padding*1;
-  // height: rem-calc(800);
-  // background-color: yellow;
-  // color: $secondary-color;
-  letter-spacing: -1px;
-  span {
-    @include breakpoint(small only) {
-      white-space: nowrap;
-    }
-  }
-}
-h4 {
-  padding-top: $global-padding*1;
-}
-h1,h4 {
-
-  margin: auto;
-  transition: transform 400ms ease-out;
-  transform: rotate(90deg);
-  @include breakpoint(medium) {
-    transform: rotate(0);
-  }
-}
 </style>

@@ -14,10 +14,6 @@
         <small 
           v-if="editName"
           class="grid-content noscroll">
-<!--           <input 
-            @keyup.enter="submitName" 
-            v-model="accountName" 
-            placeholder="Account Name"> -->
           <label>
             <span class="inline-label small">
               <input 
@@ -37,7 +33,6 @@
           </label>
         </small>
       </div>
-          <!-- @click="submitName"  -->
     </div>
     <div class="grid-block small-12 medium-6 noscroll copyright medium-text-right end"><small class="grid-content noscroll" v-html="msg"></small></div>
   </div>

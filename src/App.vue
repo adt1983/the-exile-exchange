@@ -24,7 +24,7 @@
           <!-- <modal></modal> -->
             <!-- </div> -->
         <!-- </section> -->
-        <page-footer class="grid-block shrink align-center"></page-footer>
+        <!-- <page-footer class="grid-block shrink align-center"></page-footer> -->
     <!-- </article> -->
 
   </div>
@@ -34,7 +34,7 @@
 <!-- App Ctrl -->
 <script>
 // import pageHeader from './components/Header'
-import pageFooter from './components/Footer'
+// import pageFooter from './components/Footer'
 // import Modal from './components/Modal'
 // import Exchange from './components/Exchange'
 export default {
@@ -52,11 +52,11 @@ export default {
     // call again the method if the route changes
     '$route': 'setLeague'
   },
-  components: {
+  // components: {
     // pageHeader,
     // Modal,
-    pageFooter
-  },
+    // pageFooter
+  // },
   methods: {
     setLeague () {
       this.league = this.$route.params.leagueid || ''
