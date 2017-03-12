@@ -24,10 +24,10 @@
           </div>
 
           <div class="modal-body grid-block">
-            <offers-list
+            <bids-list
                v-if="showOffers"
               :ratio="raw.key"
-              :items="raw.list"></offers-list> 
+              :items="raw.list"></bids-list> 
           </div>
 
         </div>
@@ -41,10 +41,10 @@ import { bus } from '../services/bus'
 import { pluralize } from '../filters'
 import settings from '../settings'
 
-import OffersList from '../components/OffersList'
+import BidsList from '../components/BidsList'
 
 export default {
-  name: 'offers-list-modal',
+  name: 'bids-list-modal',
   data () {
     return {
       settings,
@@ -55,7 +55,7 @@ export default {
     }
   },
   components: {
-    OffersList
+    BidsList
   },
   computed: {
     showOffers: function () {
@@ -82,8 +82,8 @@ export default {
       console.log('data', data)
       if (data && Object.keys(data)) {
         that.setData(data)
-        // that.$options.components.OffersList.props.key = data.key
-        // that.$options.components.OffersList.props.list = data.list
+        // that.$options.components.BidsList.props.key = data.key
+        // that.$options.components.BidsList.props.list = data.list
       }
       // that.modalView.template = data
     })

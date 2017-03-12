@@ -58,13 +58,13 @@
       <div class="grid-content align-center text-right noscroll">
         <!-- todo // convert asks to string -->
         <router-link 
-          v-show="params.asks !== ''"
+          v-show="askParams() !== ''"
           :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
           tag="button" 
           type="button" 
           class="button">{{searchText}}</router-link>
         <button class="button" 
-          v-show="params.asks === ''"
+          v-show="askParams() === ''"
           disabled="disabled">
           {{searchText}}
         </button>

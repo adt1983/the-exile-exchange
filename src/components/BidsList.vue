@@ -15,7 +15,7 @@ import { bus } from '../services/bus'
 import settings from '../settings'
 // to be mapped to ports (external component bindings)
 export default {
-  name: 'offers-list',
+  name: 'bids-list',
   data () {
     return {
       settings,

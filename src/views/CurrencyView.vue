@@ -1,7 +1,6 @@
 <template>
   <div class="grid-block vertical currency-view">
     <header-section
-      v-if="askParams()"
       :params="askParams()"
       :leagueid="leagueid"
       ></header-section>

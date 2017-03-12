@@ -1,7 +1,6 @@
 <template>
   <section class="grid-block noscroll vertical">
     <header-section
-      v-if="askParams()"
       :params="askParams()"
       :leagueid="leagueid"
       ></header-section>
@@ -18,7 +17,7 @@
         :ask-id="item.asks"
         :bid-id="item.bids"></exchange>
     </div>
-    <offers-list-modal></offers-list-modal>
+    <bids-list-modal></bids-list-modal>
     <contact-info-modal
       :currency-map="currencyMap"></contact-info-modal>
   </div>
@@ -35,7 +34,7 @@ import { currency } from '../services/currency'
 import Header from '../components/Header'
 import Exchange from '../components/Exchange'
 import CurrencyItem from '../components/CurrencyItem'
-import OffersListModal from 'views/OffersListModal'
+import BidsListModal from 'views/BidsListModal'
 import ContactInfoModal from 'views/ContactInfoModal'
 
 function cleanPairs (dirty, keyChar) {
@@ -103,7 +102,7 @@ export default {
     // }
   },
   components: {
-    OffersListModal,
+    BidsListModal,
     ContactInfoModal,
     Exchange,
     CurrencyItem,

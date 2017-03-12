@@ -161,8 +161,8 @@ export default {
       console.log('data', data)
       if (data && Object.keys(data)) {
         that.setData(data)
-        // that.$options.components.OffersList.props.key = data.key
-        // that.$options.components.OffersList.props.list = data.list
+        // that.$options.components.BidsList.props.key = data.key
+        // that.$options.components.BidsList.props.list = data.list
       }
       // that.modalView.template = data
     })

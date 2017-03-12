@@ -35,7 +35,7 @@ import settings from '../settings'
 
 // const evt = {
 //   namespace: 'modal',
-//   // id: 'offers-list',
+//   // id: 'bids-list',
 //   close: 'close',
 //   opem: 'open'
 // }
@@ -71,8 +71,8 @@ export default {
       console.log('data', data)
       if (data && Object.keys(data)) {
         that.setData(data)
-        // that.$options.components.OffersList.props.key = data.key
-        // that.$options.components.OffersList.props.list = data.list
+        // that.$options.components.BidsList.props.key = data.key
+        // that.$options.components.BidsList.props.list = data.list
       }
       // that.modalView.template = data
     })

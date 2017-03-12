@@ -38,8 +38,22 @@
     </header>
 
     <div class="grid-block noscroll align-center preferences">
-      <input type="checkbox" id="Offers" v-model="filterBids">&nbsp;
-      <label for="Offers">Offers Only</label>
+      <div class="grid-block noscroll">
+        <div class="grid-content noscroll text-right">
+          <small>Ask</small>
+        </div>
+      </div>
+      <div class="grid-block noscroll">
+        <div class="grid-content noscroll text-center">
+          <input type="checkbox" id="Bids" v-model="filterBids">&nbsp;
+          <label for="Bids">Hide No Bids</label>
+        </div>
+      </div>
+      <div class="grid-block noscroll text-left">
+        <div class="grid-content noscroll">
+          <small>Bid</small>
+        </div>
+      </div>
     </div>
 
     <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader>
@@ -62,7 +76,6 @@
                 <div class="grid-content noscroll">
                   <span class="badge"
                     :class="{ 'warning': (biddingIndex[key].asks && biddingIndex[key].asks.length >= 2) }">{{biddingIndex[key].asks.length}}</span>
-                  
                 </div>
               </div>
               <div class="grid-block noscroll text-center shrink">
@@ -77,21 +90,6 @@
                 </div>
               </div>
             </div>
-            <!-- <offers-list
-              v-if="selected[key]"
-              :ratio="key"
-              :items="biddingIndex[key].bids"></offers-list> -->
-            <!-- <modal 
-              v-if="showModal"
-              :ratio="key"
-              :items="biddingIndex[key].bids"
-              slot="modal"
-              @close="showModal = false">
-                  
-                    custom content here to overwrite
-                    default content
-                  
-            </modal> -->
           </div>
         </li>
       </ul>
@@ -329,7 +327,7 @@ export default {
     }
   },
   components: {
-    // OffersList,
+    // BidsList,
     CurrencyItem,
     Loader
   },
