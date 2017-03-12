@@ -1,6 +1,5 @@
 <template>
   <section class="bid-list">
-    <!-- <header>Offers <span class="badge" :class="{'success':items.length}">{{items.length}}</span></header> -->
     <ul>
       <li class="bid"
         @click="showContactInfo(item)"
@@ -61,7 +60,6 @@ export default {
 }
 .bid-list {
   width: 100%;
-  // This gets you basic styles
   @include block-list-container(
     $font-size: 1rem, // Base font size for entire list
     $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container

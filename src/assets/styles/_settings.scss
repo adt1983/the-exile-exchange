@@ -99,6 +99,7 @@ $info-color: #999;
 $success-color: #43AC6A;
 $success-dark: darken($success-color, 25);
 $warning-color: #F08A24;
+$warning-dark: darken($warning-color, 25);
 
 $white: #fff;
 $black: #000;
@@ -250,7 +251,7 @@ $actionsheet-border-color: #ccc;
 $actionsheet-animate: transform opacity;
 $actionsheet-animation-speed: 0.25s;
 $actionsheet-width: 300px;
-$actionsheet-radius: 4px;
+$actionsheet-radius: $global-radius;
 $actionsheet-shadow: 0 -3px 10px rgba(black, 0.25);
 $actionsheet-padding: $global-padding;
 $actionsheet-tail-size: 10px;
@@ -346,17 +347,17 @@ $inlinelabel-background: $dark-color;
 $inlinelabel-border: $input-border;
 $slider-background: #ddd;
 $slider-height: 1rem;
-$slider-radius: 0px;
+$slider-radius: $global-radius/2;
 $slider-thumb-height: 1.5rem;
 $slider-thumb-color: $primary-color;
-$slider-thumb-radius: 0px;
+$slider-thumb-radius: $global-radius;
 $meter-height: 1.5rem;
 $meter-background: #ccc;
 $meter-fill: $primary-color;
 $meter-fill-high: $success-color;
 $meter-fill-medium: #e7cf00;
 $meter-fill-low: $alert-color;
-$meter-radius: 0;
+$meter-radius: $global-radius;
 
 // 15. Icon
 // --------
@@ -379,7 +380,7 @@ $icon-default-size: 1rem;
 $label-fontsize: 0.8rem;
 $label-padding: ($global-padding / 3) ($global-padding / 2);
 $label-margin: 0 0 ($global-spacing / 2) 0;
-$label-radius: 0;
+$label-radius: $global-radius;
 $label-background: $primary-color;
 $label-color: isitlight($primary-color);
 $badge-margin: 0 0 ($global-spacing / 2) 0;
@@ -418,7 +419,7 @@ $menubar-icon-spacing: $menubar-item-padding;
 
 $modal-background: #fff;
 $modal-border: 0;
-$modal-radius: 0px;
+$modal-radius: $global-radius;
 $modal-shadow: none;
 $modal-zindex: 1000;
 $modal-sizes: (
@@ -487,7 +488,7 @@ $notification-offset: $global-padding;
 $notification-background: $primary-color;
 $notification-color: white;
 $notification-padding: $global-padding;
-$notification-radius: 4px;
+$notification-radius: $global-radius;
 $notification-icon-size: 60px;
 $notification-icon-margin: $global-padding;
 $notification-icon-align: top;
@@ -519,7 +520,7 @@ $panel-shadow: 3px 0 10px rgba(black, 0.25);
 $popup-width: rem-calc(300);
 $popup-background: #fff;
 $popup-border: 0;
-$popup-radius: 0;
+$popup-radius: $global-radius;
 $popup-shadow: 0 0 10px rgba(#000, 0.25);
 
 // 25. Switch

@@ -12,10 +12,15 @@
             </svg></div></router-link> -->
       </div>
     </div>
-    <div class="grid-block expand">
-      <div class="grid-content">
+    <div class="grid-block expand v-align">
+      <div class="grid-content align-center">
         <h1>{{leagueName}}</h1>
-        <h2 class="body-font">{{accountName}}</h2>
+      </div>
+    </div>
+    <div class="grid-block v-align noscroll">
+      <div class="grid-content align-center noscroll">
+        <account-name></account-name>
+        <!-- <strong class="body-font label warning-dark-bg">{{accountName}}</strong> -->
       </div>
     </div>
 <!--     <div class="grid-block shrink hide-for-small-only">
@@ -50,15 +55,15 @@
     </ul> -->
 
     <div class="grid-block shrink">
-      <div class="grid-content text-center">
+      <div class="grid-content text-center v-align">
         <!-- todo // convert asks to string -->
         <router-link 
           v-show="params.asks !== ''"
           :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
           tag="button" 
           type="button" 
-          class="button call-to-action">{{searchText}}</router-link>
-        <button class="button call-to-action" 
+          class="button align-center">{{searchText}}</router-link>
+        <button class="button align-center" 
           v-show="params.asks === ''"
           disabled="disabled">
           {{searchText}}
@@ -71,10 +76,12 @@
 <script>
 // import router from 'vue-router'
 import settings from '../settings'
-import saved from '../services/selected'
+// import saved from '../services/selected'
 
 import { league } from '../services/league'
 import { currency } from '../services/currency'
+
+import AccountNameInput from './AccountNameInput'
 
 export default {
   name: 'Header',
@@ -83,14 +90,17 @@ export default {
     return {
       settings,
 
-      accountName: '',
-      accountNameSaveKey: settings.keys.exchange.user,
+      // accountName: '',
+      // accountNameSaveKey: settings.keys.exchange.user,
 
       search: 'Search',
 
       currencyMap: {},
       leagueMap: {}
     }
+  },
+  components: {
+    'account-name': AccountNameInput
   },
   computed: {
     leagueName: function () {
@@ -118,14 +128,14 @@ export default {
       .then((response) => {
         this.leagueMap = response.collection
       })
-  },
-  created () {
-    // selected service
-    let name = saved.get(this.accountNameSaveKey)
-    if (name) {
-      this.accountName = name
-    }
   }
+  // created () {
+  //   // selected service
+  //   let name = saved.get(this.accountNameSaveKey)
+  //   if (name) {
+  //     this.accountName = name
+  //   }
+  // }
 }
 </script>
 
@@ -140,9 +150,6 @@ export default {
   .inline-list {
     margin-bottom: 0;
   }
-}
-.call-to-action {
-  margin-top: $global-spacing;
 }
 
 </style>

@@ -25,47 +25,41 @@
             </div>
           </div>
 
-          <div class="modal-body">
-            <h2 class="body-font">Buying <strong class="alt-font success">{{bidName}}</strong> for <strong class="alt-font success">{{askName}}</strong> at {{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h2>
+          <div class="grid-block">
+            <div class="modal-body grid-content">
+              <h2 class="body-font">Buying <strong class="alt-font success-color">{{bidName}}</strong> for <strong class="alt-font success">{{askName}}</strong> at {{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h2>
 
-            <span 
-              v-if="isCopied"
-              class="label success">Message Copied!</span>
-            <textarea 
-              onclick="this.focus();this.select()"
-              readonly
-              @keyup.meta.67="isCopied = true"
-              class="trade-text" 
-              v-model="message"></textarea>
+              <span 
+                v-if="isCopied"
+                class="label success">Message Copied!</span>
+              <textarea 
+                onclick="this.focus();this.select()"
+                readonly
+                @keyup.meta.67="isCopied = true"
+                class="trade-text" 
+                v-model="message"></textarea>
+            </div>
           </div>
-          <section class="small-12 medium-6 grid-content">
-            <label for="multi">
-              <span class="inline-label">
-                <span class="form-label">Multiplier</span>
-              
-                  <input 
-                    id="multi"
-                    name="multi"
-                    v-model.number="selectedMultiplier" 
-                    type="number" 
-                    min="1">
+          <div class="grid-block">
+            <section class="small-12 medium-6 grid-content noscroll">
+              <label for="multi">
+                <span class="inline-label">
+                  <span class="form-label">Multiplier</span>
+                
+                    <input 
+                      id="multi"
+                      name="multi"
+                      v-model.number="selectedMultiplier" 
+                      type="number" 
+                      min="1">
+                  </span>
                 </span>
-              </span>
-            </label>
-            <!-- <header>Multiplier: {{selectedMultiplier}}</header> -->
-            <!-- <ol>
-              <li v-for="mult in multiples">
-                <input type="radio" 
-                  @change="selectedMultiplier = mult.multiplier" 
-                  :checked="isSelected(mult)" 
-                  :name="mult.id" :id="mult.id" 
-                  :value="mult.multiplier">
-                <label :for="mult.id"><strong class="badge">X {{mult.multiplier}}</strong>&nbsp;<em>{{mult.ask}}:{{mult.bid}}</em></label>
-              </li>
-            </ol> -->
-
-                <small><em>Last seen</em> {{raw[keys.lastSeenTime] | lastSeen }}</small>
-          </section>
+              </label>
+            </section>
+            <section class="small-12 medium-6 grid-content noscroll">
+              <small class="age"><em>Last seen</em> {{raw[keys.lastSeenTime] | lastSeen }}</small>
+            </section>
+          </div>
         </div>
       </div>
     </div>
@@ -101,7 +95,7 @@ export default {
   computed: {
     message: function () {
       return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
-        ' ' + this.askName +
+        ' ' + this.bidName +
         ' for ' + (this.raw[this.keys.ask] * this.correctedMultiplier) +
         ' ' + this.askName +
         '.'
@@ -195,6 +189,9 @@ export default {
     fill: $white;
   }
 }
+.age {
+  margin-top: $global-padding/2;
+}
 .trade-text {
   cursor: copy;
   width: 100%;
@@ -202,7 +199,8 @@ export default {
   background-color: $gray-dark;
   margin: $global-padding 0;
   padding: $global-padding/2 $global-padding;
-  line-height: 2
+  line-height: 2;
+  border-radius: $global-radius;
 }
 
 .multiplier-list {

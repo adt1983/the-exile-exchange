@@ -21,40 +21,7 @@
         </div>
       </div>
     </ul>
-    <div class="grid-block noscroll contact">
-      <div
-        class="grid-content noscroll">
-        <button
-          v-if="!editName"
-          :class="{'warning': (accountName === '')}"
-          class="button success hollow"
-          type="button"
-          @click="editName = true">
-          {{accountName || defaultMsg}}
-        </button>
-        <small 
-          v-if="editName"
-          class="grid-content noscroll">
-          <label>
-            <span class="inline-label small">
-              <input 
-                @keyup.enter="submitName" 
-                v-model="accountName" 
-                type="search" 
-                placeholder="Set Account Name">
-              <a href="#"
-                v-if="accountName !== ''"
-                @click.stop.prevent="submitName"
-                class="button">Save</a>
-              <a href="#"
-                v-if="accountName === ''"
-                @click.stop.prevent="submitName"
-                class="button alert">Close</a>
-            </span>
-          </label>
-        </small>
-      </div>
-    </div>
+    <account-name></account-name>
   </div>
 </template>
 
@@ -62,7 +29,9 @@
 import settings from '../settings'
 import saved from '../services/selected'
 import { league } from '../services/league'
+
 import Loader from '../components/Loader'
+import AccountNameInput from '../components/AccountNameInput'
 
 export default {
   name: 'home',
@@ -115,7 +84,8 @@ export default {
   //   saved.set(id, value)
   // },
   components: {
-    Loader
+    Loader,
+    'account-name': AccountNameInput
   }
 
 }

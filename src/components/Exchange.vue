@@ -305,16 +305,17 @@ export default {
         .then((response) => {
           // console.log('items fresh from API!', response.data)
           that.askList = response.data
-          that.askList.push({
-            'accountName': 'Travis',
-            'ask_id': that.askList[0].ask_id,
-            'ask_qty': 1,
-            'bid_id': that.askList[0].bid_id,
-            'bid_qty': 1,
-            'lastChar': 'Cheeseman',
-            'lastSeenUTC': +(new Date()),
-            'league': that.askList[0].league
-          })
+          // test dtat
+          // that.askList.push({
+          //   'accountName': 'Travis',
+          //   'ask_id': that.askList[0].ask_id,
+          //   'ask_qty': 1,
+          //   'bid_id': that.askList[0].bid_id,
+          //   'bid_qty': 1,
+          //   'lastChar': 'Cheeseman',
+          //   'lastSeenUTC': +(new Date()),
+          //   'league': that.askList[0].league
+          // })
           ++this.loading
         })
       http
@@ -430,7 +431,7 @@ export default {
     }
     &.has-account {
       cursor: pointer;
-      background-color: $alert-dark;
+      background-color: $warning-dark;
       &:hover {
         background-color: $blocklist-item-background-hover;
       }
