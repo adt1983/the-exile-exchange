@@ -44,7 +44,7 @@
 
     <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader>
     <!-- {{orderBy}} -->
-    <section class="block-list exchange-list" v-if="loading === 2 && renderView()">
+    <section class="block-list exchange-list" v-if="Object.keys(biddingIndex).length">
       <ul>
           <!-- v-show="showKeyRow(key)"  -->
           <!-- v-if="renderKeyRow(key)"  -->
@@ -227,6 +227,7 @@ export default {
       // call other computers to make sure they are compiled
       this.isCurrentAsk // call ask first!
       this.isCurrentBid
+      this.loading
 
       // should stats be passing in `this` values
       // instead of being writting in external funtions?
@@ -243,7 +244,7 @@ export default {
     //   return this.biddingIndex && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
     // },
     isLoaded: function () {
-      if (this.askList && this.bidList) {
+      if (this.renderView && this.askList && this.bidList) {
         if (this.loading > 2) { // 2 reqs
           return true
         }
@@ -254,14 +255,12 @@ export default {
     // }
   },
   methods: {
+    // highlight account name
     isAccount: function (bids) {
       const that = this
       let valid = false
       bids.forEach(function (val) {
-        console.log('val', val.accountName)
-        console.log('val', that.accountName)
         if (val && val.accountName === that.accountName) {
-          console.log('val TRUE')
           valid = true
         }
       })
@@ -380,7 +379,6 @@ export default {
   filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.7));
   .badge {
     margin-top: ($global-padding/3)*2;
-
   }
   // This gets you basic styles
   @include block-list-container(
