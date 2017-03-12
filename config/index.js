@@ -28,8 +28,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/api': 'http://localhost:8080/static/data',
-      '/api/poecx': {
+      '/data': 'http://localhost:8080/static/data',
+      '/api': {
         target: 'https://poecx-152323.appspot.com/api/',
         changeOrigin: true,
         pathRewrite: {
