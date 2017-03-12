@@ -3,11 +3,12 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
+          
           <div class="grid-block">
             <div class="grid-block noscroll">
               <div class="grid-content noscroll">
-               <h6 class="body-font title">{{raw[keys.name]}}<br><span class="right warning-color">{{raw[keys.user]}}
+               <h6 class="body-font title">{{raw[keys.name]}}<br>
+                <span class="warning-color">{{raw[keys.user]}}</span></h6>
               </div>
             </div>
             <div class="grid-block shrink text-right">
@@ -25,10 +26,8 @@
           </div>
 
           <div class="modal-body">
-            <h2 class="body-font">Buying <strong class="alt-font success">{{bidName}}</strong> for <strong class="alt-font success">{{askName}}</strong> at {{raw[keys.ask]}}:{{raw[keys.bid]}}</h2>
+            <h2 class="body-font">Buying <strong class="alt-font success">{{bidName}}</strong> for <strong class="alt-font success">{{askName}}</strong> at {{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h2>
 
-            <!-- {{raw.lastChar}} -->
-            <!-- todo // text input with mulyiplyer -->
             <span 
               v-if="isCopied"
               class="label success">Message Copied!</span>
@@ -39,17 +38,34 @@
               class="trade-text" 
               v-model="message"></textarea>
           </div>
-         <!--  <h1>Buying</h1> {{bidName}}
-            <currency-item
-            :input="false"
-            :id="raw[keys.bidId]" 
-            class="small-icon bid-icon"
-            ></currency-item>
-            for {{askName}} <currency-item
-            :input="false"
-            :id="raw[keys.askId]" 
-            class="small-icon ask-icon"
-            ></currency-item>.  -->
+          <section class="small-12 medium-6 grid-content">
+            <label for="multi">
+              <span class="inline-label">
+                <span class="form-label">Multiplier</span>
+              
+                  <input 
+                    id="multi"
+                    name="multi"
+                    v-model.number="selectedMultiplier" 
+                    type="number" 
+                    min="1">
+                </span>
+              </span>
+            </label>
+            <!-- <header>Multiplier: {{selectedMultiplier}}</header> -->
+            <!-- <ol>
+              <li v-for="mult in multiples">
+                <input type="radio" 
+                  @change="selectedMultiplier = mult.multiplier" 
+                  :checked="isSelected(mult)" 
+                  :name="mult.id" :id="mult.id" 
+                  :value="mult.multiplier">
+                <label :for="mult.id"><strong class="badge">X {{mult.multiplier}}</strong>&nbsp;<em>{{mult.ask}}:{{mult.bid}}</em></label>
+              </li>
+            </ol> -->
+
+                <small><em>Last seen</em> {{raw[keys.lastSeenTime] | lastSeen }}</small>
+          </section>
         </div>
       </div>
     </div>
@@ -57,6 +73,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { bus } from '../services/bus'
 import settings from '../settings'
 
@@ -71,6 +88,7 @@ export default {
       // for wrapper not content
       isCopied: false,
       showModal: false,
+      selectedMultiplier: 1,
       keys: settings.keys.exchange,
       currencyKeys: settings.keys.currency,
       bus,
@@ -81,13 +99,10 @@ export default {
     CurrencyItem
   },
   computed: {
-    showOffers: function () {
-      return this.raw && this.raw.key && this.raw.list
-    },
     message: function () {
-      return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy ' + this.raw[this.keys.bid] +
+      return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
         ' ' + this.askName +
-        ' for ' + this.raw[this.keys.ask] +
+        ' for ' + (this.raw[this.keys.ask] * this.correctedMultiplier) +
         ' ' + this.askName +
         '.'
     },
@@ -98,7 +113,29 @@ export default {
     bidName () {
       const id = this.keys.bidId
       return this.getName(this.raw[ id ])
+    },
+    correctedMultiplier () {
+      if (typeof (this.selectedMultiplier) === 'number') {
+        return this.selectedMultiplier
+      } else {
+        return 1
+      }
     }
+    // multiples () {
+    //   let mult = []
+    //   for (let i = this.multiply; i >= 1; i--) {
+    //     mult.unshift({
+    //       id: 'multiplier-' + i,
+    //       multiplier: i,
+    //       ask: (this.raw[this.keys.bid] * i),
+    //       bid: (this.raw[this.keys.ask] * i)
+    //     })
+    //   }
+    //   if (!this.selectedMultiplier) {
+    //     this.selectedMultiplier = mult[0].id
+    //   }
+    //   return mult
+    // }
   },
   methods: {
     setData: function (data) {
@@ -111,6 +148,9 @@ export default {
     getName (id) {
       return this.currencyMap[id][this.currencyKeys.name]
     }
+    // isSelected (val) {
+    //   return this.selectedMultiplier === val.multiplier
+    // },
   },
   // filters: {
   //   name: function (id) {
@@ -133,6 +173,14 @@ export default {
       that.closeModal()
     })
     // this.$refs.trade.focus()
+  },
+  filters: {
+    lastSeen: function (value) {
+      if (value) {
+        // return moment(String(value)).format('MM/DD/YYYY hh:mm')
+        return moment(value).fromNow()
+      }
+    }
   }
 }
 </script>
@@ -157,4 +205,22 @@ export default {
   line-height: 2
 }
 
+.multiplier-list {
+  ol {
+    list-style: none;
+    li {
+      display: inline-block;
+      padding: rem-calc(2) rem-calc(1);
+      // border: rem-calc(1) solid $gray;
+      input,
+      label {
+        display: inline-block;
+        cursor: pointer;
+      }
+      // label {
+      //   width: 100%;
+      // }
+    } 
+  }
+}
 </style>

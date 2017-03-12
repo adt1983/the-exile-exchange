@@ -14,7 +14,6 @@
 <script>
 import { bus } from '../services/bus'
 import settings from '../settings'
-import moment from 'moment'
 // to be mapped to ports (external component bindings)
 export default {
   name: 'offers-list',
@@ -46,14 +45,6 @@ export default {
     //   console.log('showOfferInfo', offer)
     //   alert(JSON.strigify(offer))
     // }
-  },
-  filters: {
-    lastSeen: function (value) {
-      if (value) {
-        // return moment(String(value)).format('MM/DD/YYYY hh:mm')
-        return moment(value).fromNow()
-      }
-    }
   }
 }
 </script>
@@ -80,23 +71,6 @@ export default {
   ul {
     margin-bottom: 0;
   }
-
-  // This adds support for text fields, dropdowns, and radio/check inputs
-  // @include block-list-inputs(
-  //   $color: #000, // Foreground color
-  //   $background, #fff, // Background color
-  //   $background-hover: #fff, // Background color of elements on hover
-  //   $padding: 1rem, //
-  // );
-
-  // This adds support for icons
-  // &.with-icons {
-  //   @include block-list-icons(
-  //     $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
-  //     $item-selector: 'li' // This should be whatever tag or class your block list uses for items
-  //   );
-  // }
-
   // Define what tag or class your list items are with this mixin
   li {
     /* property name | duration | timing function | delay */
@@ -116,37 +90,7 @@ export default {
     &:hover {
       background-color: $blocklist-item-background-hover;
     }
-    // &.has-asks {
-    //   background-color: red;
-    // }
-    // Add styles for list items with chevrons
-    // &.with-chevron {
-    //   @include block-list-chevron(
-    //     $color: #000, // Color of chevron
-    //     $padding: 1rem, // Insert the same padding as the block list item here
-    //     $label-class: 'block-list-label' // Insert the class you're using for labels
-    //   );
-    // }
   }
-
-  // Define what tag or class your headers are with this mixin
-  // header {
-  //   @include block-list-header(
-  //     $color: #000, // Text color
-  //     $font-size: 1rem, // Font size
-  //     $uppercase: true, // If true, the text becomes all-caps
-  //     $offset: 1rem // Left-side offset for text
-  //   );
-  // }
-
-  // Define the class for labels
-  // .block-list-label {
-  //   @include block-list-label(
-  //     $color: #999, // Color of label
-  //     $left-class: 'left', // Define a modifier class for left-aligned labels
-  //     $left-padding: 1rem // Padding to add when a label is left-aligned
-  //   );
-  // }
   .title {
     padding: 0;
     margin: 0;

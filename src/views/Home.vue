@@ -80,7 +80,7 @@ export default {
       leagueSaveKey: settings.keys.league.type
     }
   },
-  beforeCreate () {
+  created () {
     let name = saved.get(this.accountNameSaveKey)
     if (name) {
       this.accountName = name

@@ -49,7 +49,7 @@
           <!-- v-show="showKeyRow(key)"  -->
           <!-- v-if="renderKeyRow(key)"  -->
         <li
-          :class="{ 'has-bids': hasBids(key) }"
+          :class="[{ 'has-bids': hasBids(key) },{'has-account': isAccount(biddingIndex[key].bids)}]"
           v-for="(key, increments) in orderBy" 
           v-show="showEmptyBids(key)"
           :key="key">
@@ -170,13 +170,16 @@ export default {
     return {
       stats,
       settings,
-      selected: {},
+      // selected: {},
 
       loading: 0,
       filterBids: true,
       showModal: false,
 
       keys: settings.keys.exchange,
+
+      accountName: '',
+      accountNameSaveKey: settings.keys.exchange.user,
 
       orderBy: [],
       askList: [],
@@ -194,9 +197,9 @@ export default {
         // return items
       }
     },
-    accountName: function () {
-      return this.selected.accountName
-    },
+    // accountName: function () {
+    //   return this.selected.accountName
+    // },
     // isCurrentBid: function () {
     //   let items
     //   console.log('this.bidId', this.bidId)
@@ -251,6 +254,19 @@ export default {
     // }
   },
   methods: {
+    isAccount: function (bids) {
+      const that = this
+      let valid = false
+      bids.forEach(function (val) {
+        console.log('val', val.accountName)
+        console.log('val', that.accountName)
+        if (val && val.accountName === that.accountName) {
+          console.log('val TRUE')
+          valid = true
+        }
+      })
+      return valid
+    },
     // toggleOffer: function (key) {
     //   this.selected[key] = !this.selected[key]
     // },
@@ -289,6 +305,16 @@ export default {
         .then((response) => {
           // console.log('items fresh from API!', response.data)
           that.askList = response.data
+          that.askList.push({
+            'accountName': 'Travis',
+            'ask_id': that.askList[0].ask_id,
+            'ask_qty': 1,
+            'bid_id': that.askList[0].bid_id,
+            'bid_qty': 1,
+            'lastChar': 'Cheeseman',
+            'lastSeenUTC': +(new Date()),
+            'league': that.askList[0].league
+          })
           ++this.loading
         })
       http
@@ -325,6 +351,11 @@ export default {
   //     })
   },
   created: function () {
+    // selected service
+    let name = saved.get(this.accountNameSaveKey)
+    if (name) {
+      this.accountName = name
+    }
     this.getData()
   }
 }

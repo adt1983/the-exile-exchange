@@ -10,7 +10,7 @@ const storageId = 'breachCurrency'
 // const 'data' = 'global'
 
 let items = []
-let collection = {}
+// let collection = {}
 
 // function setItems (value) {
 //   collection = setItemMap(value, mapId)
@@ -51,9 +51,19 @@ export const exchange = new Promise(function (resolve, reject) {
       .then((response) => {
         console.log('items fresh from API!', response.data)
         items = setItems(response.data)
+        items.push({
+          "accountName": "Travis", 
+          "ask_id": items[0].ask_id, 
+          "ask_qty": 1, 
+          "bid_id": items[0].bid_id, 
+          "bid_qty": 1, 
+          "lastChar": "Cheeseman", 
+          "lastSeenUTC": +(new Date()), 
+          "league": items[0].league
+        })
         resolve({
-          items,
-          collection
+          // collection,
+          items
         })
       })
   // }

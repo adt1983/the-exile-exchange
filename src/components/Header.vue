@@ -1,24 +1,23 @@
 <template>
-  <div class="grid-block shrink header">
-    Hello HEader
-    <div class="grid-block shrink show-for-small-only">
+  <div class="grid-block header shrink">
+    <div class="grid-block">
       <div class="grid-content text-center">
         <!-- todo // convert asks to string -->
-        <router-link 
+        <!-- <router-link 
           :to="{ name: 'home'}" 
           tag="button" 
           type="button" 
           class="button call-to-action"><div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="32" viewBox="0 0 12 32">
             <path d="M11.196 9.714q0 0.232-0.179 0.411l-7.018 7.018 7.018 7.018q0.179 0.179 0.179 0.411t-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
-            </svg></div></router-link>
+            </svg></div></router-link> -->
       </div>
     </div>
     <div class="grid-block expand">
       <div class="grid-content">
         <h1>{{leagueName}}</h1>
+        <h2 class="body-font">{{accountName}}</h2>
       </div>
     </div>
-
 <!--     <div class="grid-block shrink hide-for-small-only">
       <div class="grid-content">
         <ul class="button-group segmented call-to-action">
@@ -72,7 +71,7 @@
 <script>
 // import router from 'vue-router'
 import settings from '../settings'
-// import saved from '../services/selected'
+import saved from '../services/selected'
 
 import { league } from '../services/league'
 import { currency } from '../services/currency'
@@ -84,7 +83,8 @@ export default {
     return {
       settings,
 
-      nameId: settings.keys.exchange.user,
+      accountName: '',
+      accountNameSaveKey: settings.keys.exchange.user,
 
       search: 'Search',
 
@@ -96,8 +96,6 @@ export default {
     leagueName: function () {
       const nameKey = settings.keys.league.name
       if (Object.keys(this.leagueMap).length && this.leagueid) {
-        console.log('this.leagueMap', this.leagueMap)
-        console.log('this.leagueid', this.leagueid)
         return this.leagueMap[this.leagueid][nameKey]
       }
     },
@@ -107,11 +105,11 @@ export default {
   },
   methods: {
     askParams: function () {
-      console.log('this.params', this.params)
       return this.params
     }
   },
   beforeCreate: function () {
+    // other services
     currency
       .then((response) => {
         this.currencyMap = response.collection
@@ -120,6 +118,13 @@ export default {
       .then((response) => {
         this.leagueMap = response.collection
       })
+  },
+  created () {
+    // selected service
+    let name = saved.get(this.accountNameSaveKey)
+    if (name) {
+      this.accountName = name
+    }
   }
 }
 </script>
@@ -131,7 +136,7 @@ export default {
 
 .header {
   background-color: $dark-color;
-  border-bottom: rem-calc(1) solid $body-font-color;
+  border-bottom: rem-calc(3) solid $body-font-color;
   .inline-list {
     margin-bottom: 0;
   }

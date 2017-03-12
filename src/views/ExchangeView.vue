@@ -1,4 +1,10 @@
 <template>
+  <section class="grid-block noscroll vertical">
+    <header-section
+      v-if="askParams()"
+      :params="askParams()"
+      :leagueid="leagueid"
+      ></header-section>
   <div class="exchange-view grid-block wrap">
     <div 
       class="grid-block"
@@ -16,6 +22,7 @@
     <contact-info-modal
       :currency-map="currencyMap"></contact-info-modal>
   </div>
+  </section>
 </template>
 
 <script>
@@ -25,9 +32,9 @@ import settings from '../settings'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
 
+import Header from '../components/Header'
 import Exchange from '../components/Exchange'
 import CurrencyItem from '../components/CurrencyItem'
-
 import OffersListModal from 'views/OffersListModal'
 import ContactInfoModal from 'views/ContactInfoModal'
 
@@ -99,7 +106,8 @@ export default {
     OffersListModal,
     ContactInfoModal,
     Exchange,
-    CurrencyItem
+    CurrencyItem,
+    'header-section': Header
   },
   beforeCreate: function () {
     const that = this
@@ -117,6 +125,9 @@ export default {
   methods: {
     renderView: function () {
       return Object.keys(this.leagueMap) && Object.keys(this.leagueMap).length && Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length
+    },
+    askParams: function () {
+      return this.asks
     }
   }
 }
@@ -129,14 +140,6 @@ export default {
 .exchange-view {
   width: 100%;
   overflow-y: scroll;
-//  display: flex;
-//   flex-direction: row nowrap;
-//   justify-content: flex-start;
-//   align-content: flex-start;
-//   align-items: flex-start;
-//   @include breakpoint(medium) {
-//     align-items: center;
-//   }
   .currency-item {
     display: flex-list;
     flex-direction: row wrap;
@@ -151,16 +154,4 @@ export default {
   padding-top: $global-padding;
   border-bottom: 1px solid $secondary-color;
 }
-// .button {
-//   // white-space: nowrap;
-//   margin: $global-padding*3;
-//   filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.3));
-//   &:hover {
-//     filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.4));
-//   }
-//   svg {
-//     fill: #fff;
-//   }
-// }
-
 </style>
