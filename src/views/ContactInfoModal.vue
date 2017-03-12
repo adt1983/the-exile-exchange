@@ -13,7 +13,7 @@
             </div>
             <div class="grid-block shrink text-right">
               <div class="grid-content">
-                <button class="button tiny hollow info text-right" 
+                <button class="button hollow info text-right" 
                   @click="closeModal()">
                   <div class="svg-icon">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="32" viewBox="0 0 25 32">
@@ -26,8 +26,12 @@
           </div>
 
           <div class="grid-block">
-            <div class="modal-body grid-content">
-              <h2 class="body-font">Buying <strong class="alt-font success-color">{{bidName}}</strong> for <strong class="alt-font success">{{askName}}</strong> at {{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h2>
+            <div class="modal-body grid-content text-center">
+              <h2 class="body-font">
+                <strong>Buying</strong><br>
+                <strong class="alt-font success-color">{{bidName}}</strong> for<br>
+                <strong class="alt-font success-color">{{askName}}</strong> at</h2>
+              <h1 class="body-font">{{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h1>
 
               <span 
                 v-if="isCopied"
@@ -40,12 +44,11 @@
                 v-model="message"></textarea>
             </div>
           </div>
-          <div class="grid-block">
-            <section class="small-12 medium-6 grid-content noscroll">
+          <div class="grid-block v-align noscroll">
+            <section class="small-12 medium-6 grid-content noscroll align-top">
               <label for="multi">
                 <span class="inline-label">
                   <span class="form-label">Multiplier</span>
-                
                     <input 
                       id="multi"
                       name="multi"
@@ -56,7 +59,7 @@
                 </span>
               </label>
             </section>
-            <section class="small-12 medium-6 grid-content noscroll">
+            <section class="small-12 medium-6 grid-content noscroll align-top text-center">
               <small class="age"><em>Last seen</em> {{raw[keys.lastSeenTime] | lastSeen }}</small>
             </section>
           </div>
@@ -203,22 +206,22 @@ export default {
   border-radius: $global-radius;
 }
 
-.multiplier-list {
-  ol {
-    list-style: none;
-    li {
-      display: inline-block;
-      padding: rem-calc(2) rem-calc(1);
-      // border: rem-calc(1) solid $gray;
-      input,
-      label {
-        display: inline-block;
-        cursor: pointer;
-      }
-      // label {
-      //   width: 100%;
-      // }
-    } 
-  }
-}
+// .multiplier-list {
+//   ol {
+//     list-style: none;
+//     li {
+//       display: inline-block;
+//       // padding: rem-calc(2) rem-calc(1);
+//       // border: rem-calc(1) solid $gray;
+//       input,
+//       label {
+//         display: inline-block;
+//         cursor: pointer;
+//       }
+//       // label {
+//       //   width: 100%;
+//       // }
+//     } 
+//   }
+// }
 </style>

@@ -1,15 +1,20 @@
 <template>
   <div class="home">
+<!--   selectedLeague: {{selectedLeague}}
+  currencies: {{lastAsks}} -->
+<!--     <exhange-view
+      ></exhange-view> -->
+
     <header>
       <h1>{{title}}</h1>
     </header>
-    <ul class="grid shrink no-bullet">
+    <ul class="grid-block shrink no-bullet">
       <li v-if="!this.league.length">
         <loader></loader>
       </li>
-      <div class="grid-block">
-        <div class="grid-content">
-          <ul class="button-group segmented call-to-action">
+      <div class="grid-block v-align">
+        <div class="grid-content align-center">
+          <ul class="button-group segmented">
             <li v-for="leag in league">
               <router-link 
                 :to="{ name: 'currency', params: { leagueid: leag.$slug }}" 
@@ -21,7 +26,11 @@
         </div>
       </div>
     </ul>
-    <account-name></account-name>
+    <div class="grid-block v-align">
+      <div class="grid-content align-center">
+        <account-name class="call-to-action"></account-name>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,6 +41,7 @@ import { league } from '../services/league'
 
 import Loader from '../components/Loader'
 import AccountNameInput from '../components/AccountNameInput'
+import ExchangeView from 'views/ExchangeView'
 
 export default {
   name: 'home',
@@ -44,6 +54,9 @@ export default {
       defaultMsg: 'Add your account name.',
       accountName: '',
 
+      currencySaveKey: settings.keys.currency.type,
+      lastAsks: undefined,
+
       league,
       title: 'Select League.',
       leagueSaveKey: settings.keys.league.type
@@ -53,6 +66,14 @@ export default {
     let name = saved.get(this.accountNameSaveKey)
     if (name) {
       this.accountName = name
+    }
+    let currencies = saved.get(this.currencySaveKey)
+    if (currencies) {
+      this.lastAsks = currencies
+    }
+    let league = saved.get(this.leagueSaveKey)
+    if (league) {
+      this.selectedLeague = league
     }
   },
   computed: {
@@ -85,6 +106,7 @@ export default {
   // },
   components: {
     Loader,
+    ExchangeView,
     'account-name': AccountNameInput
   }
 
@@ -102,7 +124,8 @@ export default {
   margin: auto;
   // overflow-y: scroll;
   text-align: center;
-  header {
+  header,
+  .call-to-action {
     padding: $global-padding*3 0;
   }
 }

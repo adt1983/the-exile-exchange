@@ -33,7 +33,7 @@ module.exports = {
         target: 'https://poecx-152323.appspot.com/api/',
         changeOrigin: true,
         pathRewrite: {
-          '^/api/poecx': ''
+          '^/api': ''
         }
       }
     },

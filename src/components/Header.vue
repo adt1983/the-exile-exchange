@@ -1,7 +1,7 @@
 <template>
   <div class="grid-block header shrink">
-    <div class="grid-block">
-      <div class="grid-content text-center">
+    <!-- <div class="grid-block"> -->
+      <!-- <div class="grid-content text-center"> -->
         <!-- todo // convert asks to string -->
         <!-- <router-link 
           :to="{ name: 'home'}" 
@@ -10,9 +10,9 @@
           class="button call-to-action"><div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="32" viewBox="0 0 12 32">
             <path d="M11.196 9.714q0 0.232-0.179 0.411l-7.018 7.018 7.018 7.018q0.179 0.179 0.179 0.411t-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
             </svg></div></router-link> -->
-      </div>
-    </div>
-    <div class="grid-block expand v-align">
+      <!-- </div> -->
+    <!-- </div> -->
+    <div class="grid-block shrink v-align">
       <div class="grid-content align-center">
         <h1>{{leagueName}}</h1>
       </div>
@@ -54,16 +54,16 @@
       </li>
     </ul> -->
 
-    <div class="grid-block shrink">
-      <div class="grid-content text-center v-align">
+    <div class="grid-block v-align noscroll">
+      <div class="grid-content align-center text-right noscroll">
         <!-- todo // convert asks to string -->
         <router-link 
           v-show="params.asks !== ''"
           :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
           tag="button" 
           type="button" 
-          class="button align-center">{{searchText}}</router-link>
-        <button class="button align-center" 
+          class="button">{{searchText}}</router-link>
+        <button class="button" 
           v-show="params.asks === ''"
           disabled="disabled">
           {{searchText}}
