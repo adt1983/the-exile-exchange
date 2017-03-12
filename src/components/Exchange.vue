@@ -46,7 +46,7 @@
       <div class="grid-block noscroll">
         <div class="grid-content noscroll text-center">
           <input type="checkbox" id="Bids" v-model="filterBids">&nbsp;
-          <label for="Bids">Hide No Bids</label>
+          <label for="Bids">Hide Empty Bids</label>
         </div>
       </div>
       <div class="grid-block noscroll text-left">
@@ -102,58 +102,10 @@ import settings from '../settings'
 import { http } from '../services'
 import { bus } from '../services/bus'
 import saved from '../services/selected'
-// import { league } from '../services/league'
-// import { currency } from '../services/currency'
 import * as filters from '../filters'
+
 import CurrencyItem from '../components/CurrencyItem'
 import Loader from './Loader'
-
-const stats = {
-  byExchangeRatio: {},
-  setStats (items, key, askKey, bidKey, askId, askIdKey) {
-    let t = []
-    // console.log('baseRatio items', items)
-    // do all manipulation here
-    // in one loop!
-    t = items.map(function (item) {
-      item = stats.addRatio(item, key, askKey, bidKey)
-      stats.addItemToIndex(item, key, askKey, item[key + '_key'], askId, askIdKey)
-      return item
-    })
-    return t
-  },
-  addRatio: function (item, key, askKey, bidKey) {
-    // todo: externalize these flags in settings{} ?
-    item[key] = item[askKey] + ':' + item[bidKey]
-    item[key + '_raw'] = (item[bidKey] / item[askKey]) * 100
-    item[key + '_pair'] = item[bidKey] + ':' + item[askKey]
-    item[key + '_pair' + '_raw'] = (item[askKey] / item[bidKey]) * 100
-    // item[key + '_key'] = item[askKey] + ':' + item[bidKey] + ':' + item[bidKey] + ':' + item[askKey]
-    item[key + '_key'] = (item[askKey] < item[bidKey]) ? item[askKey] + ':' + item[bidKey] : item[bidKey] + ':' + item[askKey]
-    item[key + '_base'] = (item[askKey] < item[bidKey]) ? (item[bidKey] / item[askKey]) : (item[askKey] / item[bidKey])
-    return item
-  },
-  addItemToIndex: function (item, key, askKey, index, askId, askIdKey) {
-    if (!stats.byExchangeRatio[index]) {
-      stats.byExchangeRatio[index] = {
-        bids: [],
-        asks: []
-      }
-      stats.byExchangeRatio[index][key + '_base'] = item[key + '_base']
-    }
-    // if no asks, define them
-    if (stats.byExchangeRatio[index].asks.length) {
-      // assumes that the first in index is ask
-      if (item[askIdKey] === askId) {
-        stats.byExchangeRatio[index].asks.push(item)
-      } else {
-        stats.byExchangeRatio[index].bids.push(item)
-      }
-    } else {
-      stats.byExchangeRatio[index].asks.push(item)
-    }
-  }
-}
 
 export default {
   name: 'exchange',
@@ -166,7 +118,6 @@ export default {
   },
   data () {
     return {
-      stats,
       settings,
       // selected: {},
 
@@ -182,6 +133,7 @@ export default {
       orderBy: [],
       askList: [],
       bidList: [],
+      byExchangeRatio: {},
 
       title: 'Breach Currency Exchange'
     }
@@ -190,7 +142,7 @@ export default {
     isCurrentAsk: function () {
       let items
       if (this.askList && this.askList.length) {
-        items = stats.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.askId)
+        items = this.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.askId)
         return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
         // return items
       }
@@ -202,7 +154,7 @@ export default {
     //   let items
     //   console.log('this.bidId', this.bidId)
     //   if (this.bidList && this.bidList.length) {
-    //     items = stats.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid)
+    //     items = this.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid)
     //     return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
     //     // return items
     //   }
@@ -221,7 +173,7 @@ export default {
       // otherwise it will never render
       //
       const that = this
-      let items
+      // let items
       // call other computers to make sure they are compiled
       this.isCurrentAsk // call ask first!
       this.isCurrentBid
@@ -230,13 +182,13 @@ export default {
       // should stats be passing in `this` values
       // instead of being writting in external funtions?
       // bad scope here?
-      items = this.stats.byExchangeRatio
-      this.orderBy = Object.keys(this.stats.byExchangeRatio).sort(function (a, b) {
-        const aa = that.stats.byExchangeRatio[a] && that.stats.byExchangeRatio[a][that.keys.ratio + '_base']
-        const bb = that.stats.byExchangeRatio[b] && that.stats.byExchangeRatio[b][that.keys.ratio + '_base']
+      // items = this.byExchangeRatio
+      this.orderBy = Object.keys(this.byExchangeRatio).sort(function (a, b) {
+        const aa = that.byExchangeRatio[a] && that.byExchangeRatio[a][that.keys.ratio + '_base']
+        const bb = that.byExchangeRatio[b] && that.byExchangeRatio[b][that.keys.ratio + '_base']
         return bb - aa
       })
-      return items
+      return this.byExchangeRatio
     },
     // hasAsks: function (key) {
     //   return this.biddingIndex && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
@@ -253,6 +205,50 @@ export default {
     // }
   },
   methods: {
+    setStats (items, key, askKey, bidKey, askId, askIdKey) {
+      const that = this
+      let t = []
+      // console.log('baseRatio items', items)
+      // do all manipulation here
+      // in one loop!
+      t = items.map(function (item) {
+        let i = that.addRatio(item, key, askKey, bidKey)
+        that.addItemToIndex(i, key, askKey, item[key + '_key'], askId, askIdKey)
+        return i
+      })
+      return t
+    },
+    addRatio: function (item, key, askKey, bidKey) {
+      // todo: externalize these flags in settings{} ?
+      item[key] = item[askKey] + ':' + item[bidKey]
+      item[key + '_raw'] = (item[bidKey] / item[askKey]) * 100
+      item[key + '_pair'] = item[bidKey] + ':' + item[askKey]
+      item[key + '_pair' + '_raw'] = (item[askKey] / item[bidKey]) * 100
+      // item[key + '_key'] = item[askKey] + ':' + item[bidKey] + ':' + item[bidKey] + ':' + item[askKey]
+      item[key + '_key'] = (item[askKey] < item[bidKey]) ? item[askKey] + ':' + item[bidKey] : item[bidKey] + ':' + item[askKey]
+      item[key + '_base'] = (item[askKey] < item[bidKey]) ? (item[bidKey] / item[askKey]) : (item[askKey] / item[bidKey])
+      return item
+    },
+    addItemToIndex: function (item, key, askKey, index, askId, askIdKey) {
+      if (!this.byExchangeRatio[index]) {
+        this.byExchangeRatio[index] = {
+          bids: [],
+          asks: []
+        }
+        this.byExchangeRatio[index][key + '_base'] = item[key + '_base']
+      }
+      // if no asks, define them
+      if (this.byExchangeRatio[index].asks.length) {
+        // assumes that the first in index is ask
+        if (item[askIdKey] === askId) {
+          this.byExchangeRatio[index].asks.push(item)
+        } else {
+          this.byExchangeRatio[index].bids.push(item)
+        }
+      } else {
+        this.byExchangeRatio[index].asks.push(item)
+      }
+    },
     // highlight account name
     isAccount: function (bids) {
       const that = this
