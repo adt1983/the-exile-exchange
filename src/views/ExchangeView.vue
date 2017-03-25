@@ -4,7 +4,7 @@
       :params="askParams()"
       :leagueid="leagueid"
       ></header-section>
-  <div class="exchange-view grid-block wrap">
+  <div class="exchange-view grid-block nowrap">
     <div 
       class="grid-block"
       v-if="renderView()"
@@ -18,8 +18,6 @@
         :bid-id="item.bids"></exchange>
     </div>
     <bids-list-modal></bids-list-modal>
-    <contact-info-modal
-      :currency-map="currencyMap"></contact-info-modal>
   </div>
   </section>
 </template>
@@ -35,7 +33,6 @@ import Header from '../components/Header'
 import Exchange from '../components/Exchange'
 import CurrencyItem from '../components/CurrencyItem'
 import BidsListModal from 'views/BidsListModal'
-import ContactInfoModal from 'views/ContactInfoModal'
 
 function cleanPairs (dirty, keyChar) {
   let clean
@@ -103,7 +100,6 @@ export default {
   },
   components: {
     BidsListModal,
-    ContactInfoModal,
     Exchange,
     CurrencyItem,
     'header-section': Header

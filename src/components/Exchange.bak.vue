@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper grid-block vertical">
     <!-- accountName: {{accountName}} {{selected}} -->
-    <header class="grid-block shrink">
+    <header class="grid-block">
       <div class="grid-block text-center noscroll">
         <div class="grid-content noscroll">
           <currency-item
@@ -39,7 +39,7 @@
       </div>
     </header>
 
-    <div class="grid-block shrink noscroll align-center preferences">
+    <div class="grid-block noscroll align-center preferences">
       <div class="grid-block noscroll">
         <div class="grid-content noscroll text-right">
           <small>Ask</small>
@@ -57,33 +57,21 @@
         </div>
       </div>
     </div>
-  <!-- {{Object.keys(biddingIndex)}}
-  {{Object.keys(biddingIndex).length}}
-  {{orderBy.length}} -->
+  {{Object.keys(biddingIndex)}}
     <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader>
     <!-- {{orderBy}} -->
     <section class="block-list exchange-list" v-if="Object.keys(biddingIndex).length">
       <ul>
+          <!-- v-show="showKeyRow(key)"  -->
+          <!-- v-if="renderKeyRow(key)"  -->
         <li
-          class="exchange-row"
-          :class="[{ 'has-bids': hasBids(key) }]"
+          :class="[{ 'has-bids': hasBids(key) },{'has-account': isAccount(biddingIndex[key].bids)}]"
           v-for="(key, increments) in orderBy" 
+          v-show="showEmptyBids(key)"
           :key="key">
           <div class="grid-content">
-            <ul class="exchange-item">
-              <li><a href=""
-                :class="applyColorClass(biddingIndex[key].asks)"
-                @click.prevent="showOffer(key, biddingIndex[key].asks, 'ask')"><span
-                v-if="biddingIndex[key].asks && biddingIndex[key].asks.length">{{biddingIndex[key].asks.length}}</span></a></li>
-              <li
-                class="exchange-ratio"
-                :class="{'has-account': isAccount(biddingIndex[key].asks) || isAccount(biddingIndex[key].bids)}"><span class="secondary-color body-font text-center">{{key}}</span></li>
-              <li><a href=""
-                :class="applyColorClass(biddingIndex[key].bids)"
-                @click.prevent="showOffer(key, biddingIndex[key].bids, 'bid')"
-                v-if="biddingIndex[key].bids && biddingIndex[key].bids.length">{{biddingIndex[key].bids.length}}</a></li>
-            </ul>
-          <!--   <div 
+            
+            <div 
               class="call-to-action grid-block noscroll"
               @click="showOffer(key, biddingIndex[key].bids)">
               <div class="grid-block noscroll text-center">
@@ -103,7 +91,7 @@
                     v-if="biddingIndex[key].bids && biddingIndex[key].bids.length">{{biddingIndex[key].bids.length}}</span>
                 </div>
               </div>
-            </div> -->
+            </div>
           </div>
         </li>
       </ul>
@@ -156,7 +144,6 @@ export default {
   computed: {
     isCurrentAsk: function () {
       let items
-      console.log('this.askId', this.askId)
       if (this.askList && this.askList.length) {
         items = this.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.askId)
         return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
@@ -166,15 +153,15 @@ export default {
     // accountName: function () {
     //   return this.selected.accountName
     // },
-    isCurrentBid: function () {
-      let items
-      console.log('this.bidId', this.bidId)
-      if (this.bidList && this.bidList.length) {
-        items = this.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid)
-        return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
-        // return items
-      }
-    },
+    // isCurrentBid: function () {
+    //   let items
+    //   console.log('this.bidId', this.bidId)
+    //   if (this.bidList && this.bidList.length) {
+    //     items = this.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid)
+    //     return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
+    //     // return items
+    //   }
+    // },
     // get only, just need a function
     // highestAsk: function () {
     //   return filters.highest(this.isCurrentAsk, this.keys.ask)
@@ -193,6 +180,7 @@ export default {
       // call other computers to make sure they are compiled
       this.isCurrentAsk // call ask first!
       this.isCurrentBid
+      this.loading
 
       // should stats be passing in `this` values
       // instead of being writting in external funtions?
@@ -221,24 +209,9 @@ export default {
     // }
   },
   methods: {
-    applyColorClass (bids) {
-      const isAccount = this.isAccount(bids)
-      const count = bids && bids.length
-      let className = 'warning-color'
-      if (isAccount) {
-        return className
-      }
-      // is not own account
-      className = 'info-color'
-      if (count) {
-        if (count >= 2) {
-          className = 'success-color'
-        } else if (count === 1) {
-          className = 'info-color'
-        }
-      }
-      return className
-    },
+    // refreshData () {
+    //   this.getData()
+    // },
     setStats (items, key, askKey, bidKey, askId, askIdKey) {
       const that = this
       let t = []
@@ -283,12 +256,6 @@ export default {
         this.byExchangeRatio[index].asks.push(item)
       }
     },
-    setAccountName () {
-      let name = saved.get(this.accountNameSaveKey)
-      if (name) {
-        this.accountName = name
-      }
-    },
     // highlight account name
     isAccount: function (bids) {
       const that = this
@@ -303,9 +270,9 @@ export default {
     // toggleOffer: function (key) {
     //   this.selected[key] = !this.selected[key]
     // },
-    showOffer: function (key, list, type) {
-      const config = { key, list, type }
-      bus.$emit('modal.traderlist.open', config)
+    showOffer: function (key, list) {
+      const settings = { key, list }
+      bus.$emit('modal.traderlist.open', settings)
     },
     // keep the template clean
     // hasTrade: function (key) {
@@ -338,7 +305,6 @@ export default {
         .then((response) => {
           // console.log('items fresh from API!', response.data)
           that.askList = response.data
-          console.log('that.askList.length', that.askList.length)
           // test data
           // that.askList.push({
           //   'accountName': 'Travis',
@@ -357,7 +323,6 @@ export default {
         .then((response) => {
           // console.log('items fresh from API!', response.data)
           that.bidList = response.data
-          console.log('that.bidList.length', that.bidList.length)
           ++this.loading
         })
       // will be considered loaded with `loading` = 2
@@ -389,9 +354,10 @@ export default {
   created: function () {
     const that = this
     // selected service
-    this.setAccountName()
-    bus.$on('saved.accountName', this.setAccountName)
-
+    let name = saved.get(this.accountNameSaveKey)
+    if (name) {
+      this.accountName = name
+    }
     that.getData()
     // auto refresh data
     this.refreshInterval = setTimeout(function () {
@@ -411,7 +377,6 @@ export default {
 // call settings for global SCSS access
 @import '../assets/styles/settings';
 @import './node_modules/angular-base-apps/scss/components/block-list';
-@import './node_modules/angular-base-apps/scss/components/menu-bar';
 
 .wrapper {
   @include base-panel;
@@ -436,92 +401,106 @@ export default {
   margin-bottom: 0;
   ul {
     margin-bottom: 0;
-    .exchange-row {
-      &:nth-child(even) {
-        background-color: lighten($dark-color, 5);
-      }
-      &:nth-child(odd) {
-        background-color: lighten($dark-color, 8);
-      }
-      /* property name | duration | timing function | delay */
-      // transition: background-color $default-animation-speed*2 ease-in-out;
-      // @include block-list-item();
-      // &.has-bids {
-      //   cursor: pointer;
-      //   background-color: $dark-color;
-      //   // &:hover {
-      //   //   background-color: $blocklist-item-background-hover;
-      //   // }
-      // }
-      // &.has-asks {
-      //   background-color: red;
-      // }
-    }
   }
+
+  // This adds support for text fields, dropdowns, and radio/check inputs
+  // @include block-list-inputs(
+  //   $color: #000, // Foreground color
+  //   $background, #fff, // Background color
+  //   $background-hover: #fff, // Background color of elements on hover
+  //   $padding: 1rem, //
+  // );
+
+  // This adds support for icons
+  // &.with-icons {
+  //   @include block-list-icons(
+  //     $size: 0.8, // This should be a decimal point. 0.8 makes the icon 80% the size of its parent
+  //     $item-selector: 'li' // This should be whatever tag or class your block list uses for items
+  //   );
+  // }
 
   // Define what tag or class your list items are with this mixin
-
-}
-.exchange-item {
-  // This placeholder selector gets you the core structural styles for the menu
-  @extend %menu-bar;
-  text-align: center;
-  // Set the orientation and sizing of the menu bar
-  @include menu-bar-layout(
-    $orientation: horizontal, // Can be horizontal or vertical
-    $stretch: true // Set to false for a condensed menu
-  );
-
-  // Add styles for the menu bar items and text
-  @include menu-bar-style(
-    $background: transparent, // Background color of items
-    $background-hover: $primary-color // Background color of item on hover
-    // $background-active: #666, // Background color of an active item
-    // $color: #fff, // Text color of items
-    // $color-hover, // Text color of item on hover
-    // $color-active, // Text color of item when active
-    // $autocolor: false // When true, all the above colors will be derived from $background
-  );
-  // li {
-  //   border-top: 0;
-  // }
-  .exchange-ratio {
-    flex-flow: column nowrap;
-    flex: 1 0 0;
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    font-size: 1rem;
-    line-height: 1;
-  }
- .has-account {
-    // cursor: pointer;
-      color: $warning-color;
-    // background-color: $warning-dark;
-    // &:hover {
-    //   background-color: $blocklist-item-background-hover;
+  li {
+    /* property name | duration | timing function | delay */
+    transition: background-color $default-animation-speed*2 ease-in-out;
+    @include block-list-item(
+      // $color: #000, // Color of items
+      // $color-hover, // Color of items on hover
+      // $color-disabled, // Color of items when disabled
+      // $background: transparent, // Background color
+      // $background-hover: #ccc, // Background color on hover
+      // $border: 1px solid #ccc, // Top and bottom border of items
+      // $padding: 1rem
+    );
+    &.has-bids {
+      cursor: pointer;
+      background-color: $dark-color;
+      &:nth-child(odd) {
+        background-color: darken($dark-color, 5);
+      }
+      &:hover {
+        background-color: $blocklist-item-background-hover;
+      }
+    }
+    &.has-account {
+      cursor: pointer;
+      background-color: $warning-dark;
+      &:hover {
+        background-color: $blocklist-item-background-hover;
+      }
+    }
+    // &.has-asks {
+    //   background-color: red;
+    // }
+    // Add styles for list items with chevrons
+    // &.with-chevron {
+    //   @include block-list-chevron(
+    //     $color: #000, // Color of chevron
+    //     $padding: 1rem, // Insert the same padding as the block list item here
+    //     $label-class: 'block-list-label' // Insert the class you're using for labels
+    //   );
     // }
   }
-   
+
+  // Define what tag or class your headers are with this mixin
+  // header {
+  //   @include block-list-header(
+  //     $color: #000, // Text color
+  //     $font-size: 1rem, // Font size
+  //     $uppercase: true, // If true, the text becomes all-caps
+  //     $offset: 1rem // Left-side offset for text
+  //   );
+  // }
+
+  // Define the class for labels
+  // .block-list-label {
+  //   @include block-list-label(
+  //     $color: #999, // Color of label
+  //     $left-class: 'left', // Define a modifier class for left-aligned labels
+  //     $left-padding: 1rem // Padding to add when a label is left-aligned
+  //   );
+  // }
+
 }
+
 .preferences {
   background-color: $gray-dark;
   padding: $global-padding/2 0;
 }
-// .svg-icon {
-//     &.loading {
-//       animation: rotation $default-animation-speed infinite linear;
-//     }
-// }
+.svg-icon {
+    &.loading {
+      animation: rotation $default-animation-speed infinite linear;
+    }
+}
 
-// @keyframes rotation {
-//     from {
-//         transform: rotate(0deg);
-//     }
-//     to {
-//         transform: rotate(359deg);
-//     }
-// }
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
 
 svg path,
 svg rect{

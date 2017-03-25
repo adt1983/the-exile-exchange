@@ -32,7 +32,7 @@ export default {
   methods: {
     showContactInfo: function (info) {
       bus.$emit('modal.contactinfo.open', info)
-      bus.$emit('modal.offerlist.close')
+      // bus.$emit('modal.traderlist.close')
     },
     toggleList: function () {
       this.showOfferInfo = !this.showOfferInfo

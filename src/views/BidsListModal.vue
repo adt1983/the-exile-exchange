@@ -2,7 +2,9 @@
   <transition name="modal" v-if="showModal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div 
+          :class="side"
+          class="modal-container">
 
           <div class="grid-block">
             <div class="grid-block">
@@ -31,6 +33,11 @@
           </div>
 
         </div>
+   <!--      <slot 
+          name="aside"
+          :class="{ 'right': side }"
+          class="modal-container"></slot> -->
+        <contact-info-modal></contact-info-modal>
       </div>
     </div>
   </transition>
@@ -42,6 +49,7 @@ import { pluralize } from '../filters'
 import settings from '../settings'
 
 import BidsList from '../components/BidsList'
+import ContactInfoModal from 'views/ContactInfoModal'
 
 export default {
   name: 'bids-list-modal',
@@ -50,11 +58,13 @@ export default {
       settings,
       // for wrapper not content
       showModal: false,
+      side: 'center',
       bus,
       raw: ''
     }
   },
   components: {
+    ContactInfoModal,
     BidsList
   },
   computed: {
@@ -63,7 +73,7 @@ export default {
     },
     bidLabel () {
       if (this.raw.list) {
-        return pluralize(this.raw.list.length, ' bid')
+        return pluralize(this.raw.list.length, ' ' + this.raw.type)
       }
     }
   },
@@ -78,8 +88,7 @@ export default {
   },
   created: function () {
     const that = this
-    bus.$on('modal.offerlist.open', function (data) {
-      console.log('data', data)
+    bus.$on('modal.traderlist.open', function (data) {
       if (data && Object.keys(data)) {
         that.setData(data)
         // that.$options.components.BidsList.props.key = data.key
@@ -87,8 +96,19 @@ export default {
       }
       // that.modalView.template = data
     })
-    bus.$on('modal.offerlist.close', function (data) {
+    bus.$on('modal.traderlist.close', function (data) {
       that.closeModal()
+    })
+    bus.$on('modal.contactinfo.open', function (data) {
+      that.side = 'left'
+    })
+    bus.$on(
+      [
+        'modal.traderlist.open',
+        'modal.contactinfo.close',
+        'modal.traderlist.close'
+      ], function (data) {
+      that.side = 'center'
     })
   }
 }

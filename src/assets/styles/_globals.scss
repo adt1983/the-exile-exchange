@@ -108,29 +108,53 @@ input {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, .5);
   display: table;
   transition: opacity $default-animation-speed ease;
 }
+
+$modal-width: rem-calc(400);
 .modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+  display: flex;
+  flex: 1 1 auto;
+  // Horizontally and vertically center the modal
+  align-items: center;
+  justify-content: center;
+  // align-content: center;
 }
+
 
 .modal-container {
   @include base-panel;
-  width: rem-calc(400);
+  width: $modal-width;
   @include breakpoint(small only) {
     width: 98%;
-  }
-  margin: 0 auto;
+  }  
+  // @include breakpoint(medium) {
+  //   height: auto;
+  //   max-width: map-get($modal-sizes, medium);
+  // }
+
+  margin: $global-spacing;
   background-color: $dark-color;
   padding: $global-padding;
   border-radius: rem-calc(2);
   box-shadow: 0 rem-calc(2) 8px rgba(0, 0, 0, .33);
   transition: all $default-animation-speed ease;
   max-height: 95vh;
+
+  transition: flex-basis $default-animation-speed ease;
+  // transform: translateX(0);
+  // &.center {
+  //   transform: translateX(0);
+  // }
+  // &.left {
+  //   transform: translateX(-$modal-width/2);
+  // }
+  // &.right {
+  //   transform: translateX($modal-width);
+  // }
 }
 
 .modal-header {

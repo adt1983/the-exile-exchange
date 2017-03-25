@@ -37,6 +37,7 @@
 <script>
 import settings from '../settings'
 import saved from '../services/selected'
+import { bus } from '../services/bus'
 
 export default {
   name: 'AccountNameInput',
@@ -61,6 +62,8 @@ export default {
       // if (this.accountName !== '') {
       saved.set(this.accountNameSaveKey, this.accountName)
       // }
+
+      bus.$emit('saved.accountName', this.accountName)
       this.editName = false
     }
   }

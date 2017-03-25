@@ -1,8 +1,8 @@
 <template>
   <transition name="modal" v-if="showModal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
+    <!-- <div class="modal-mask"> -->
+      <!-- <div class="modal-wrapper"> -->
+        <div class="modal-container right">
           
           <div class="grid-block">
             <div class="grid-block noscroll">
@@ -64,8 +64,8 @@
             </section>
           </div>
         </div>
-      </div>
-    </div>
+      <!-- </div> -->
+    <!-- </div> -->
   </transition>
 </template>
 
@@ -74,15 +74,17 @@ import moment from 'moment'
 import { bus } from '../services/bus'
 import settings from '../settings'
 
+import { currency } from '../services/currency'
 import CurrencyItem from '../components/CurrencyItem'
 
 export default {
   name: 'contact-info-modal',
-  props: ['currencyMap'],
+  // props: ['currencyMap'],
   data () {
     return {
       settings,
       // for wrapper not content
+      currencyMap: {},
       isCopied: false,
       showModal: false,
       selectedMultiplier: 1,
@@ -94,6 +96,13 @@ export default {
   },
   components: {
     CurrencyItem
+  },
+  beforeCreate: function () {
+    const that = this
+    currency
+      .then((response) => {
+        that.currencyMap = response.collection
+      })
   },
   computed: {
     message: function () {

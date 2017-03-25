@@ -42,6 +42,7 @@ export default {
   },
   defaults: {
     refreshInterval: 1000 * 60 * 6, // six minutes
+    autoRefresh: true,
     disabledCurrencyIndexes: [
       4
     ],
