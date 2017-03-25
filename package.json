@@ -1,7 +1,7 @@
 {
-  "name": "league-currency-exchange",
+  "name": "poecx-ui",
   "version": "1.0.0",
-  "description": "League Currency Exchange",
+  "description": "Exchange",
   "author": "Travis Mullen <travis@boombangmedia.com>",
   "private": true,
   "scripts": {

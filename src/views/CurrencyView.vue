@@ -4,14 +4,12 @@
       :params="askParams()"
       :leagueid="leagueid"
       ></header-section>
-    <div class="grid-content stage">
-      <div class="grid-container">
-
-      <currency-list
-        v-on:selected="updateAskSelected"
-        class="active grid-block"
-        ></currency-list>
-        
+    <div class="grid-content stage v-align">
+      <div class="grid-container ">
+        <currency-list
+          v-on:selected="updateAskSelected"
+          class="active grid-block align-center"
+          ></currency-list>
       </div>
     </div>
   </div>
@@ -148,7 +146,10 @@ export default {
 <style lang="scss" scoped>
 // call settings for global SCSS access
 @import '../assets/styles/settings';
-
+.stage {
+  min-height: 100%;
+  margin-top: rem-calc(-100);
+}
 .currency-view {
   // @include base-panel;
   // padding: 0 $global-padding*3;

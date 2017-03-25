@@ -1,17 +1,17 @@
 <template>
   <div class="currency-list">
-    <ol class="grid-block wrap">
-      <li class="grid-block shrink" 
+    <ol>
+      <li class="currency-item-wrapper" 
         v-for="item in currency" :key="item[keys.id]">
-        <div class="grid-block">
-          <div class="grid-content text-center">
+       <!--  <div class="grid-block">
+          <div class="grid-content text-center"> -->
             <currency-item
               v-on:select="selectItem"
               :input="true"
               :id="item[keys.id]"
               ></currency-item>
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
       </li>
     </ol>
   </div>
@@ -70,10 +70,24 @@ export default {
 @import '../assets/styles/settings';
 
 .currency-list {
-  @include base-panel;
   // padding: 0 $global-padding*3;
   ol {
+    @include base-panel;
+    padding: 0;
+    margin: auto;
     list-style: none;
+    // display: flex;
+    // flex-flow: row wrap;
+  }
+  .currency-item-wrapper {
+    display: inline-block;
+    // flex: 0 0 auto;
+    padding: 0;
+    margin: rem-calc(3) rem-calc(2.5);
+  }
+  .grid-content {
+    margin: 0;
+    padding: 0;
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="grid-block ">
+  <!-- <div class="shell"> -->
     <transition name="fade-in">
-<!--       <div v-if="preloader === false" class="currency-item grid-block vertical nowrap align-center justify-center">
+<!--       <div v-if="preloader === false" class="currency-item vertical nowrap align-center justify-center">
         <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          width="78px" height="78px" viewBox="0 0 78 78" enable-background="new 0 0 78 78" xml:space="preserve">
         <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -20,30 +20,30 @@
         </svg>
       </div> -->
       <figure v-if="input && preloader"
-        class="currency-item grid-block vertical nowrap is-input"
-        v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection }"
+        class="currency-item is-input"
+        v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
         v-on:mouseleave="activeSelection = false"
         v-on:click="selectItem">
          <img 
-          class="show-for-medium thumbnail"
+
           :src="imgUrl" :alt="name"
           v-tooltip.top-center="ttmsg">
-         <img 
-          class="show-for-small-only thumbnail"
+<!--          <img 
+          class="show-for-small-only"
           :src="imgUrl" :alt="name">
-        <small class="show-for-small-only grid-block currency-name" v-html="ttmsg"></small>
+        <small class="show-for-small-only currency-name" v-html="ttmsg"></small> -->
       </figure>
       <div
         v-if="!input && preloader"
-        class="currency-item grid-block text-center align-center nowrap is-display">
+        class="currency-item text-center is-display">
          <figure class="grid-content noscroll">
           <img :src="imgUrl" :alt="name"
             v-tooltip.top-center="ttmsg">
-          <!-- <h6 class="show-for-small-only grid-block currency-name text-center" v-html="ttmsg"></h6> -->
+          <!-- <h6 class="show-for-small-only currency-name text-center" v-html="ttmsg"></h6> -->
          </figure>
       </div>
     </transition>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -75,6 +75,9 @@ export default {
     id: [String, Number]
   },
   computed: {
+    isDisabled: function () {
+      return this.settings.defaults.disabledCurrencyIndexes.indexOf(this.id) > -1
+    },
     preloader: function () {
       if (Object.keys(this.currencyMap).length && this.id) {
         return this.currencyMap[this.id]
@@ -123,6 +126,9 @@ export default {
     // method is used to format and place constraints
     // on the input's value
     selectItem: function () {
+      if (this.isDisabled) {
+        return
+      }
       this.selected = !this.selected
       this.activeSelection = this.selected
       this.$emit('select', { id: this.id, selected: this.selected })
@@ -146,10 +152,13 @@ export default {
 // call settings for global SCSS access
 @import '../assets/styles/settings';
 @import '../assets/styles/tooltip';
-.shell {
-  // width: rem-calc(78);
-  // height: rem-calc(78);
-}
+
+$icon-size: rem-calc(46) !default;
+
+// .shell {
+//   display: block;
+//   padding: rem-calc(3);
+// }
 .fade-in-enter-active, 
 .fade-in-leave-active {
   transition: opacity $default-animation-speed*2;
@@ -158,6 +167,9 @@ export default {
   opacity: 0
 }
 .currency-item {
+  display: block;
+  margin: auto ;
+  padding: 0;
   transition: border-color $default-animation-speed;
   background-color: $dark-color;
   border: solid 1px $gray-dark;
@@ -183,11 +195,11 @@ export default {
     }
   }
   // active styles
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
   // width: rem-calc(78);
   // height: rem-calc(78);
-  line-height: 1;
+  // line-height: 1;
   text-align: center;
   // float: left;
   // margin-right: .2em;
@@ -196,29 +208,43 @@ export default {
     border: none;
     background-color: transparent;
     // margin: auto;
-    filter: drop-shadow(rem-calc(-1) rem-calc(2) rem-calc(1) rgba($primary-color, 0.6));
+    // filter: drop-shadow(rem-calc(-1) rem-calc(2) rem-calc(1) rgba($primary-color, 0.6));
   }
   img {
-    margin: rem-calc(2);
-    width: rem-calc(78);
-    height: rem-calc(78);
+    margin: 0;
+    padding: rem-calc(1);
+    width: $icon-size;
+    height: $icon-size;
+    // width: rem-calc(78);
+    // height: rem-calc(78);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     .small-icon & {
-      width: rem-calc(36);
-      height: rem-calc(36);
+      width: $icon-size/2;
+      height: $icon-size/2;
     }
   }
-  svg path,
-  svg rect {
-    margin: auto;
-    width: rem-calc(78);
-    height: rem-calc(78);
-    fill: $primary-color;
-    .small-icon & {
+  &.is-disabled {
+    // cursor: not-allowed !important;
+    cursor: no-drop !important;
+    // border-color: $gray;
+    &:hover {
+      border-color: $gray-dark;
+    }
+    // img {
+    //   filter: grayscale(100%);
+    // }
+  }
+  // svg path,
+  // svg rect {
+  //   margin: auto;
+  //   width: rem-calc(78);
+  //   height: rem-calc(78);
+  //   fill: $primary-color;
+  //   .small-icon & {
 
-    }
-  }
+  //   }
+  // }
   
 }
 .currency-name {

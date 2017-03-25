@@ -145,8 +145,8 @@ export default {
 @import '../assets/styles/settings';
 
 .header {
-  background-color: $dark-color;
-  border-bottom: rem-calc(3) solid $body-font-color;
+  background-color: $gray;
+  border-bottom: rem-calc(1) solid $black;
   .inline-list {
     margin-bottom: 0;
   }

@@ -16,7 +16,8 @@
         </div>
       </div>
       <div class="grid-block text-center noscroll shrink">
-        <div class="svg-icon">
+        <div :click="getData()"
+          class="svg-icon">
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
             <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
           </svg>
@@ -55,7 +56,7 @@
         </div>
       </div>
     </div>
-
+  {{Object.keys(biddingIndex)}}
     <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader>
     <!-- {{orderBy}} -->
     <section class="block-list exchange-list" v-if="Object.keys(biddingIndex).length">
@@ -119,7 +120,8 @@ export default {
   data () {
     return {
       settings,
-      // selected: {},
+
+      refreshInterval: undefined,
 
       loading: 0,
       filterBids: true,
@@ -146,6 +148,7 @@ export default {
         return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
         // return items
       }
+      
     },
     // accountName: function () {
     //   return this.selected.accountName
@@ -188,6 +191,7 @@ export default {
         const bb = that.byExchangeRatio[b] && that.byExchangeRatio[b][that.keys.ratio + '_base']
         return bb - aa
       })
+      console.log('this.byExchangeRatio', this.byExchangeRatio)
       return this.byExchangeRatio
     },
     // hasAsks: function (key) {
@@ -205,6 +209,9 @@ export default {
     // }
   },
   methods: {
+    refreshData () {
+      this.getData()
+    },
     setStats (items, key, askKey, bidKey, askId, askIdKey) {
       const that = this
       let t = []
@@ -298,7 +305,7 @@ export default {
         .then((response) => {
           // console.log('items fresh from API!', response.data)
           that.askList = response.data
-          // test dtat
+          // test data
           // that.askList.push({
           //   'accountName': 'Travis',
           //   'ask_id': that.askList[0].ask_id,
@@ -329,7 +336,7 @@ export default {
   },
   beforeCreate: function () {
     let name = saved.get(settings.keys.exchange.user)
-    console.log('items fresh from API!', name)
+    // console.log('items fresh from API!', name)
     // if (name) {
     //   this.accountName = name
     // }
@@ -345,12 +352,20 @@ export default {
   //     })
   },
   created: function () {
+    const that = this
     // selected service
     let name = saved.get(this.accountNameSaveKey)
     if (name) {
       this.accountName = name
     }
-    this.getData()
+    that.getData()
+    console.log(this.settings.defaults.refreshInterval)
+    // this.refreshInterval = setInterval(function () {
+    //   that.getData()
+    // }, this.settings.defaults.refreshInterval)
+  },
+  beforeDestroy: function () {
+    clearInterval(this.refreshInterval)
   }
 }
 </script>
@@ -417,6 +432,9 @@ export default {
     &.has-bids {
       cursor: pointer;
       background-color: $dark-color;
+      &:nth-child(odd) {
+        background-color: darken($dark-color, 5);
+      }
       &:hover {
         background-color: $blocklist-item-background-hover;
       }

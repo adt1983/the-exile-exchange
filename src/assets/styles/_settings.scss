@@ -83,9 +83,9 @@ $base-line-height: 1.5;
 $headers: "h1,h2,h3,h4,h5,h6";
 $font-weight-normal: normal;
 $font-weight-bold: bold;
-$body-background: #0f0f0f;
+$body-background: #1E2B34;
 $body-font-color: #DCD3C3;
-$body-font-family: "Century Gothic", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: "BellGothicStd-Black", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $alt-font-family: 'breathe_fireregular', $body-font-family;
 $body-font-weight: $font-weight-normal;
 $body-font-style: normal;
@@ -93,7 +93,7 @@ $body-antialiased: true;
 
 $primary-color: #2173a6;
 $secondary-color: #f1f1f1;
-$alert-color: #AC2E2D;
+$alert-color: #1E2B34;
 $alert-dark: darken($alert-color, 25);
 $info-color: #999;
 $success-color: #43AC6A;
@@ -104,7 +104,7 @@ $warning-dark: darken($warning-color, 25);
 $white: #fff;
 $black: #000;
 $dark-color: #232323;
-$gray: #dfdfdf;
+$gray: #4B555D;
 $gray-dark: darken($gray, 60);
 $gray-light: lighten($gray, 8);
 
@@ -116,14 +116,16 @@ $icon-classes: ('iconic', 'ionicons', 'material-icons', 'open-iconic');
 $loader-classes: ('sk-loader');
 $default-animation-speed: 0.15s;
 
+$icon-size: rem-calc(46);
+
 // 3. Breakpoints
 // --------------
 
 $breakpoints: (
   small: rem-calc(0),
   medium: rem-calc(640),
-  large: rem-calc(1200),
-  xlarge: rem-calc(1440),
+  large: rem-calc(1440),
+  xlarge: rem-calc(1600),
   xxlarge: rem-calc(1920),
 );
 $breakpoint-classes: (small medium large);
@@ -204,7 +206,7 @@ $acronym-underline: 1px dotted #ddd;
 // 5. Grid
 // -------
 
-$container-width: rem-calc(900);
+$container-width:  (rem-calc(3.75)*2 + $icon-size ) * 22;
 $block-padding: $global-padding;
 $block-spacing: $global-spacing;
 $total-columns: 12;

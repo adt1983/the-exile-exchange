@@ -34,3 +34,16 @@
     font-style: normal;
 
 }
+
+
+@font-face {
+    font-family: 'BellGothicStd-Black';
+    src: url('../static/fonts/BellGothicStd-Black.eot?#iefix') format('embedded-opentype'),  
+         url('../static/fonts/BellGothicStd-Black.otf')  format('opentype'),
+         url('../static/fonts/BellGothicStd-Black.woff') format('woff'), 
+         url('../static/fonts/BellGothicStd-Black.ttf')  format('truetype'), 
+         url('../static/fonts/BellGothicStd-Black.svg#BellGothicStd-Black') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
