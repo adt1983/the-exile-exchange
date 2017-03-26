@@ -13,9 +13,9 @@ let items = []
 let collection = {}
 
 function getSearch (id) {
-  let preset = settings.presets.currencySearch['default']
-  if (settings.presets.currencySearch[ id ]) {
-    preset = settings.presets.currencySearch[ id ]
+  let preset = settings.defaults.currencySearch['default']
+  if (settings.defaults.currencySearch[ id ]) {
+    preset = settings.defaults.currencySearch[ id ]
   }
   return preset
 }

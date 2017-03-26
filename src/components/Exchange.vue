@@ -51,7 +51,7 @@
               <div 
                 :show="loading < 2"
                 v-on:click="refreshData()"
-                class="svg-icon call-to-action">
+                class="svg-icon">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
                   <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
                 </svg>
@@ -82,8 +82,8 @@
             <ul class="exchange-item">
               <li><a href=""
                 :class="applyColorClass(biddingIndex[key].asks)"
-                @click.prevent="showOffer(key, biddingIndex[key].asks, 'ask')"
-                v-if="biddingIndex[key].asks && biddingIndex[key].asks.length">{{biddingIndex[key].asks.length}}</a></li>
+                @click.prevent="showOffer(key, biddingIndex[key].asks, 'ask')"><span
+                v-if="biddingIndex[key].asks && biddingIndex[key].asks.length">{{biddingIndex[key].asks.length}}</span></a></li>
               <li
                 class="exchange-ratio"
                 :class="{'has-account': isAccount(biddingIndex[key].asks) || isAccount(biddingIndex[key].bids)}"><span class="secondary-color body-font text-center">{{key}}</span></li>
@@ -185,14 +185,14 @@ export default {
       // should stats be passing in `this` values
       // instead of being writting in external funtions?
       // bad scope here?
-      // items = this.byExchangeRatio[ this.bidId ]
-      this.orderBy = Object.keys(this.byExchangeRatio[ this.bidId ]).sort(function (a, b) {
-        const aa = that.byExchangeRatio[ that.bidId ][a] && that.byExchangeRatio[ that.bidId ][a][that.keys.ratio + '_base']
-        const bb = that.byExchangeRatio[ that.bidId ][b] && that.byExchangeRatio[ that.bidId ][b][that.keys.ratio + '_base']
+      // items = this.byExchangeRatio
+      this.orderBy = Object.keys(this.byExchangeRatio).sort(function (a, b) {
+        const aa = that.byExchangeRatio[a] && that.byExchangeRatio[a][that.keys.ratio + '_base']
+        const bb = that.byExchangeRatio[b] && that.byExchangeRatio[b][that.keys.ratio + '_base']
         return bb - aa
       })
-      // console.log('this.byExchangeRatio[ this.bidId ]', this.byExchangeRatio[ this.bidId ])
-      return this.byExchangeRatio[ this.bidId ]
+      // console.log('this.byExchangeRatio', this.byExchangeRatio)
+      return this.byExchangeRatio
     },
     // hasAsks: function (key) {
     //   return this.biddingIndex && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
@@ -275,25 +275,25 @@ export default {
       return item
     },
     addItemToIndex: function (item, key, askKey, index, askId, askIdKey) {
-      if (!this.byExchangeRatio[ this.bidId ][index]) {
-        this.byExchangeRatio[ this.bidId ][index] = {
+      if (!this.byExchangeRatio[index]) {
+        this.byExchangeRatio[index] = {
           bids: [],
           asks: []
         }
-        this.byExchangeRatio[ this.bidId ][index][key + '_base'] = item[key + '_base']
+        this.byExchangeRatio[index][key + '_base'] = item[key + '_base']
       }
       // if no asks, define them
-      // if (this.byExchangeRatio[ this.bidId ][index].asks.length) {
+      // if (this.byExchangeRatio[index].asks.length) {
         // assumes that the first in index is ask
       console.log('key', item[key])
       console.log('(item[askIdKey] === askId', (item[askIdKey].toString() === askId))
       if (item[askIdKey].toString() === askId) {
-        this.byExchangeRatio[ this.bidId ][index].asks.push(item)
+        this.byExchangeRatio[index].asks.push(item)
       } else {
-        this.byExchangeRatio[ this.bidId ][index].bids.push(item)
+        this.byExchangeRatio[index].bids.push(item)
       }
       // } else {
-      //   this.byExchangeRatio[ this.bidId ][index].asks.push(item)
+      //   this.byExchangeRatio[index].asks.push(item)
       // }
     },
     // clearIndex: function (items) {
@@ -346,7 +346,7 @@ export default {
     getData: function () {
       this.askList = [] // hard reset
       this.bidList = [] // hard reset
-      this.byExchangeRatio[ this.bidId ] = {} // hard reset
+      this.byExchangeRatio = {} // hard reset
       // this.biddingIndex
       this.loading = 0
       let league = this.leagueMap[this.leagueId][this.settings.keys.league.id] || 'Standard'
@@ -530,9 +530,6 @@ export default {
 .preferences {
   background-color: $gray-dark;
   padding: $global-padding/2 0;
-}
-.call-to-action {
-  cursor: pointer;
 }
 // .svg-icon {
 //     &.loading {

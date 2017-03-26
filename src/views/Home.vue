@@ -93,13 +93,14 @@ export default {
   },
   methods: {
     createParams: function (ids) {
-      const that = this
       let all = []
       for (let i = 0; i < ids.length; i++) {
         let p = []
-        p.push(that.currencyMap[ids[i]].$preset)
+        console.log('ids[i]', ids[i])
+        console.log('that.currencyMap', this.currencyMap)
+        p.push(this.currencyMap[ids[i]].$preset)
         p.push(ids[i])
-        p = p.join(that.settings.paramDiv)
+        p = p.join(this.settings.paramDiv)
         all.push(p)
       }
       return all.join(this.settings.paramSubDiv)
@@ -118,6 +119,9 @@ export default {
     },
     submitLeague (v) {
       saved.set(this.accountNameSaveKey, this.selectedLeague)
+    },
+    isLoaded () {
+      return Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length
     }
   },
   mounted: function () {
