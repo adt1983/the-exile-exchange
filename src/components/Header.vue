@@ -1,5 +1,27 @@
 <template>
   <div class="grid-block header shrink">
+    <ul class="header-nav grid-block shrink">
+          <li v-for="league in leagueMap">
+            <router-link 
+              class="alt-font"
+              active-class="is-active"
+              :to="{ params: { leagueid: league[settings.keys.league.slug] }}" 
+              tag="a">{{league[settings.keys.league.name]}}</router-link>
+          </li>
+    </ul>
+    <div class="grid-block expand">
+      
+    </div>
+    <ul class="header-nav grid-block shrink float-right">
+      <li>
+        <account-name></account-name>
+      </li>
+          <li>  
+            <router-link 
+              active-class="is-active"
+              :to="{ name: 'currency', params: { leagueid: leagueid }}"
+              tag="a" >Currency</router-link></li>
+    </ul>
     <!-- <div class="grid-block"> -->
       <!-- <div class="grid-content text-center"> -->
         <!-- todo // convert asks to string -->
@@ -12,31 +34,11 @@
             </svg></div></router-link> -->
       <!-- </div> -->
     <!-- </div> -->
-    <div class="grid-block shrink v-align">
-      <div class="grid-content align-center">
-        <h1>{{leagueName}}</h1>
-      </div>
-    </div>
-    <div class="grid-block v-align noscroll">
+<!--     <div class="grid-block v-align noscroll">
       <div class="grid-content align-center noscroll">
         <account-name></account-name>
-        <!-- <strong class="body-font label warning-dark-bg">{{accountName}}</strong> -->
       </div>
-    </div>
-    <div class="grid-block shrink v-align hide-for-small-only">
-      <div class="grid-content align-center">
-        <ul class="button-group segmented call-to-action">
-          <!-- leagueMap{{leagueMap}} -->
-          <li v-for="league in leagueMap">
-            <!-- league{{league}} -->
-            <router-link 
-              active-class="is-active"
-              :to="{ params: { leagueid: league[settings.keys.league.slug] }}" 
-              tag="a">{{league[settings.keys.league.name]}}</router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </div> -->
 
     <!-- SHOW SELECTED -->
     <!-- <ul class="no-bullet grid-block horizontal shrink">
@@ -53,16 +55,11 @@
           ></currency-item>
       </li>
     </ul> -->
-    <div class="grid-block v-align noscroll">
-      <div class="grid-content align-center text-right noscroll">
+    <!-- <div class="grid-block v-align noscroll">
+      <div class="grid-content align-center text-right noscroll"> --> 
         <!-- todo // convert asks to string -->
-        <router-link 
-          v-show="params.length === 0"
-          :to="{ name: 'currency', params: { leagueid: leagueid }}"
-          tag="button" 
-          type="button" 
-          class="button">Currency</router-link>
-        <router-link 
+      
+     <!--    <router-link 
           v-show="askParams() !== '' && params.length"
           :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
           tag="button" 
@@ -72,8 +69,8 @@
           v-show="askParams() === '' && params.length"
           disabled="disabled">
           {{searchText}}
-        </button>
-      </div>
+        </button> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -151,6 +148,7 @@ export default {
 
 // call settings for global SCSS access
 @import '../assets/styles/settings';
+@import './node_modules/angular-base-apps/scss/components/menu-bar';
 
 .header {
   background-color: $gray;
@@ -159,5 +157,47 @@ export default {
     margin-bottom: 0;
   }
 }
+.header-nav {
+  // This placeholder selector gets you the core structural styles for the menu
+  @extend %menu-bar;
+  text-align: center;
+  // Set the orientation and sizing of the menu bar
+  @include menu-bar-layout(
+    $orientation: horizontal, // Can be horizontal or vertical
+    $stretch: false // Set to false for a condensed menu
+  );
 
+  // Add styles for the menu bar items and text
+  @include menu-bar-style(
+    $background: transparent, // Background color of items
+    $background-hover: $primary-color // Background color of item on hover
+    // $background-active: #666, // Background color of an active item
+    // $color: #fff, // Text color of items
+    // $color-hover, // Text color of item on hover
+    // $color-active, // Text color of item when active
+    // $autocolor: false // When true, all the above colors will be derived from $background
+  );
+  li {
+    white-space: nowrap;
+  }
+  .title {
+    flex-flow: column nowrap;
+    flex: 1 0 0;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1;
+  }
+ .is-active {
+    background-color: $dark-color;
+    cursor: default;
+    &:hover {
+      background-color: $dark-color;
+    }
+  }
+  .float-right {
+    align-self: flex-end;
+  }
+}
 </style>

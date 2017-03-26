@@ -10,6 +10,25 @@
           v-on:selected="updateAskSelected"
           class="active grid-block align-center"
           ></currency-list>
+
+        <div class="grid-block text-center align-center">
+          <div class="grid-content">
+            <router-link 
+              :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
+              tag="button" 
+              type="button"
+              :class="{'hollow': askParams() === ''}"
+              :disabled="askParams() === ''"
+              class="button large expand exchange-call-to-action">Exchange&nbsp;<div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="32" viewBox="0 0 10 32">
+<path d="M10.286 16q0 0.464-0.339 0.804l-8 8q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-16q0-0.464 0.339-0.804t0.804-0.339 0.804 0.339l8 8q0.339 0.339 0.339 0.804z"></path>
+</svg></div></router-link>
+           <!--  <button class="button large expand hollow disabled exchange-call-to-action"
+              v-if="askParams() === ''"
+              disabled="disabled">
+              Exchange
+            </button> -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -80,9 +99,9 @@ export default {
     const value = this.leagueid
     saved.set(id, value)
     // get ask currency params
-    // let name = saved.get(this.currencySaveKey)
-    // if (name) {
-    //   this.accountName = name
+    // let savedCurrency = saved.get(this.currencySaveKey)
+    // if (savedCurrency) {
+    //   this.savedCurrency = name
     // }
   },
   beforeDestroy: function () {
@@ -150,6 +169,9 @@ export default {
   min-height: 100%;
   margin-top: rem-calc(-100);
 }
+.exchange-call-to-action {
+  margin-top: $global-padding;
+}
 .currency-view {
   // @include base-panel;
   // padding: 0 $global-padding*3;
@@ -169,7 +191,12 @@ export default {
   }
   svg path,
   svg rect{
-    fill: $secondary-color;
+      // fill: red;
+    fill: $white;
+    .hollow & ,
+    [disabled="disabled"] & {
+      fill: $primary-color;
+    }
   }
 }
 

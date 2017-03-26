@@ -75,6 +75,11 @@ export default {
       // currencyKeys: settings.keys.currency,
       // league,
 
+      // create unique!!!
+      // unique: function () {
+      //   return {}
+      // },
+
       selected: {},
 
       leagueMap: {},

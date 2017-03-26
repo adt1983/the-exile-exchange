@@ -60,7 +60,7 @@ $include-css: (
   label: false,
   badge: true,
   list: true,
-  menu-bar: false,
+  menu-bar: true,
   loader: false,
   modal: false,
   motion: false,
@@ -412,7 +412,7 @@ $menubar-background-active: $menubar-background-hover;
 $menubar-color: isitlight($menubar-background);
 $menubar-color-hover: $menubar-color;
 $menubar-color-active: $menubar-color-hover;
-$menubar-item-padding: $global-padding $global-padding/4;
+$menubar-item-padding: $global-padding;
 $menubar-icon-size: 25px;
 $menubar-icon-spacing: $menubar-item-padding;
 

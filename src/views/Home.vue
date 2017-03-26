@@ -32,7 +32,7 @@
         </div>
       </ul>
       <div class="grid-block v-align">
-        <div class="grid-content align-center">
+        <div class="grid-content align-center text-center">
           <account-name class="call-to-action"></account-name>
         </div>
       </div>
@@ -167,6 +167,7 @@ export default {
   header,
   .call-to-action {
     padding: $global-padding*3 0;
+    margin: 0 auto;
   }
 }
 
