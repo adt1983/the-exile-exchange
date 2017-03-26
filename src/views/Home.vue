@@ -4,8 +4,8 @@
         :leagueid="leagueid"
         ></header-section> -->
     <div class="home">
-  <!--   selectedLeague: {{selectedLeague}}
-    currencies: {{lastAsks}} -->
+    selectedLeague: {{selectedLeague}}
+    currencies: {{lastAsks}}
   <!--     <exhange-view
         ></exhange-view> -->
 
@@ -45,6 +45,7 @@ import settings from '../settings'
 import saved from '../services/selected'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
+import router from '../router'
 
 import Loader from '../components/Loader'
 import Header from '../components/Header'
@@ -69,21 +70,8 @@ export default {
 
       league,
       title: 'Select League.',
-      leagueSaveKey: settings.keys.league.type
-    }
-  },
-  created () {
-    let name = saved.get(this.accountNameSaveKey)
-    if (name) {
-      this.accountName = name
-    }
-    let currencies = saved.get(this.currencySaveKey)
-    if (currencies) {
-      this.lastAsks = currencies
-    }
-    let league = saved.get(this.leagueSaveKey)
-    if (league) {
-      this.selectedLeague = league
+      leagueSaveKey: settings.keys.league.type,
+      selectedLeague: undefined
     }
   },
   computed: {
@@ -96,8 +84,6 @@ export default {
       let all = []
       for (let i = 0; i < ids.length; i++) {
         let p = []
-        console.log('ids[i]', ids[i])
-        console.log('that.currencyMap', this.currencyMap)
         p.push(this.currencyMap[ids[i]].$preset)
         p.push(ids[i])
         p = p.join(this.settings.paramDiv)
@@ -106,7 +92,12 @@ export default {
       return all.join(this.settings.paramSubDiv)
     },
     selected () {
-      const currency = this.createParams(this.settings.defaults.currencyIndexes)
+      let currency
+      if (this.lastAsks && this.lastAsks.length) {
+        currency = this.lastAsks
+      } else {
+        currency = this.createParams(this.settings.defaults.currencyIndexes)
+      }
       console.log('currency', currency)
       return currency
     },
@@ -122,13 +113,21 @@ export default {
     },
     isLoaded () {
       return Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length
+    },
+    isSet () {
+      return this.selectedLeague
+    },
+    gotoExchange () {
+      if (this.isSet) {
+        router.push({
+          name: 'exchange',
+          params: {
+            leagueid: this.selectedLeague,
+            askids: this.selected()
+          }
+        })
+      }
     }
-  },
-  mounted: function () {
-    league
-      .then((response) => {
-        this.league = response.items
-      })
   },
   beforeCreate: function () {
     const that = this
@@ -136,6 +135,27 @@ export default {
       .then((response) => {
         that.currencyMap = response.collection
         // this.currency = response.items
+      })
+  },
+  created () {
+    let name = saved.get(this.accountNameSaveKey)
+    if (name) {
+      this.accountName = name
+    }
+    let currencies = saved.get(this.currencySaveKey)
+    if (currencies) {
+      this.lastAsks = currencies
+    }
+    let league = saved.get(this.leagueSaveKey)
+    if (league) {
+      this.selectedLeague = league
+    }
+  },
+  mounted: function () {
+    league
+      .then((response) => {
+        this.league = response.items
+        this.gotoExchange()
       })
   },
   // beforeDestroy: function () {
