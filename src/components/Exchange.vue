@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper grid-block vertical">
+  <div class="wrapper">
     <!-- accountName: {{accountName}} {{selected}} -->
     <header class="grid-block shrink">
       <div class="grid-block text-center noscroll">
@@ -15,15 +15,16 @@
             :alt="currencyMap[askId][settings.keys.currency.name]"> -->
         </div>
       </div>
-      <div class="grid-block text-center noscroll shrink">
-        <div 
-          :show="loading < 2"
-          class="svg-icon">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
-            <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
-          </svg>
-        </div>
-      </div>
+<!--       <div class="grid-block text-center noscroll shrink">
+          <div 
+            :show="loading < 2"
+            v-on:click="refreshData()"
+            class="svg-icon">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
+              <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
+            </svg>
+          </div>
+      </div> -->
       <div class="grid-block text-center noscroll">
         <div class="grid-content noscroll">
             <currency-item
@@ -47,6 +48,14 @@
       </div>
       <div class="grid-block noscroll">
         <div class="grid-content noscroll text-center">
+              <div 
+                :show="loading < 2"
+                v-on:click="refreshData()"
+                class="svg-icon call-to-action">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
+                  <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
+                </svg>
+              </div>
           <!-- <input type="checkbox" id="Bids" v-model="settings.defaults.autoRefresh">&nbsp;
           <label for="Bids">Auto Refresh</label> -->
         </div>
@@ -63,18 +72,18 @@
     <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader>
     <!-- {{orderBy}} -->
     <section class="block-list exchange-list" v-if="Object.keys(biddingIndex).length">
-      <ul>
-        <li
+      <!-- <ul> -->
+        <div
           class="exchange-row"
           :class="[{ 'has-bids': hasBids(key) }]"
           v-for="(key, increments) in orderBy" 
           :key="key">
-          <div class="grid-content">
+          <!-- <div class="grid-content"> -->
             <ul class="exchange-item">
               <li><a href=""
                 :class="applyColorClass(biddingIndex[key].asks)"
-                @click.prevent="showOffer(key, biddingIndex[key].asks, 'ask')"><span
-                v-if="biddingIndex[key].asks && biddingIndex[key].asks.length">{{biddingIndex[key].asks.length}}</span></a></li>
+                @click.prevent="showOffer(key, biddingIndex[key].asks, 'ask')"
+                v-if="biddingIndex[key].asks && biddingIndex[key].asks.length">{{biddingIndex[key].asks.length}}</a></li>
               <li
                 class="exchange-ratio"
                 :class="{'has-account': isAccount(biddingIndex[key].asks) || isAccount(biddingIndex[key].bids)}"><span class="secondary-color body-font text-center">{{key}}</span></li>
@@ -104,9 +113,9 @@
                 </div>
               </div>
             </div> -->
-          </div>
-        </li>
-      </ul>
+          <!-- </div> -->
+        </div>
+      <!-- </ul> -->
     </section>
   </div> 
 </template>
@@ -116,7 +125,7 @@ import settings from '../settings'
 import { http } from '../services'
 import { bus } from '../services/bus'
 import saved from '../services/selected'
-import * as filters from '../filters'
+// import * as filters from '../filters'
 
 import CurrencyItem from '../components/CurrencyItem'
 import Loader from './Loader'
@@ -154,27 +163,6 @@ export default {
     }
   },
   computed: {
-    isCurrentAsk: function () {
-      let items
-      console.log('this.askId', this.askId)
-      if (this.askList && this.askList.length) {
-        items = this.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.askId)
-        return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
-        // return items
-      }
-    },
-    // accountName: function () {
-    //   return this.selected.accountName
-    // },
-    isCurrentBid: function () {
-      let items
-      console.log('this.bidId', this.bidId)
-      if (this.bidList && this.bidList.length) {
-        items = this.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid)
-        return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
-        // return items
-      }
-    },
     // get only, just need a function
     // highestAsk: function () {
     //   return filters.highest(this.isCurrentAsk, this.keys.ask)
@@ -191,20 +179,20 @@ export default {
       const that = this
       // let items
       // call other computers to make sure they are compiled
-      this.isCurrentAsk // call ask first!
-      this.isCurrentBid
+      this.isCurrentAsk() // call ask first!
+      this.isCurrentBid()
 
       // should stats be passing in `this` values
       // instead of being writting in external funtions?
       // bad scope here?
-      // items = this.byExchangeRatio
-      this.orderBy = Object.keys(this.byExchangeRatio).sort(function (a, b) {
-        const aa = that.byExchangeRatio[a] && that.byExchangeRatio[a][that.keys.ratio + '_base']
-        const bb = that.byExchangeRatio[b] && that.byExchangeRatio[b][that.keys.ratio + '_base']
+      // items = this.byExchangeRatio[ this.bidId ]
+      this.orderBy = Object.keys(this.byExchangeRatio[ this.bidId ]).sort(function (a, b) {
+        const aa = that.byExchangeRatio[ that.bidId ][a] && that.byExchangeRatio[ that.bidId ][a][that.keys.ratio + '_base']
+        const bb = that.byExchangeRatio[ that.bidId ][b] && that.byExchangeRatio[ that.bidId ][b][that.keys.ratio + '_base']
         return bb - aa
       })
-      console.log('this.byExchangeRatio', this.byExchangeRatio)
-      return this.byExchangeRatio
+      // console.log('this.byExchangeRatio[ this.bidId ]', this.byExchangeRatio[ this.bidId ])
+      return this.byExchangeRatio[ this.bidId ]
     },
     // hasAsks: function (key) {
     //   return this.biddingIndex && this.biddingIndex[key].asks && this.biddingIndex[key].asks.length
@@ -212,6 +200,7 @@ export default {
     isLoaded: function () {
       if (this.renderView && this.askList && this.bidList) {
         if (this.loading > 2) { // 2 reqs
+          // this.biddingIndex
           return true
         }
       }
@@ -221,6 +210,28 @@ export default {
     // }
   },
   methods: {
+    isCurrentAsk: function () {
+      console.log('this.askId', this.askId)
+      if (this.askList && this.askList.length && this.bidList && this.bidList.length) {
+        this.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.bidId)
+        // return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
+        // return items
+      }
+    },
+    // accountName: function () {
+    //   return this.selected.accountName
+    // },
+    isCurrentBid: function () {
+      console.log('this.bidId', this.bidId)
+      if (this.bidList && this.bidList.length && this.bidList && this.bidList.length) {
+        this.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid, this.bidId, this.keys.askId)
+        // return filters.current(items, this.keys.lastSeenTime, settings.refreshRate)
+        // return items
+      }
+    },
+    refreshData () {
+      this.getData()
+    },
     applyColorClass (bids) {
       const isAccount = this.isAccount(bids)
       const count = bids && bids.length
@@ -239,18 +250,18 @@ export default {
       }
       return className
     },
+    // this.setStats(this.bidList, this.keys.ratio, this.keys.ask, this.keys.bid, this.bidId, this.keys.askId)
+    //     this.setStats(this.askList, this.keys.ratio, this.keys.ask, this.keys.bid, this.askId, this.keys.askId)
     setStats (items, key, askKey, bidKey, askId, askIdKey) {
       const that = this
-      let t = []
+      // let t = []
       // console.log('baseRatio items', items)
       // do all manipulation here
       // in one loop!
-      t = items.map(function (item) {
+      items.forEach(function (item) {
         let i = that.addRatio(item, key, askKey, bidKey)
         that.addItemToIndex(i, key, askKey, item[key + '_key'], askId, askIdKey)
-        return i
       })
-      return t
     },
     addRatio: function (item, key, askKey, bidKey) {
       // todo: externalize these flags in settings{} ?
@@ -264,25 +275,30 @@ export default {
       return item
     },
     addItemToIndex: function (item, key, askKey, index, askId, askIdKey) {
-      if (!this.byExchangeRatio[index]) {
-        this.byExchangeRatio[index] = {
+      if (!this.byExchangeRatio[ this.bidId ][index]) {
+        this.byExchangeRatio[ this.bidId ][index] = {
           bids: [],
           asks: []
         }
-        this.byExchangeRatio[index][key + '_base'] = item[key + '_base']
+        this.byExchangeRatio[ this.bidId ][index][key + '_base'] = item[key + '_base']
       }
       // if no asks, define them
-      if (this.byExchangeRatio[index].asks.length) {
+      // if (this.byExchangeRatio[ this.bidId ][index].asks.length) {
         // assumes that the first in index is ask
-        if (item[askIdKey] === askId) {
-          this.byExchangeRatio[index].asks.push(item)
-        } else {
-          this.byExchangeRatio[index].bids.push(item)
-        }
+      console.log('key', item[key])
+      console.log('(item[askIdKey] === askId', (item[askIdKey].toString() === askId))
+      if (item[askIdKey].toString() === askId) {
+        this.byExchangeRatio[ this.bidId ][index].asks.push(item)
       } else {
-        this.byExchangeRatio[index].asks.push(item)
+        this.byExchangeRatio[ this.bidId ][index].bids.push(item)
       }
+      // } else {
+      //   this.byExchangeRatio[ this.bidId ][index].asks.push(item)
+      // }
     },
+    // clearIndex: function (items) {
+    //   items.
+    // },
     setAccountName () {
       let name = saved.get(this.accountNameSaveKey)
       if (name) {
@@ -328,6 +344,10 @@ export default {
       return Object.keys(this.leagueMap) && Object.keys(this.leagueMap).length && Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length && Object.keys(this.biddingIndex) && (Object.keys(this.biddingIndex).length || Object.keys(this.biddingIndex).length === 0)
     },
     getData: function () {
+      this.askList = [] // hard reset
+      this.bidList = [] // hard reset
+      this.byExchangeRatio[ this.bidId ] = {} // hard reset
+      // this.biddingIndex
       this.loading = 0
       let league = this.leagueMap[this.leagueId][this.settings.keys.league.id] || 'Standard'
       const askReq = '/CurrencyOrder' + '/' + league + '/' + this.askId + '/' + this.currencyMap[this.askId].$preset
@@ -336,7 +356,7 @@ export default {
       http
         .get(askReq)
         .then((response) => {
-          // console.log('items fresh from API!', response.data)
+          console.log('ASKS fresh from API!', response.data)
           that.askList = response.data
           console.log('that.askList.length', that.askList.length)
           // test data
@@ -351,17 +371,17 @@ export default {
           //   'league': that.askList[0].league
           // })
           ++this.loading
+          // this.biddingIndex
         })
       http
         .get(bidReq)
         .then((response) => {
-          // console.log('items fresh from API!', response.data)
+          console.log('BIDS fresh from API!', response.data)
           that.bidList = response.data
           console.log('that.bidList.length', that.bidList.length)
           ++this.loading
         })
       // will be considered loaded with `loading` = 2
-      this.biddingIndex
     }
   },
   components: {
@@ -423,19 +443,22 @@ export default {
 }
 
 .exchange-list {
+  // width: rem-calc(210);
   filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.7));
   .badge {
     margin-top: ($global-padding/3)*2;
   }
-  // This gets you basic styles
-  @include block-list-container(
-    $font-size: 1rem, // Base font size for entire list
-    $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
-  );
+  // // This gets you basic styles
+  // @include block-list-container(
+  //   $font-size: 1rem, // Base font size for entire list
+  //   $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
+  // );
 
-  margin-bottom: 0;
-  ul {
-    margin-bottom: 0;
+  // margin: 0;
+  // ul {
+  //   padding: 0;
+  //   margin: 0;
+    // margin-bottom: 0;
     .exchange-row {
       &:nth-child(even) {
         background-color: lighten($dark-color, 5);
@@ -457,7 +480,7 @@ export default {
       //   background-color: red;
       // }
     }
-  }
+  // }
 
   // Define what tag or class your list items are with this mixin
 
@@ -507,6 +530,9 @@ export default {
 .preferences {
   background-color: $gray-dark;
   padding: $global-padding/2 0;
+}
+.call-to-action {
+  cursor: pointer;
 }
 // .svg-icon {
 //     &.loading {

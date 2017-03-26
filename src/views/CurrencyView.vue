@@ -121,8 +121,8 @@ export default {
       let all = []
       ids.forEach(function (id) {
         let p = []
-        p.push(id.id)
         p.push(that.currencyMap[id.id].$preset)
+        p.push(id.id)
         p = p.join(that.settings.paramDiv)
         all.push(p)
       })

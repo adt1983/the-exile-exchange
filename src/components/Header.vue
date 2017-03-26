@@ -23,12 +23,12 @@
         <!-- <strong class="body-font label warning-dark-bg">{{accountName}}</strong> -->
       </div>
     </div>
-<!--     <div class="grid-block shrink hide-for-small-only">
-      <div class="grid-content">
+    <div class="grid-block shrink v-align hide-for-small-only">
+      <div class="grid-content align-center">
         <ul class="button-group segmented call-to-action">
-          leagueMap{{leagueMap}}
+          <!-- leagueMap{{leagueMap}} -->
           <li v-for="league in leagueMap">
-            league{{league}}
+            <!-- league{{league}} -->
             <router-link 
               active-class="is-active"
               :to="{ params: { leagueid: league[settings.keys.league.slug] }}" 
@@ -36,7 +36,7 @@
           </li>
         </ul>
       </div>
-    </div> -->
+    </div>
 
     <!-- SHOW SELECTED -->
     <!-- <ul class="no-bullet grid-block horizontal shrink">
@@ -53,18 +53,23 @@
           ></currency-item>
       </li>
     </ul> -->
-
     <div class="grid-block v-align noscroll">
       <div class="grid-content align-center text-right noscroll">
         <!-- todo // convert asks to string -->
         <router-link 
-          v-show="askParams() !== ''"
+          v-show="params.length === 0"
+          :to="{ name: 'currency', params: { leagueid: leagueid }}"
+          tag="button" 
+          type="button" 
+          class="button">Currency</router-link>
+        <router-link 
+          v-show="askParams() !== '' && params.length"
           :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
           tag="button" 
           type="button" 
           class="button">{{searchText}}</router-link>
         <button class="button" 
-          v-show="askParams() === ''"
+          v-show="askParams() === '' && params.length"
           disabled="disabled">
           {{searchText}}
         </button>
@@ -74,7 +79,7 @@
 </template>
 
 <script>
-// import router from 'vue-router'
+import router from '../router'
 import settings from '../settings'
 // import saved from '../services/selected'
 
@@ -92,7 +97,7 @@ export default {
 
       // accountName: '',
       // accountNameSaveKey: settings.keys.exchange.user,
-
+      router,
       search: 'Search',
 
       currencyMap: {},
@@ -103,6 +108,9 @@ export default {
     'account-name': AccountNameInput
   },
   computed: {
+    routerinfo () {
+      console.log('this.router', this.router)
+    },
     leagueName: function () {
       const nameKey = settings.keys.league.name
       if (Object.keys(this.leagueMap).length && this.leagueid) {

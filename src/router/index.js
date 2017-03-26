@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// import settings from 'settings'
+
 import Home from 'views/Home'
 import CurrencyView from 'views/CurrencyView'
 import ExchangeView from 'views/ExchangeView'
@@ -19,9 +21,20 @@ Vue.use(Router)
 // }
 
 // function exchangeViewPropsFn (route) {
-//   const now = new Date()
+//   const params = route.params
+//   console.log('route', route)
+//   if (!params.askids) {
+//     params.askids = settings.defaults.currencyIndexes
+//     // router.push({ name: 'user', params: { userId: 123 }})
+//   }
+//   // const now = new Date()
+//   // return {
+//   //   name: (now.getFullYear() + parseInt(route.params.years)) + '!'
+//   // }
+//   // router.push({ name: 'user', params: { userId: 123 }})
+//   console.log('this', this)
 //   return {
-//     name: (now.getFullYear() + parseInt(route.params.years)) + '!'
+//     leagueid: params.leagueid
 //   }
 // }
 
@@ -31,11 +44,15 @@ export default new Router({
   routes: [
     {
       path: '/',
+      props: true,
       name: 'home',
       component: Home
     },
     {
       path: '/currency/:leagueid',
+      // props: {
+      //   routeaction: 'name: \'exchange\', params: { leagueid: leagueid, askids: askParams() }'
+      // },
       props: true,
       name: 'currency',
       component: CurrencyView

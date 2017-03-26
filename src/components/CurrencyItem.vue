@@ -36,11 +36,11 @@
       <div
         v-if="!input && preloader"
         class="currency-item text-center is-display">
-         <figure class="grid-content noscroll">
+         <!-- <figure class="grid-content noscroll"> -->
           <img :src="imgUrl" :alt="name"
             v-tooltip.top-center="ttmsg">
           <!-- <h6 class="show-for-small-only currency-name text-center" v-html="ttmsg"></h6> -->
-         </figure>
+         <!-- </figure> -->
       </div>
     </transition>
   <!-- </div> -->

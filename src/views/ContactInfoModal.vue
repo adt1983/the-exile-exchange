@@ -91,6 +91,7 @@ export default {
       keys: settings.keys.exchange,
       currencyKeys: settings.keys.currency,
       bus,
+      league: 'SET LEAGUE',
       raw: ''
     }
   },
@@ -106,11 +107,11 @@ export default {
   },
   computed: {
     message: function () {
-      return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
+      return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy your ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
         ' ' + this.bidName +
-        ' for ' + (this.raw[this.keys.ask] * this.correctedMultiplier) +
+        ' for my ' + (this.raw[this.keys.ask] * this.correctedMultiplier) +
         ' ' + this.askName +
-        '.'
+        'in' + this.league + '.'
     },
     askName () {
       const id = this.keys.askId

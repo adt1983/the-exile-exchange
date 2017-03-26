@@ -1,24 +1,23 @@
 <template>
-  <section class="grid-block noscroll vertical">
+  <section class="exchange-wrapper grid-block vertical">
     <header-section
       :params="askParams()"
       :leagueid="leagueid"
       ></header-section>
-  <div class="exchange-view grid-block nowrap">
-    <div 
-      class="grid-block"
-      v-if="renderView()"
-      v-for="item in getSelectedAsks">
-      <exchange 
-        class="exchange-list-item"
-        :league-map="leagueMap"
-        :currency-map="currencyMap"
-        :league-id="leagueid"
-        :ask-id="item.asks"
-        :bid-id="item.bids"></exchange>
+    <div class="exchange-view">
+      <div 
+        class="exchange-column grid-content"
+        v-if="renderView()"
+        v-for="item in getSelectedAsks">
+        <exchange 
+          :league-map="leagueMap"
+          :currency-map="currencyMap"
+          :league-id="leagueid"
+          :ask-id="item.asks"
+          :bid-id="item.bids"></exchange>
+      </div>
+      <bids-list-modal></bids-list-modal>
     </div>
-    <bids-list-modal></bids-list-modal>
-  </div>
   </section>
 </template>
 
@@ -131,22 +130,36 @@ export default {
 <style lang="scss" scoped>
 // call settings for global SCSS access
 @import '../assets/styles/settings';
-
+.exchange-wrapper {
+  &.grid-block {
+    margin: 0;
+  }
+}
 .exchange-view {
   width: 100%;
   overflow-y: scroll;
-  .currency-item {
-    display: flex-list;
-    flex-direction: row wrap;
+  display: flex;
+  // flex-direction: column nowrap;
+  // .currency-item {
+  //   display: flex-list;
+  //   flex-direction: row wrap;
+  // }
+  .grid-content {
+    margin: 0;
+    padding: 0;
   }
+}
+.exchange-column {
+  flex: 0 1 rem-calc(200);
+  // width: ;
 }
 .asks-panel,
 .offers-panel {
   border: 1px solid $gray;
   margin: rem-calc(10) auto;
 }
-.exchange-list-item {
-  padding-top: $global-padding;
-  border-bottom: 1px solid $secondary-color;
-}
+// .exchange-list-item {
+//   padding-top: $global-padding;
+//   border-bottom: 1px solid $secondary-color;
+// }
 </style>
