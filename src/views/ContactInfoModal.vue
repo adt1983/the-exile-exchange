@@ -74,12 +74,13 @@ import moment from 'moment'
 import { bus } from '../services/bus'
 import settings from '../settings'
 
+import { league } from '../services/league'
 import { currency } from '../services/currency'
 import CurrencyItem from '../components/CurrencyItem'
 
 export default {
   name: 'contact-info-modal',
-  // props: ['currencyMap'],
+  props: ['leagueid'],
   data () {
     return {
       settings,
@@ -91,6 +92,7 @@ export default {
       keys: settings.keys.exchange,
       currencyKeys: settings.keys.currency,
       bus,
+      leagueMap: {},
       league: 'SET LEAGUE',
       raw: ''
     }
@@ -104,14 +106,19 @@ export default {
       .then((response) => {
         that.currencyMap = response.collection
       })
+    league
+      .then((response) => {
+        that.leagueMap = response.collection
+      })
   },
   computed: {
     message: function () {
-      return 'Hi ' + this.raw[this.keys.name] + ', I\'d like to buy your ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
+      // `Hi @${this.raw[this.keys.name]}, I'd like to buy your (${this.raw[this.keys.bid] * this.correctedMultiplier}) ${this.bidName}`
+      return 'Hi @' + this.raw[this.keys.name] + ', I\'d like to buy your ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
         ' ' + this.bidName +
         ' for my ' + (this.raw[this.keys.ask] * this.correctedMultiplier) +
         ' ' + this.askName +
-        'in' + this.league + '.'
+        ' in ' + this.leagueMap[this.leagueid] + '.'
     },
     askName () {
       const id = this.keys.askId

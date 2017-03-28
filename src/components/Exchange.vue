@@ -122,7 +122,7 @@
 
 <script>
 import settings from '../settings'
-import { http } from '../services'
+// import { http } from '../services'
 import { bus } from '../services/bus'
 import saved from '../services/selected'
 // import * as filters from '../filters'
@@ -157,7 +157,7 @@ export default {
       orderBy: [],
       askList: [],
       bidList: [],
-      byExchangeRatio: {},
+      // byExchangeRatio: {},
 
       title: 'Breach Currency Exchange'
     }
@@ -342,47 +342,47 @@ export default {
     renderView: function () {
       // makes ref to this.biddingIndex which start to computes its contents
       return Object.keys(this.leagueMap) && Object.keys(this.leagueMap).length && Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length && Object.keys(this.biddingIndex) && (Object.keys(this.biddingIndex).length || Object.keys(this.biddingIndex).length === 0)
-    },
-    getData: function () {
-      this.askList = [] // hard reset
-      this.bidList = [] // hard reset
-      this.byExchangeRatio = {} // hard reset
-      // this.biddingIndex
-      this.loading = 0
-      let league = this.leagueMap[this.leagueId][this.settings.keys.league.id] || 'Standard'
-      const askReq = '/CurrencyOrder' + '/' + league + '/' + this.askId + '/' + this.currencyMap[this.askId].$preset
-      const bidReq = '/CurrencyOrder' + '/' + league + '/' + this.currencyMap[this.askId].$preset + '/' + this.askId
-      const that = this
-      http
-        .get(askReq)
-        .then((response) => {
-          console.log('ASKS fresh from API!', response.data)
-          that.askList = response.data
-          console.log('that.askList.length', that.askList.length)
-          // test data
-          // that.askList.push({
-          //   'accountName': 'Travis',
-          //   'ask_id': that.askList[0].ask_id,
-          //   'ask_qty': 1,
-          //   'bid_id': that.askList[0].bid_id,
-          //   'bid_qty': 1,
-          //   'lastChar': 'Cheeseman',
-          //   'lastSeenUTC': +(new Date()),
-          //   'league': that.askList[0].league
-          // })
-          ++this.loading
-          // this.biddingIndex
-        })
-      http
-        .get(bidReq)
-        .then((response) => {
-          console.log('BIDS fresh from API!', response.data)
-          that.bidList = response.data
-          console.log('that.bidList.length', that.bidList.length)
-          ++this.loading
-        })
-      // will be considered loaded with `loading` = 2
     }
+    // getData: function () {
+    //   this.askList = [] // hard reset
+    //   this.bidList = [] // hard reset
+    //   this.byExchangeRatio = {} // hard reset
+    //   // this.biddingIndex
+    //   this.loading = 0
+    //   let league = this.leagueMap[this.leagueId][this.settings.keys.league.id] || 'Standard'
+    //   const askReq = '/CurrencyOrder' + '/' + league + '/' + this.askId + '/' + this.currencyMap[this.askId].$preset
+    //   const bidReq = '/CurrencyOrder' + '/' + league + '/' + this.currencyMap[this.askId].$preset + '/' + this.askId
+    //   const that = this
+    //   http
+    //     .get(askReq)
+    //     .then((response) => {
+    //       console.log('ASKS fresh from API!', response.data)
+    //       that.askList = response.data
+    //       console.log('that.askList.length', that.askList.length)
+    //       // test data
+    //       // that.askList.push({
+    //       //   'accountName': 'Travis',
+    //       //   'ask_id': that.askList[0].ask_id,
+    //       //   'ask_qty': 1,
+    //       //   'bid_id': that.askList[0].bid_id,
+    //       //   'bid_qty': 1,
+    //       //   'lastChar': 'Cheeseman',
+    //       //   'lastSeenUTC': +(new Date()),
+    //       //   'league': that.askList[0].league
+    //       // })
+    //       ++this.loading
+    //       // this.biddingIndex
+    //     })
+    //   http
+    //     .get(bidReq)
+    //     .then((response) => {
+    //       console.log('BIDS fresh from API!', response.data)
+    //       that.bidList = response.data
+    //       console.log('that.bidList.length', that.bidList.length)
+    //       ++this.loading
+    //     })
+    //   // will be considered loaded with `loading` = 2
+    // }
   },
   components: {
     // BidsList,

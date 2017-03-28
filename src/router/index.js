@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+// import { parseParams } from '../services/util'
 // import settings from 'settings'
 
 import Home from 'views/Home'
@@ -36,6 +36,10 @@ Vue.use(Router)
 //   return {
 //     leagueid: params.leagueid
 //   }
+// }
+
+// function exchangeViewPropsFn (route) {
+
 // }
 
 export default new Router({

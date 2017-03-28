@@ -35,9 +35,11 @@
 </template>
 
 <script>
+// import { bus } from '../services/bus'
 import settings from '../settings'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
+import { createParams } from '../services/util'
 import saved from '../services/selected'
 // import router from 'vue-router'
 import Header from '../components/Header'
@@ -68,7 +70,9 @@ export default {
       keys: settings.keys.currency,
 
       leagueSaveKey: settings.keys.league.type,
+
       currencySaveKey: settings.keys.currency.type,
+      lastAsks: undefined,
 
       currencyMap: {},
       leagueMap: {},
@@ -87,22 +91,12 @@ export default {
     currency
       .then((response) => {
         this.currencyMap = response.collection
+        // this.getSelectedCurrencies()
       })
     league
       .then((response) => {
         this.leagueMap = response.collection
       })
-  },
-  created: function () {
-    // save league param from last page
-    const id = this.leagueSaveKey
-    const value = this.leagueid
-    saved.set(id, value)
-    // get ask currency params
-    // let savedCurrency = saved.get(this.currencySaveKey)
-    // if (savedCurrency) {
-    //   this.savedCurrency = name
-    // }
   },
   beforeDestroy: function () {
     // save ask currency params
@@ -135,20 +129,31 @@ export default {
     }
   },
   methods: {
-    createParams: function (ids) {
-      const that = this
-      let all = []
-      ids.forEach(function (id) {
-        let p = []
-        p.push(that.currencyMap[id.id].$preset)
-        p.push(id.id)
-        p = p.join(that.settings.paramDiv)
-        all.push(p)
-      })
-      return all.join(this.settings.paramSubDiv)
+    // getSelectedCurrencies () {
+    //   let currencies = saved.get(this.currencySaveKey)
+    //   if (currencies) {
+    //     this.lastAsks = currencies
+    //   }
+    //   let params = parseParams(this.selectedCurrencies())
+    //   console.log('params', params)
+    //   setTimeout(function () {
+    //     for (let i = params.length - 1; i >= 0; i--) {
+    //       bus.$emit('select.preset', { id: params[i].bids })
+    //     }
+    //   }, 10)
+    // },
+    selectedCurrencies () {
+      let currency
+      if (this.lastAsks && this.lastAsks.length) {
+        currency = this.lastAsks
+      } else {
+        currency = createParams(this.settings.defaults.currencyIndexes, this.currencyMap)
+      }
+      console.log('currency', currency)
+      return currency
     },
     updateAskSelected: function (items) {
-      this.params.asks = this.createParams(items)
+      this.params.asks = createParams(items, this.currencyMap)
       this.selected.asks = items
     },
     askParams: function () {

@@ -1,4 +1,5 @@
 // // this is aliased in webpack config based on server/client build
+import settings from 'settings'
 // import api from 'create-api'
 export function storageAvailable (type) {
   try {
@@ -106,3 +107,48 @@ export function selectText () {};
 //     ref.off('value', handler)
 //   }
 // }
+// manage parameters by ID pairs
+export function cleanPairs (dirty, keyChar) {
+  let clean
+  if (dirty.indexOf(keyChar) >= 0) {
+    clean = dirty.split(keyChar)
+  } else {
+    clean = dirty
+  }
+  return clean
+}
+
+export function parseParams (ids) {
+  let params = cleanPairs(ids, settings.paramSubDiv)
+  let item
+  let items = []
+  if (params && params.forEach) {
+    params.forEach(function (a) {
+      let temp = {}
+      item = cleanPairs(a, settings.paramDiv)
+      temp.asks = item[0]
+      temp.bids = item[1]
+      items.push(temp)
+    })
+  } else {
+    params = cleanPairs(params, settings.paramDiv)
+    items.push({
+      asks: params[0],
+      bids: params[1]
+    })
+  }
+  return items
+}
+
+export function createParams (ids, currencyMap) {
+  let all = []
+  ids.forEach(function (id) {
+    let p = []
+    let iid = id.id || id
+    p.push(currencyMap[iid].$preset)
+    p.push(iid)
+    p = p.join(settings.paramDiv)
+    all.push(p)
+  })
+  return all.join(settings.paramSubDiv)
+}

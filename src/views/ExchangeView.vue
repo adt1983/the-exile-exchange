@@ -24,46 +24,16 @@
 <script>
 // import { bus } from '../services/bus'
 import settings from '../settings'
+import { parseParams } from '../services/util'
 // import { http } from '../services'
-import { league } from '../services/league'
-import { currency } from '../services/currency'
+// import { league } from '../services/league'
+// import { currency } from '../services/currency'
+import { ExchangeModel } from '../services/exchange'
 
 import Header from '../components/Header'
 import Exchange from '../components/Exchange'
 import CurrencyItem from '../components/CurrencyItem'
 import BidsListModal from 'views/BidsListModal'
-
-function cleanPairs (dirty, keyChar) {
-  let clean
-  if (dirty.indexOf(keyChar) >= 0) {
-    clean = dirty.split(keyChar)
-  } else {
-    clean = dirty
-  }
-  return clean
-}
-
-function parseParams (ids) {
-  let params = cleanPairs(ids, settings.paramSubDiv)
-  let item
-  let items = []
-  if (params && params.forEach) {
-    params.forEach(function (a) {
-      let temp = {}
-      item = cleanPairs(a, settings.paramDiv)
-      temp.asks = item[0]
-      temp.bids = item[1]
-      items.push(temp)
-    })
-  } else {
-    params = cleanPairs(params, settings.paramDiv)
-    items.push({
-      asks: params[0],
-      bids: params[1]
-    })
-  }
-  return items
-}
 
 export default {
   name: 'exchange-view',
@@ -109,17 +79,24 @@ export default {
     'header-section': Header
   },
   beforeCreate: function () {
-    const that = this
-
-    currency
-      .then((response) => {
-        that.currencyMap = response.collection
-        // this.currency = response.items
-      })
-    league
-      .then((response) => {
-        that.leagueMap = response.collection
-      })
+    let m1 = new ExchangeModel(12, 4, this.leagueid)
+    console.log('m1', m1)
+    let m2 = new ExchangeModel(6, 4, this.leagueid)
+    console.log('m2', m2)
+    // let data = m1.data()
+    // console.log('typeof(m1.data)', typeof (m1.data))
+    // console.log('data', data)
+    // let that = this
+    // function req () {
+    //   return ExchangeModel.preData
+    // }
+    // console.log('req', req)
+    // req
+    //   .then(function (data) {
+    //     console.log('data', data)
+    //     that.currencyMap = data.currencyMap
+    //     that.leagueMap = data.leagueMap
+    //   })
   },
   methods: {
     renderView: function () {

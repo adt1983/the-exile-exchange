@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { bus } from '../services/bus'
 import settings from '../settings'
 import { currency } from '../services/currency'
 
@@ -125,12 +126,15 @@ export default {
     // Instead of updating the value directly, this
     // method is used to format and place constraints
     // on the input's value
-    selectItem: function () {
+    selectItemUI: function () {
       if (this.isDisabled) {
         return
       }
       this.selected = !this.selected
       this.activeSelection = this.selected
+    },
+    selectItem: function () {
+      this.selectItemUI()
       this.$emit('select', { id: this.id, selected: this.selected })
     }
   },
@@ -141,6 +145,15 @@ export default {
         this.currencyMap = response.collection
         // this.currency = response.items
       })
+  },
+  created () {
+    bus.$on('select.preset', function (data) {
+      console.log('data', data)
+      console.log('data.id === this.id', data.id === this.id)
+      if (data.id === this.id) {
+        this.selectItemUI()
+      }
+    })
   }
   // filters: {
   //   timeAgo

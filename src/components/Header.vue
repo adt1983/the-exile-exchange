@@ -20,7 +20,7 @@
             <router-link 
               active-class="is-active"
               :to="{ name: 'currency', params: { leagueid: leagueid }}"
-              tag="a" >Currency</router-link></li>
+              tag="a" >Currencies</router-link></li>
     </ul>
     <!-- <div class="grid-block"> -->
       <!-- <div class="grid-content text-center"> -->

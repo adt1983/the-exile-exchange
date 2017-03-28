@@ -42,7 +42,7 @@ export default {
   },
   defaults: {
     refreshInterval: 1000 * 60 * 6, // six minutes
-    autoRefresh: true,
+    autoRefresh: false,
     disabledCurrencyIndexes: [
       4
     ],
@@ -55,6 +55,7 @@ export default {
       '25': '6',
       '4': '6',
       'default': '4'
-    }
+    },
+    leagueId: 'standard'
   }
 }
