@@ -1,16 +1,46 @@
-import axios from 'axios'
-import { http } from 'services'
-// import { storageAvailable, setItemMap } from 'services/util'
+import { http, httpAll, httpSpread } from 'services'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
 import settings from 'settings'
 
-// const keys = settings.keys.exchange
-// const mapId = keys.id
+// for mapping to API props
+const keys = settings.keys.exchange
 
-// const storageType = 'localStorage'
-// const storageId = 'breachCurrency'
-console.log('axios.all', axios.all)
+function createRatio (item) {
+  // todo: externalize these flags in settings{} ?
+  item[keys.ratio] = item[keys.ask] + ':' + item[keys.bid]
+  item[keys.ratio + '_raw'] = (item[keys.bid] / item[keys.ask]) * 100
+  item[keys.ratio + '_pair'] = item[keys.bid] + ':' + item[keys.ask]
+  item[keys.ratio + '_pair' + '_raw'] = (item[keys.ask] / item[keys.bid]) * 100
+  // item[key + '_key'] = item[keys.ask] + ':' + item[keys.bid] + ':' + item[keys.bid] + ':' + item[keys.ask]
+  item[keys.ratio + '_key'] = (item[keys.ask] < item[keys.bid]) ? item[keys.ask] + ':' + item[keys.bid] : item[keys.bid] + ':' + item[keys.ask]
+  item[keys.ratio + '_base'] = (item[keys.ask] < item[keys.bid]) ? (item[keys.bid] / item[keys.ask]) : (item[keys.ask] / item[keys.bid])
+  return item
+}
+
+function addItemToIndex (item, index, askId, collection) {
+  if (!collection[index]) {
+    collection[index] = {
+      bids: [],
+      asks: []
+    }
+    collection[index][keys.ratio + '_base'] = item[keys.ratio + '_base']
+  }
+  if (item[keys.askId].toString() === askId) {
+    collection[index].asks.push(item)
+  } else {
+    collection[index].bids.push(item)
+  }
+}
+
+function setStats (items, askId, collection) {
+  items.forEach(function (item) {
+    let ratio = createRatio(item)
+    addItemToIndex(ratio, item[keys.ratio + '_key'], askId, collection)
+  })
+  return items
+}
+
 export class ExchangeModel {
 
   constructor (ask, bid, leagueId) {
@@ -27,6 +57,7 @@ export class ExchangeModel {
     console.log('constructor', ask)
     return this.getData()
   }
+
   get asklist () {
     console.log('this.askList', this.askList)
     return this.askList
@@ -48,9 +79,11 @@ export class ExchangeModel {
   set addbid (list) {
     this.bidList.push(list)
   }
-  // first get the league & currency
+
+  // first :: get the prerequisite data
+  //          for league & currency
   preData () {
-    let that = this
+    let dis = this
     return new Promise(function (resolve, reject) {
       function getCurrency () {
         return currency
@@ -58,11 +91,11 @@ export class ExchangeModel {
       function getLeague () {
         return league
       }
-      axios.all([ getCurrency(), getLeague() ])
-        .then(axios.spread(function (currency, league) {
-          that.currencyMap = currency.collection
-          that.leagueMap = league.collection
-          resolve(that) // instance
+      httpAll([ getCurrency(), getLeague() ])
+        .then(httpSpread(function (currency, league) {
+          dis.currencyMap = currency.collection
+          dis.leagueMap = league.collection
+          resolve(dis) // instance
         }))
         .catch(function (error) {
           console.log('can\'t load dependencies', error)
@@ -71,6 +104,7 @@ export class ExchangeModel {
     })
   }
 
+  // second :: build the API parameters
   buildURLs (instance) {
     return new Promise(function (resolve, reject) {
       try {
@@ -87,7 +121,7 @@ export class ExchangeModel {
     })
   }
 
-  // second get the data
+  // third :: get the core data
   reqData (instance) {
     return new Promise(function (resolve, reject) {
       function getAskData () {
@@ -97,8 +131,8 @@ export class ExchangeModel {
         return http.get(instance.bidReq)
       }
 
-      axios.all([getAskData(), getBidData()])
-        .then(axios.spread(function (asks, bids) {
+      httpAll([getAskData(), getBidData()])
+        .then(httpSpread(function (asks, bids) {
           instance.askList = asks.data
           instance.bidList = bids.data
           resolve(instance)
@@ -110,27 +144,30 @@ export class ExchangeModel {
     })
   }
 
+  // finally :: arrange the data !!
   indexData (instance) {
     return new Promise(function (resolve) {
-      console.log('this.askList', instance.askList)
-      console.log('this.bidList', instance.bidList)
+      setStats(instance.askList, instance.askId, instance.exchangeMap)
+      setStats(instance.bidList, instance.bidId, instance.exchangeMap)
       resolve(instance)
     })
   }
 
   getData () {
-    // let that = this
-    this.preData()
-      .then(this.buildURLs)
-      .then(this.reqData)
-      .then(this.indexData)
-      .then(function (instance) {
-        console.log('completed', instance)
-        return instance
-      })
-      .catch(function (error) {
-        console.log('something went wrong', error)
-        return error
-      })
+    let dis = this
+    return new Promise(function (resolve, reject) {
+      dis.preData()
+        .then(dis.buildURLs)
+        .then(dis.reqData)
+        .then(dis.indexData)
+        .then(function (instance) {
+          console.log('completed', instance)
+          resolve(instance)
+        })
+        .catch(function (error) {
+          console.log('something went wrong', error)
+          reject(error)
+        })
+    })
   }
 }

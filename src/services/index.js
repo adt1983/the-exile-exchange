@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+export const httpAll = axios.all
+export const httpSpread = axios.spread
+
 export const http = axios.create({
   // `url` is the server URL that will be used for the request
   // url: '/user',
