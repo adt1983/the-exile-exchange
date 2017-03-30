@@ -145,8 +145,10 @@ export function createParams (ids, currencyMap) {
   ids.forEach(function (id) {
     let p = []
     let iid = id.id || id
-    p.push(currencyMap[iid].$preset)
+    // ask: iid
+    // bid: currencyMap[iid].$preset
     p.push(iid)
+    p.push(currencyMap[iid].$preset)
     p = p.join(settings.paramDiv)
     all.push(p)
   })
