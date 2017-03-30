@@ -21,7 +21,6 @@
           :ask-id="item.askId"
           :bid-id="item.bidId"></exchange>
       </div>
-      <loader class="grid-block" v-if="loading"></loader>
       <bids-list-modal></bids-list-modal>
     </div>
   </section>
@@ -92,12 +91,13 @@ export default {
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })
-      return Promise.all(exchanges).then(values => {
-        dis.loading = false
-        dis.activeExchanges = values
-      }).catch(reason => {
-        console.log(reason)
-      })
+      this.activeExchanges = exchanges
+      // return Promise.all(exchanges).then(values => {
+      //   dis.loading = false
+      //   dis.activeExchanges = values
+      // }).catch(reason => {
+      //   console.log(reason)
+      // })
     },
     askParams: function () {
       return this.asks

@@ -69,9 +69,10 @@
   <!-- {{Object.keys(exchangeMap)}}
   {{Object.keys(exchangeMap).length}}
   {{orderBy.length}} -->
-    <!-- <loader class="grid-block" :class="{ 'progress-50': (loading === 1)  }" v-if="loading < 2"></loader> -->
+    <loader class="grid-block" :class="exchangeMap && Object.keys(exchangeMap).length === 0"></loader>
+
     <!-- {{orderBy}} -->
-    <section class="block-list exchange-list" v-if="Object.keys(exchangeMap).length">
+    <section class="block-list exchange-list" v-if="exchangeMap && Object.keys(exchangeMap).length">
       <!-- <ul> -->
         <div
           class="exchange-row"
@@ -128,7 +129,7 @@ import saved from '../services/selected'
 // import * as filters from '../filters'
 
 import CurrencyItem from '../components/CurrencyItem'
-// import Loader from './Loader'
+import Loader from './Loader'
 
 export default {
   name: 'exchange',
@@ -151,7 +152,7 @@ export default {
 
       refreshInterval: undefined,
 
-      loading: 0,
+      // loading: true,
       filterBids: true,
       showModal: false,
 
@@ -245,8 +246,8 @@ export default {
   },
   components: {
     // BidsList,
-    CurrencyItem
-    // Loader
+    CurrencyItem,
+    Loader
   },
   created: function () {
     // selected service
