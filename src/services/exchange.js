@@ -15,15 +15,20 @@
     return orderBy
   }
 
-  function createRatio (item) {
+  function createRatio (item, askId) {
+    const isAsk = item[keys.askId].toString() === askId
+    const ask = isAsk ? keys.ask : keys.bid
+    const bid = isAsk ? keys.bid : keys.ask
     // todo: externalize these flags in settings{} ?
-    item[keys.ratio] = item[keys.ask] + ':' + item[keys.bid]
-    item[keys.ratio + '_raw'] = (item[keys.bid] / item[keys.ask]) * 100
-    item[keys.ratio + '_pair'] = item[keys.bid] + ':' + item[keys.ask]
-    item[keys.ratio + '_pair' + '_raw'] = (item[keys.ask] / item[keys.bid]) * 100
-    // item[key + '_key'] = item[keys.ask] + ':' + item[keys.bid] + ':' + item[keys.bid] + ':' + item[keys.ask]
-    item[keys.ratio + '_key'] = (item[keys.ask] < item[keys.bid]) ? item[keys.ask] + ':' + item[keys.bid] : item[keys.bid] + ':' + item[keys.ask]
-    item[keys.ratio + '_base'] = (item[keys.ask] < item[keys.bid]) ? (item[keys.bid] / item[keys.ask]) : (item[keys.ask] / item[keys.bid])
+    item[keys.ratio] = item[ask] + ':' + item[bid]
+    console.log('item[keys.ratio] ', item[keys.ratio])
+    // item[keys.ratio + '_raw'] = (item[bid] / item[ask]) * 100
+    // console.log('item[keys.ratio +', item[keys.ratio + '_raw'])
+    // item[keys.ratio + '_pair'] = item[bid] + ':' + item[ask]
+    // item[keys.ratio + '_pair' + '_raw'] = (item[ask] / item[bid]) * 100
+    // item[key + '_key'] = item[ask] + ':' + item[bid] + ':' + item[bid] + ':' + item[ask]
+    item[keys.ratio + '_key'] = item[ask] + ':' + item[bid]
+    item[keys.ratio + '_base'] = (item[bid] / item[ask])
     return item
   }
 
@@ -155,7 +160,7 @@
       })
     }
 
-    // finally :: arrange the data !!
+    // finally :: set and arrange the data !!
     indexData (instance) {
       return new Promise(function (resolve) {
         // set states for asks
@@ -173,11 +178,20 @@
     // refreshReq() {
     // auto refresh data
     // this.refreshInterval = setTimeout(function () {
-    //   that.getData()
-    //   if (this.settings.defaults.autoRefresh) {
+    //   dis.reqData
+          // .then(dis.indexData)
+          // .then(function (instance) {
+          //   console.log('refresh completed', instance)
+          //   resolve(instance)
+          // })
+          // .catch(function (error) {
+          //   console.log('something went wrong', error)
+          //   reject(error)
+          // })
+    //   if (settings.defaults.autoRefresh) {
     //     this.refreshInterval()
     //   }
-    // }, this.settings.defaults.refreshInterval)
+    // }, settings.defaults.refreshInterval)
     // }
 
     instantiate () {

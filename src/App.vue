@@ -15,7 +15,7 @@
             </div>
           </div> -->
           <div class="grid-block">
-            <transition name="slide-fade">
+            <transition name="route-transition">
               <!-- <keep-alive> -->
                 <router-view></router-view>
               <!-- </keep-alive> -->
@@ -104,23 +104,23 @@ body {
 
 // /* Enter and leave animations can use different */
 /* durations and timing functions.              */
-.slide-fade-enter-active {
+.route-transition-enter-active {
   transition: transform $default-animation-speed*2 linear $default-animation-speed*3;
 }
-.slide-fade-leave-active {
+.route-transition-leave-active {
   transition: transform $default-animation-speed*2 linear;
 }
-.slide-fade-enter
-/* .slide-fade-leave-active for <2.1.8 */ {
-  transform: translateX(100%);
+.route-transition-enter
+/* .route-transition-leave-active for <2.1.8 */ {
+  transform: translateY(100%);
 }
-.slide-fade-leave-to {
+.route-transition-leave-to {
   opacity: 0;
   overflow: hidden;
 
-  transform: translateX(-80%);
+  transform: translateY(-80%);
 }
-// .slide-fade-leave {
+// .route-transition-leave {
 //   transform: translateX(0);
 // }
 
