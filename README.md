@@ -1,6 +1,6 @@
-# travismullen-vue
+# poecx-ui
 
-> Travis Mullen - Interactive Consultant
+> poeex - user interface
 
 ## Build Setup
 
