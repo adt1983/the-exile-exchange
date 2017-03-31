@@ -4,26 +4,25 @@
       :params="askParams()"
       :leagueid="leagueid"
       ></header-section>
-    <div class="exchange-view">
-
-      <div 
-        class="exchange-column grid-content"
-        v-if="activeExchanges.length"
-        v-for="item in activeExchanges">
-        <exchange 
-          :league-map="item.leagueMap"
-          :currency-map="item.currencyMap"
-          :exchange-map="item.exchangeMap"
-          :league-id="item.leagueId"
-          :order-by="item.orderBy"
-          :ask-list="item.askList"
-          :bid-list="item.bidList"
-          :ask-id="item.askId"
-          :bid-id="item.bidId"></exchange>
-      </div>
-      <loader class="grid-block" v-if="loading"></loader>
+      <transition-group class="exchange-view" name="slide-fade">
+        <div 
+          class="exchange-column grid-content"
+          v-if="activeExchanges.length"
+          v-for="item in activeExchanges"
+          v-bind:key="item.exchangeMap">
+          <exchange 
+            :league-map="item.leagueMap"
+            :currency-map="item.currencyMap"
+            :exchange-map="item.exchangeMap"
+            :league-id="item.leagueId"
+            :order-by="item.orderBy"
+            :ask-list="item.askList"
+            :bid-list="item.bidList"
+            :ask-id="item.askId"
+            :bid-id="item.bidId"></exchange>
+        </div>
+      </transition-group>
       <bids-list-modal></bids-list-modal>
-    </div>
   </section>
 </template>
 
@@ -92,12 +91,31 @@ export default {
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })
-      return Promise.all(exchanges).then(values => {
+
+      return new Promise(function (resolve, reject) {
+        return exchanges.reduce(function (chain, exchangePromise) {
+          return chain.then(function () {
+            return exchangePromise
+          }).then(function (value) {
+            dis.activeExchanges.push(value)
+          })
+        }, Promise.resolve())
+      }).then(function () {
+        console.log('All done')
+      }).catch(function (err) {
+        console.log('err', err)
+        // catch any error that happened along the way
+        // addTextToPage("Argh, broken: " + err.message)
+      }).then(function () {
+        // finally
         dis.loading = false
-        dis.activeExchanges = values
-      }).catch(reason => {
-        console.log(reason)
       })
+      // return Promise.all(exchanges).then(values => {
+      //   dis.loading = false
+      //   dis.activeExchanges = values
+      // }).catch(reason => {
+      //   console.log(reason)
+      // })
     },
     askParams: function () {
       return this.asks
@@ -137,8 +155,30 @@ export default {
   border: 1px solid $gray;
   margin: rem-calc(10) auto;
 }
+.view-loader {
+  margin-top: $global-padding;
+}
 // .exchange-list-item {
 //   padding-top: $global-padding;
 //   border-bottom: 1px solid $secondary-color;
 // }
+
+// /* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: transform $default-animation-speed*2 linear $default-animation-speed*3;
+}
+.slide-fade-leave-active {
+  transition: transform $default-animation-speed*2 linear;
+}
+.slide-fade-enter
+/* .slide-fade-leave-active for <2.1.8 */ {
+  transform: translateY(-100%);
+}
+.slide-fade-leave-to {
+  opacity: 0;
+  overflow: hidden;
+
+  transform: translateY(80%);
+}
 </style>
