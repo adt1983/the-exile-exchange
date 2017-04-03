@@ -49,9 +49,7 @@ function createRatio (item, askId) {
   return item
 }
 
-function addItemToIndex (item, index, askId, collection) {
-  // console.log('askId', askId)
-  // console.log('item[keys.askId]', item[keys.askId])
+function addItemToIndex (item, index, collection) {
   if (!collection[index]) {
     collection[index] = {
       bids: [],
@@ -69,21 +67,22 @@ function addItemToIndex (item, index, askId, collection) {
 function setStats (items, askId, collection) {
   items.forEach(function (item) {
     let ratio = createRatio(item, askId)
-    addItemToIndex(ratio, item[keys.ratio], askId, collection)
+    addItemToIndex(ratio, item[keys.ratio], collection)
   })
   return items
 }
 // askList, bidList, askId, exchangeMap
 export function exchange (askList, bidList, askId) {
   let exchangeMap = {} // new map for each exchange query
-  let exhange = {askList, bidList, askId}
-  setStats(exhange.askList, exhange.askId, exchangeMap)
+  let exchange = {askList, bidList, askId}
+  setStats(exchange.askList, exchange.askId, exchangeMap)
   // set states for bids
-  setStats(exhange.bidList, exhange.askId, exchangeMap)
+  setStats(exchange.bidList, exchange.askId, exchangeMap)
   // set an array of keys so they have a set order
-  exhange.exchangeMap = exchangeMap
-  exhange.orderBy = arrangeCollection(exchangeMap)
-  return exhange
+  exchange.exchangeMap = exchangeMap
+  exchange.orderBy = arrangeCollection(exchangeMap)
+  exchange.bidId = exchange.bidList[0][keys.askId]
+  return exchange
 }
 
 export class ExchangeModel {

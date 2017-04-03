@@ -3,6 +3,8 @@
       <!-- accountName: {{accountName}} {{selected}} -->
       <header class="grid-block shrink">
         <div class="grid-block text-center noscroll">
+        {{askId}}
+        {{bidId}}
             <currency-item
               :input="false"
               :id="askId" 

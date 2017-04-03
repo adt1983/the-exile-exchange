@@ -24,6 +24,7 @@ function createBid (askId, bidId, askQty, bidQty, lastChar, accoutName) {
   // check ratio
   // compute new ratio values for testing as `$$ratio`
   let pct = parseInt((askQty / bidQty) * 100, 10)
+  // mapped to `keys` in settings for external API
   return {
     $$ratio: pct, // for testing against `$ratio` and `$ratio_base`
     [keys.askId]: askId,
@@ -150,14 +151,27 @@ describe('ExchangeFactory', () => {
       bidList.push(createBid(settings.beta, settings.alpha, bid.bidQty, bid.askQty, bid.lastChar, bid.accoutName))
     })
   })
+
   it('should return object', () => {
     const results = exchange(askList, bidList, settings.alpha)
     expect(results).to.be.an('object')
   })
+
+  it('should render `askId`', () => {
+    const results = exchange(askList, bidList, settings.alpha)
+    expect(results.askId).to.be.ok
+  })
+
+  it('should render `bidId`', () => {
+    const results = exchange(askList, bidList, settings.alpha)
+    expect(results.bidId).to.be.ok
+  })
+
   it('should render `exchangeMap`', () => {
     const results = exchange(askList, bidList, settings.alpha)
     expect(results.exchangeMap).to.be.an('object')
   })
+
   it('should render all asks', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const map = Object.keys(results.exchangeMap)
@@ -171,6 +185,7 @@ describe('ExchangeFactory', () => {
     }
     expect(total).to.equal(0)
   })
+
   it('should render all bids', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const map = Object.keys(results.exchangeMap)
@@ -184,10 +199,12 @@ describe('ExchangeFactory', () => {
     }
     expect(total).to.equal(0)
   })
+
   it('should have `orderBy` array', () => {
     const results = exchange(askList, bidList, settings.alpha)
     expect(results.orderBy).to.be.an('array')
   })
+
   it('should have `orderBy` in the correct (decending) order', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const originalOrder = results.orderBy
@@ -198,6 +215,7 @@ describe('ExchangeFactory', () => {
     })
     expect(testOrder.join()).to.equal(originalOrder.join())
   })
+
   it('should group asks by unmixed `$ratio_base`', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const map = Object.keys(results.exchangeMap)
@@ -215,6 +233,7 @@ describe('ExchangeFactory', () => {
       }
     }
   })
+
   it('should group bids by unmixed `$ratio_base`', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const map = Object.keys(results.exchangeMap)
@@ -232,7 +251,8 @@ describe('ExchangeFactory', () => {
       }
     }
   })
-  it('should not mix asks of same `$ratio` with different multipliers', () => {
+
+  it('should seperate asks of same `$ratio` and different multipliers', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const map = Object.keys(results.exchangeMap)
     for (let i = map.length - 1; i >= 0; i--) {
@@ -249,7 +269,8 @@ describe('ExchangeFactory', () => {
       }
     }
   })
-  it('should not mix bids of same `$ratio` with different multipliers', () => {
+
+  it('should seperate bids of same `$ratio` and different multipliers', () => {
     const results = exchange(askList, bidList, settings.alpha)
     const map = Object.keys(results.exchangeMap)
     for (let i = map.length - 1; i >= 0; i--) {
