@@ -78,7 +78,16 @@ export default {
   created: function () {
     return this.getSelectedOffers()
   },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'setLeague'
+  },
   methods: {
+    setLeague () {
+      this.getSelectedOffers()
+      // todo save this in storage
+      // this.league = this.$route.params.leagueid || ''
+    },
     getSelectedAsks: function () {
       let params = parseParams(this.askids)
       return params
@@ -88,6 +97,7 @@ export default {
       const params = this.getSelectedAsks()
       const exchanges = []
       console.log('params', params)
+      dis.activeExchanges = []
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })

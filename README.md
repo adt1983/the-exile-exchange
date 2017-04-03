@@ -1,6 +1,6 @@
 # poecx-ui
 
-> poeex - user interface
+> poecx - user interface
 
 ## Build Setup
 

@@ -14,7 +14,8 @@
     </div>
     <ul class="header-nav grid-block shrink float-right">
       <li>
-        <account-name></account-name>
+        <account-name 
+          class="account-name"></account-name>
       </li>
           <li>  
             <router-link 
@@ -134,13 +135,6 @@ export default {
         this.leagueMap = response.collection
       })
   }
-  // created () {
-  //   // selected service
-  //   let name = saved.get(this.accountNameSaveKey)
-  //   if (name) {
-  //     this.accountName = name
-  //   }
-  // }
 }
 </script>
 
@@ -160,13 +154,11 @@ export default {
 .header-nav {
   // This placeholder selector gets you the core structural styles for the menu
   @extend %menu-bar;
-  text-align: center;
   // Set the orientation and sizing of the menu bar
   @include menu-bar-layout(
     $orientation: horizontal, // Can be horizontal or vertical
     $stretch: false // Set to false for a condensed menu
   );
-
   // Add styles for the menu bar items and text
   @include menu-bar-style(
     $background: transparent, // Background color of items
@@ -179,6 +171,11 @@ export default {
   );
   li {
     white-space: nowrap;
+    text-align: center;
+    a {
+      font-size: $menubar-fontsize*1.2;
+      padding: $menubar-item-padding*2;
+    }
   }
   .title {
     flex-flow: column nowrap;
@@ -199,5 +196,9 @@ export default {
   .float-right {
     align-self: flex-end;
   }
+}
+.account-name {
+  // display: block;
+  margin: auto $global-spacing;
 }
 </style>

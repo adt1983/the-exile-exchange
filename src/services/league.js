@@ -62,6 +62,7 @@ export const league = new Promise(function (resolve, reject) {
       collection
     })
   } else {
+    console.log('http', http)
     http
       .get('/League',
       {

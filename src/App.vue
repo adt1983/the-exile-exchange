@@ -44,31 +44,6 @@ export default {
       league: '',
       loading: false
     }
-  },
-  created () {
-    this.setLeague()
-  },
-  watch: {
-    // call again the method if the route changes
-    '$route': 'setLeague'
-  },
-  // components: {
-    // pageHeader,
-    // Modal,
-    // pageFooter
-  // },
-  methods: {
-    setLeague () {
-      this.league = this.$route.params.leagueid || ''
-      // getPost(this.$route.params.id, (err, post) => {
-      //   this.loading = false
-      //   if (err) {
-      //     this.error = err.toString()
-      //   } else {
-      //     this.post = post
-      //   }
-      // })
-    }
   }
 }
 </script>
