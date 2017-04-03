@@ -22,12 +22,10 @@ let bidList = []
 //   }
 function createBid (askId, bidId, askQty, bidQty, lastChar, accoutName) {
   // check ratio
-  // mock $ratio as $$ratio
+  // compute new ratio values for testing as `$$ratio`
   let pct = parseInt((askQty / bidQty) * 100, 10)
-  // console.log('$$ratio', pct)
-  // console.log('lastChar', lastChar)
   return {
-    $$ratio: pct,
+    $$ratio: pct, // for testing against `$ratio` and `$ratio_base`
     [keys.askId]: askId,
     [keys.bidId]: bidId,
     [keys.ask]: askQty,
@@ -162,17 +160,27 @@ describe('ExchangeFactory', () => {
   })
   it('should render all asks', () => {
     const results = exchange(askList, bidList, settings.alpha)
+    const map = Object.keys(results.exchangeMap)
     let total = askList.length
-    for (let i = Object.keys(results.exchangeMap).length - 1; i >= 0; i--) {
-      total = (total - results.exchangeMap[Object.keys(results.exchangeMap)[i]].asks.length)
+    // check there is data to test
+    expect(total).not.to.equal(0)
+    // find total and remove each once found until none are remaining
+    for (let i = map.length - 1; i >= 0; i--) {
+      let key = map[i]
+      total = (total - results.exchangeMap[key].asks.length)
     }
     expect(total).to.equal(0)
   })
   it('should render all bids', () => {
     const results = exchange(askList, bidList, settings.alpha)
+    const map = Object.keys(results.exchangeMap)
     let total = bidList.length
-    for (let i = Object.keys(results.exchangeMap).length - 1; i >= 0; i--) {
-      total = (total - results.exchangeMap[Object.keys(results.exchangeMap)[i]].bids.length)
+    // check there is data to test
+    expect(total).not.to.equal(0)
+    // find total and remove each once found until none are remaining
+    for (let i = map.length - 1; i >= 0; i--) {
+      let key = map[i]
+      total = (total - results.exchangeMap[key].bids.length)
     }
     expect(total).to.equal(0)
   })
@@ -186,21 +194,21 @@ describe('ExchangeFactory', () => {
     let testOrder = results.orderBy.slice(0)
     // decending order
     testOrder.sort(function (a, b) {
-      return b - a
+      return a - b
     })
     expect(testOrder.join()).to.equal(originalOrder.join())
   })
   it('should group asks by unmixed `$ratio_base`', () => {
     const results = exchange(askList, bidList, settings.alpha)
-    for (let i = Object.keys(results.exchangeMap).length - 1; i >= 0; i--) {
-      let key = Object.keys(results.exchangeMap)[i]
+    const map = Object.keys(results.exchangeMap)
+    for (let i = map.length - 1; i >= 0; i--) {
+      let key = map[i]
       let items = results.exchangeMap[key].asks
       if (items && items.length) {
         // get $ratio_base
         let ratio = items[0].$ratio_base
         do {
-          // check each item in ratio
-          // to make sure its correct
+          // check each item's $ratio_base
           let item = items.shift()
           expect(item.$ratio_base).to.equal(ratio)
         } while (items.length > 0)
@@ -209,49 +217,49 @@ describe('ExchangeFactory', () => {
   })
   it('should group bids by unmixed `$ratio_base`', () => {
     const results = exchange(askList, bidList, settings.alpha)
-    for (let i = Object.keys(results.exchangeMap).length - 1; i >= 0; i--) {
-      let key = Object.keys(results.exchangeMap)[i]
+    const map = Object.keys(results.exchangeMap)
+    for (let i = map.length - 1; i >= 0; i--) {
+      let key = map[i]
       let items = results.exchangeMap[key].bids
       if (items && items.length) {
         // get $ratio_base
         let ratio = items[0].$ratio_base
         do {
-          // check each item in ratio
-          // to make sure its correct
+          // check each item's $ratio_base
           let item = items.shift()
           expect(item.$ratio_base).to.equal(ratio)
         } while (items.length > 0)
       }
     }
   })
-  it('should not mixed asks of same `$ratio` but different multiple', () => {
+  it('should not mix asks of same `$ratio` with different multipliers', () => {
     const results = exchange(askList, bidList, settings.alpha)
-    for (let i = Object.keys(results.exchangeMap).length - 1; i >= 0; i--) {
-      let key = Object.keys(results.exchangeMap)[i]
+    const map = Object.keys(results.exchangeMap)
+    for (let i = map.length - 1; i >= 0; i--) {
+      let key = map[i]
       let items = results.exchangeMap[key].asks
       if (items && items.length) {
         // get $ratio_base
         let ratio = items[0].$ratio
         do {
-          // check each item in ratio
-          // to make sure its correct
+          // check each item's $ratio
           let item = items.shift()
           expect(item.$ratio).to.equal(ratio)
         } while (items.length > 0)
       }
     }
   })
-  it('should not mixed bids of same `$ratio` but different multiple', () => {
+  it('should not mix bids of same `$ratio` with different multipliers', () => {
     const results = exchange(askList, bidList, settings.alpha)
-    for (let i = Object.keys(results.exchangeMap).length - 1; i >= 0; i--) {
-      let key = Object.keys(results.exchangeMap)[i]
+    const map = Object.keys(results.exchangeMap)
+    for (let i = map.length - 1; i >= 0; i--) {
+      let key = map[i]
       let items = results.exchangeMap[key].bids
       if (items && items.length) {
         // get $ratio_base
         let ratio = items[0].$ratio
         do {
-          // check each item in ratio
-          // to make sure its correct
+          // check each item's $ratio
           let item = items.shift()
           expect(item.$ratio).to.equal(ratio)
         } while (items.length > 0)

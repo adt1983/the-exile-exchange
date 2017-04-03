@@ -17,7 +17,7 @@ function arrangeCollection (collection) {
   let orderBy = Object.keys(collection).sort(function (a, b) {
     let aa = collection[a] && collection[a][keys.ratio + '_base']
     let bb = collection[b] && collection[b][keys.ratio + '_base']
-    return bb - aa
+    return aa - bb
   })
   return orderBy
 }
