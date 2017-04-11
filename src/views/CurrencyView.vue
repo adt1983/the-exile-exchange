@@ -149,7 +149,7 @@ export default {
       } else {
         currency = createParams(this.settings.defaults.currencyIndexes, this.currencyMap)
       }
-      console.log('currency', currency)
+      // console.log('currency', currency)
       return currency
     },
     updateAskSelected: function (items) {

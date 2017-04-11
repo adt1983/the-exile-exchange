@@ -9,7 +9,7 @@
           class="exchange-column grid-content"
           v-if="activeExchanges.length"
           v-for="item in activeExchanges"
-          v-bind:key="item.exchangeMap">
+          :key="item.exchangeMap">
           <exchange 
             :league-map="item.leagueMap"
             :currency-map="item.currencyMap"
@@ -22,6 +22,7 @@
             :bid-id="item.bidId"></exchange>
         </div>
       </transition-group>
+      <loader v-if="loading"></loader>
       <bids-list-modal></bids-list-modal>
   </section>
 </template>
@@ -63,11 +64,6 @@ export default {
 
     }
   },
-  computed: {
-    list () {
-      return this.getSelectedOffers()
-    }
-  },
   components: {
     BidsListModal,
     Exchange,
@@ -80,13 +76,11 @@ export default {
   },
   watch: {
     // call again the method if the route changes
-    '$route': 'setLeague'
+    '$route': 'refresh'
   },
   methods: {
-    setLeague () {
+    refresh () {
       this.getSelectedOffers()
-      // todo save this in storage
-      // this.league = this.$route.params.leagueid || ''
     },
     getSelectedAsks: function () {
       let params = parseParams(this.askids)
@@ -94,38 +88,30 @@ export default {
     },
     getSelectedOffers: function () {
       let dis = this
+      this.activeExchanges = [] // reset
       const params = this.getSelectedAsks()
       const exchanges = []
-      console.log('params', params)
-      dis.activeExchanges = []
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })
 
-      return new Promise(function (resolve, reject) {
-        return exchanges.reduce(function (chain, exchangePromise) {
-          return chain.then(function () {
-            return exchangePromise
-          }).then(function (value) {
+      return exchanges.reduce(function (chain, exchangePromise) {
+        return chain.then(function () {
+          return exchangePromise
+        }).then(function (value) {
+          console.log('value', value)
+          if (value.askList.length || value.bidList.length) {
             dis.activeExchanges.push(value)
-          })
-        }, Promise.resolve())
-      }).then(function () {
+          }
+        })
+      }, Promise.resolve()).then(function () {
         console.log('All done')
       }).catch(function (err) {
         console.log('err', err)
-        // catch any error that happened along the way
-        // addTextToPage("Argh, broken: " + err.message)
       }).then(function () {
         // finally
         dis.loading = false
       })
-      // return Promise.all(exchanges).then(values => {
-      //   dis.loading = false
-      //   dis.activeExchanges = values
-      // }).catch(reason => {
-      //   console.log(reason)
-      // })
     },
     askParams: function () {
       return this.asks

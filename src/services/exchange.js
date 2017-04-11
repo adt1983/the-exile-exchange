@@ -6,7 +6,7 @@ import settings from 'settings'
 // for mapping to API props
 const keys = settings.keys.exchange
 
-function getGCD (a, b) {
+function getGCD (a, b) { // greatest common denom
   for (let c; b; a = b, b = c) {
     c = a % b
   }
@@ -25,17 +25,17 @@ function arrangeCollection (collection) {
 function createRatio (item, askId) {
   let ask = null
   let bid = null
-  // let isAsk = false
+  // let isBid = false
   let gcd = 1
   // give all items same orientation to avoid confusion
   if (typeof (item[keys.askId].toString) === 'function') {
-    item.isAsk = (item[keys.askId].toString() === askId)
+    item.isBid = (item[keys.askId].toString() === askId)
   } else {
-    item.isAsk = (item[keys.askId] === askId)
+    item.isBid = (item[keys.askId] === askId)
   }
   // so we dont have to think about ask vs bid
-  ask = item.isAsk ? keys.ask : keys.bid
-  bid = item.isAsk ? keys.bid : keys.ask
+  ask = item.isBid ? keys.ask : keys.bid
+  bid = item.isBid ? keys.bid : keys.ask
   item[keys.ratio] = item[ask] + ':' + item[bid]
   //
   // crete ratio in format of
@@ -57,10 +57,10 @@ function addItemToIndex (item, index, collection) {
     }
     collection[index][keys.ratio + '_base'] = item[keys.ratio + '_base']
   }
-  if (item.isAsk) {
-    collection[index].asks.push(item)
-  } else {
+  if (item.isBid) {
     collection[index].bids.push(item)
+  } else {
+    collection[index].asks.push(item)
   }
 }
 
@@ -75,13 +75,14 @@ function setStats (items, askId, collection) {
 export function exchange (askList, bidList, askId) {
   let exchangeMap = {} // new map for each exchange query
   let exchange = {askList, bidList, askId}
+  console.log('askId', askId)
   setStats(exchange.askList, exchange.askId, exchangeMap)
   // set states for bids
   setStats(exchange.bidList, exchange.askId, exchangeMap)
   // set an array of keys so they have a set order
   exchange.exchangeMap = exchangeMap
   exchange.orderBy = arrangeCollection(exchangeMap)
-  exchange.bidId = exchange.bidList[0][keys.askId]
+  exchange.bidId = exchange.askList[0][keys.askId]
   return exchange
 }
 
@@ -91,7 +92,8 @@ export class ExchangeModel {
     // ids and arrays
     this.askId = ask.id || ask
     this.bidId = bid.id || bid
-
+    console.log('this.bidId', this.bidId)
+    console.log('this.askId', this.askId)
     this.askList = []
     this.bidList = []
 
@@ -101,6 +103,7 @@ export class ExchangeModel {
     // key maps
     this.leagueMap = {}
     this.currencyMap = {}
+    this.exchangeMap = {}
 
     this.leagueId = leagueId || settings.defaults.leagueId
     this.league = ''
@@ -108,27 +111,27 @@ export class ExchangeModel {
     return this.instantiate()
   }
 
-  get asklist () {
-    console.log('this.askList', this.askList)
-    return this.askList
-  }
-  get bidlist () {
-    console.log('this.bidList', this.bidList)
-    return this.bidList
-  }
+  // get asklist () {
+  //   console.log('this.askList', this.askList)
+  //   return this.askList
+  // }
+  // get bidlist () {
+  //   console.log('this.bidList', this.bidList)
+  //   return this.bidList
+  // }
 
-  set asklist (list) {
-    this.askList = list
-  }
-  set bidlist (list) {
-    this.bidList = list
-  }
-  set addask (item) {
-    this.askList.push(item)
-  }
-  set addbid (list) {
-    this.bidList.push(list)
-  }
+  // set asklist (list) {
+  //   this.askList = list
+  // }
+  // set bidlist (list) {
+  //   this.bidList = list
+  // }
+  // set addask (item) {
+  //   this.askList.push(item)
+  // }
+  // set addbid (list) {
+  //   this.bidList.push(list)
+  // }
 
   // first :: get the prerequisite data
   //          for league & currency
@@ -191,9 +194,14 @@ export class ExchangeModel {
 
   // finally :: set and arrange the data !!
   indexData (instance) {
-    return new Promise(function (resolve) {
-      // resolve that ish!
-      resolve(exchange(instance.askList, instance.bidList, instance.askId))
+    return new Promise(function (resolve, reject) {
+      if (instance.askList.length === 0 || instance.bidList.length === 0) {
+        instance.noData = true
+        resolve(instance)
+      } else {
+        // resolve that ish!
+        resolve(exchange(instance.askList, instance.bidList, instance.askId))
+      }
     })
   }
 

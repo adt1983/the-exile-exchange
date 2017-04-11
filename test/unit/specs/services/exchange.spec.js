@@ -287,4 +287,6 @@ describe('ExchangeFactory', () => {
       }
     }
   })
+  // if doesnt have data returned
+  // should have all required attribs for views to render
 })

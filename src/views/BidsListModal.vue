@@ -25,7 +25,7 @@
             </div>
           </div>
 
-          <div class="modal-body grid-block">
+          <div class="modal-body scroll grid-block">
             <bids-list
                v-if="showOffers"
               :ratio="raw.key"

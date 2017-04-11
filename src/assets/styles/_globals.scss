@@ -155,6 +155,7 @@ $modal-width: rem-calc(400);
   // &.right {
   //   transform: translateX($modal-width);
   // }
+
 }
 
 .modal-header {
@@ -169,6 +170,9 @@ $modal-width: rem-calc(400);
   width: 100%;
   // overflow-y: scroll;
   max-height: 75vh;
+  &.scroll {
+    overflow-y: scroll;
+  }
 }
 
 /*

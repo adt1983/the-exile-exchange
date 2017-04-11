@@ -21,9 +21,9 @@
       </div> -->
       <figure v-if="input && preloader"
         class="currency-item is-input"
-        v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
-        v-on:mouseleave="activeSelection = false"
-        v-on:click="selectItem">
+        :class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
+        @:mouseleave="activeSelection = false"
+        @:click="selectItem">
          <img 
 
           :src="imgUrl" :alt="name"
@@ -139,11 +139,9 @@ export default {
     }
   },
   beforeCreate: function () {
-    // console.log('beforeCreate getSelectedAsks', this.getSelectedAsks)
     currency
       .then((response) => {
         this.currencyMap = response.collection
-        // this.currency = response.items
       })
   },
   created () {
@@ -155,9 +153,6 @@ export default {
       }
     })
   }
-  // filters: {
-  //   timeAgo
-  // }
 }
 </script>
 
