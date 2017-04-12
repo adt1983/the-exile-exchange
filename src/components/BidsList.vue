@@ -4,7 +4,7 @@
       <li class="bid"
         @click="showContactInfo(item)"
         v-for="item in items">
-          <h6 class="body-font title">{{item[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{item[keys.user]}}<!-- </span>&nbsp;<strong>{{ratio}}</strong> --></h6>
+          <h6 class="body-font title">{{item[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{item[keys.user]}}</span><!-- &nbsp;<strong>{{ratio}}</strong> --></h6>
       </li>
     </ul>
   </section>
