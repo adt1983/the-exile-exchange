@@ -57,7 +57,7 @@
                   v-if="exchangeMap[key].asks && exchangeMap[key].asks.length">{{exchangeMap[key].asks.length}}</a></li>
                 <li
                   class="exchange-ratio"
-                  :class="{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}"><span class="secondary-color body-font text-center">{{key}}</span></li>
+                  :class="[{'small-font': (key.length > 4) },{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}]"><span class="secondary-color body-font text-center">{{key}}</span></li>
                 <li><a href=""
                   :class="applyColorClass(exchangeMap[key].bids)"
                   @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid')"
@@ -222,7 +222,10 @@ export default {
     padding-bottom: ($global-padding/3)*2;
   }
 }
-
+.small-font > {
+  padding-top: 0.15rem;
+  font-size: 0.7rem;
+}
 .exchange-list {
   // width: rem-calc(210);
   filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.7));
@@ -249,7 +252,7 @@ export default {
       }
     }
   // }
-
+  
 }
 .exchange-item {
   // This placeholder selector gets you the core structural styles for the menu

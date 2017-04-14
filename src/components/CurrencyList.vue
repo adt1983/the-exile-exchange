@@ -18,6 +18,7 @@
 </template>
 
 <script>
+// import { bus } from '../services/bus'
 import settings from '../settings'
 // import { timeAgo } from '../filters'
 import { currency } from '../services/currency'
@@ -25,22 +26,24 @@ import CurrencyItem from './CurrencyItem'
 
 export default {
   name: 'currency-list',
+  props: {
+    preselected: [Array]
+  },
   data () {
     return {
       keys: settings.keys.currency,
       currency: [],
+      currencyMap: {},
       selected: [],
       title: 'List'
     }
   },
-  // props: {
-  //   items: Array
-  // },
   components: {
     'currency-item': CurrencyItem
   },
   methods: {
     selectItem: function (item) {
+      console.log('selectItem', item)
       if (item.selected) {
         this.selected.push(item)
       } else {
@@ -50,13 +53,26 @@ export default {
       }
       this.$emit('selected', this.selected)
     }
+    // makeSelections () {
+    //   if (this.preselected && this.preselected.length) {
+    //     for (let item of this.preselected) {
+    //       // console.log('cur', item)
+    //       // let cur = item
+    //       // cur.selected = true
+    //       bus.$emit('selectitem', this.currencyMap[item.id])
+    //       // this.selectItem(this.currencyMap[item.id])
+    //       // bus.$emit('select-preset', cur)
+    //     }
+    //   }
+    // }
   },
   beforeCreate: function () {
     // console.log('beforeCreate getSelectedAsks', this.getSelectedAsks)
     currency
       .then((response) => {
-        // this.currencyMap = response.collection
+        this.currencyMap = response.collection
         this.currency = response.items
+        // this.makeSelections()
       })
   }
   // filters: {

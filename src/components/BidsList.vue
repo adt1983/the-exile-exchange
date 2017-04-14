@@ -3,7 +3,8 @@
     <ul>
       <li class="bid"
         @click="showContactInfo(item)"
-        v-for="item in items">
+        v-for="item in items"
+        :key="item[keys.lastSeenTime]">
           <h6 class="body-font title">{{item[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{item[keys.user]}}<!-- </span>&nbsp;<strong>{{ratio}}</strong> --></h6>
       </li>
     </ul>
@@ -28,6 +29,13 @@ export default {
   props: {
     items: Array,
     ratio: String
+  },
+  computed: {
+    sortedItems () {
+      return this.items.sort(function (a, b) {
+        return a[this.keys.lastSeenTime] - b[this.keys.lastSeenTime]
+      })
+    }
   },
   methods: {
     showContactInfo: function (info) {

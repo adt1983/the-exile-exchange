@@ -22,7 +22,6 @@
             :bid-id="item.bidId"></exchange>
         </div>
       </transition-group>
-      <loader v-if="loading"></loader>
       <bids-list-modal></bids-list-modal>
   </section>
 </template>
@@ -31,6 +30,7 @@
 // import { bus } from '../services/bus'
 import settings from '../settings'
 import { parseParams } from '../services/util'
+import saved from '../services/selected'
 // import { http } from '../services'
 // import { league } from '../services/league'
 // import { currency } from '../services/currency'
@@ -48,6 +48,8 @@ export default {
   data () {
     return {
       settings,
+      currencySaveKey: settings.keys.currency.saveAs,
+      leagueSaveKey: settings.keys.league.saveAs,
 
       loading: true,
 
@@ -74,6 +76,9 @@ export default {
   created: function () {
     return this.getSelectedOffers()
   },
+  // beforeDestroy: function () {
+  //   return this.getSelectedOffers()
+  // },
   watch: {
     // call again the method if the route changes
     '$route': 'refresh'
@@ -81,9 +86,20 @@ export default {
   methods: {
     refresh () {
       this.getSelectedOffers()
+      saved.set(this.leagueSaveKey, this.leagueid)
     },
     getSelectedAsks: function () {
+      let ids = []
+      console.log('this.askids', this.askids)
       let params = parseParams(this.askids)
+      console.log('params', params)
+      if (params && params.length) {
+        for (let param of params) {
+          ids.push(param.id)
+        }
+        saved.set(this.currencySaveKey, ids)
+        console.log('saved ids', ids)
+      }
       return params
     },
     getSelectedOffers: function () {
@@ -94,7 +110,7 @@ export default {
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })
-
+      // bus.$emit('data:loading') // send promise?
       return exchanges.reduce(function (chain, exchangePromise) {
         return chain.then(function () {
           return exchangePromise
@@ -105,7 +121,7 @@ export default {
           }
         })
       }, Promise.resolve()).then(function () {
-        console.log('All done')
+        // console.log('All done')
       }).catch(function (err) {
         console.log('err', err)
       }).then(function () {

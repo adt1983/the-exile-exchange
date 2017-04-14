@@ -21,9 +21,9 @@
       </div> -->
       <figure v-if="input && preloader"
         class="currency-item is-input"
-        :class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
-        @:mouseleave="activeSelection = false"
-        @:click="selectItem">
+        v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
+        v-on:mouseleave="activeSelection = false"
+        v-on:click="selectItem">
          <img 
 
           :src="imgUrl" :alt="name"
@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import { bus } from '../services/bus'
 import settings from '../settings'
+import saved from '../services/selected'
 import { currency } from '../services/currency'
 
 export default {
@@ -60,7 +60,8 @@ export default {
       currencyMap: {},
       settings,
       selected: false,
-      activeSelection: false
+      activeSelection: false,
+      animate: null
     }
   },
   props: {
@@ -126,15 +127,17 @@ export default {
     // Instead of updating the value directly, this
     // method is used to format and place constraints
     // on the input's value
-    selectItemUI: function () {
+    selectItemUI: function (isClick) {
       if (this.isDisabled) {
         return
       }
       this.selected = !this.selected
-      this.activeSelection = this.selected
+      if (isClick) {
+        this.activeSelection = this.selected
+      }
     },
-    selectItem: function () {
-      this.selectItemUI()
+    selectItem: function (isClick) {
+      this.selectItemUI(isClick)
       this.$emit('select', { id: this.id, selected: this.selected })
     }
   },
@@ -142,17 +145,32 @@ export default {
     currency
       .then((response) => {
         this.currencyMap = response.collection
+        // this.currency = response.items
       })
   },
-  created () {
-    bus.$on('select.preset', function (data) {
-      console.log('data', data)
-      console.log('data.id === this.id', data.id === this.id)
-      if (data.id === this.id) {
-        this.selectItemUI()
-      }
-    })
+  created: function () {
+    const currencies = saved.get(this.keys.saveAs)
+    const id = typeof (this.id) === 'string' ? this.id : this.id.toString()
+    // let params = []
+    // if (typeof (currencies) === 'string') {
+    //   params = JSON.parse(currencies)
+    // } else {
+    //   params = currencies
+    // }
+    let index = currencies.indexOf(id)
+    if (index !== -1) {
+      let dis = this
+      this.animate = setTimeout(function () {
+        dis.selectItem()
+      }, 180 * index)
+    }
+  },
+  beforeDestory () {
+    clearTimeout(this.animate)
   }
+  // filters: {
+  //   timeAgo
+  // }
 }
 </script>
 

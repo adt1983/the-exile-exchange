@@ -8,6 +8,7 @@
       <div class="grid-container ">
         <currency-list
           v-on:selected="updateAskSelected"
+          :preselected="preselected"
           class="active grid-block align-center"
           ></currency-list>
 
@@ -40,7 +41,7 @@ import settings from '../settings'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
 import { createParams } from '../services/util'
-import saved from '../services/selected'
+// import saved from '../services/selected'
 // import router from 'vue-router'
 import Header from '../components/Header'
 import CurrencyList from '../components/CurrencyList'
@@ -69,9 +70,6 @@ export default {
       title: 'Currency',
       keys: settings.keys.currency,
 
-      leagueSaveKey: settings.keys.league.type,
-
-      currencySaveKey: settings.keys.currency.type,
       lastAsks: undefined,
 
       currencyMap: {},
@@ -80,30 +78,19 @@ export default {
         asks: [],
         offers: []
       },
+      preselected: [],
       params: {
         asks: '',
         offers: ''
       }
     }
   },
-  beforeCreate: function () {
-    // get data from services
-    currency
-      .then((response) => {
-        this.currencyMap = response.collection
-        // this.getSelectedCurrencies()
-      })
-    league
-      .then((response) => {
-        this.leagueMap = response.collection
-      })
-  },
-  beforeDestroy: function () {
-    // save ask currency params
-    const id = this.currencySaveKey
-    const value = this.askParams()
-    saved.set(id, value)
-  },
+  // beforeDestroy: function () {
+  //   // save ask currency params
+  //   const id = this.currencySaveKey
+  //   const value = this.askParams()
+  //   saved.set(id, value)
+  // },
   components: {
     'currency-list': CurrencyList,
     'currency-item': CurrencyItem,
@@ -117,42 +104,45 @@ export default {
         comp[a[that.keys.id]] = true
         comp.bid = a
       })
-      return comp
-    },
-    selectedOffers: function () {
-      const that = this
-      let comp = {}
-      this.selected.offers.forEach(function (a) {
-        comp[a[that.keys.id]] = true
-      })
+      console.log('selectedAsks', comp)
       return comp
     }
+    // selectedOffers: function () {
+    //   const that = this
+    //   let comp = {}
+    //   this.selected.offers.forEach(function (a) {
+    //     comp[a[that.keys.id]] = true
+    //   })
+    //   return comp
+    // }
   },
   methods: {
     // getSelectedCurrencies () {
-    //   let currencies = saved.get(this.currencySaveKey)
+    //   const currencies = saved.get(this.currencySaveKey)
     //   if (currencies) {
     //     this.lastAsks = currencies
     //   }
-    //   let params = parseParams(this.selectedCurrencies())
-    //   console.log('params', params)
-    //   setTimeout(function () {
-    //     for (let i = params.length - 1; i >= 0; i--) {
-    //       bus.$emit('select.preset', { id: params[i].bids })
-    //     }
-    //   }, 10)
+      // const params = parseParams(currencies)
+      // console.log('params', params)
+      // console.log('params', params)
+      // setTimeout(function () {
+        // for (let i = params.length - 1; i >= 0; i--) {
+        //   bus.$emit('select.preset', { id: params[i].bids })
+        // }
+      // }, 10)
     // },
-    selectedCurrencies () {
-      let currency
-      if (this.lastAsks && this.lastAsks.length) {
-        currency = this.lastAsks
-      } else {
-        currency = createParams(this.settings.defaults.currencyIndexes, this.currencyMap)
-      }
-      // console.log('currency', currency)
-      return currency
-    },
+    // selectedCurrencies () {
+    //   let currency
+    //   if (this.lastAsks && this.lastAsks.length) {
+    //     currency = this.lastAsks
+    //   } else {
+    //     currency = createParams(this.settings.defaults.currencyIndexes, this.currencyMap)
+    //   }
+    //   // console.log('currency', currency)
+    //   return currency
+    // },
     updateAskSelected: function (items) {
+      console.log('items', items)
       this.params.asks = createParams(items, this.currencyMap)
       this.selected.asks = items
     },
@@ -162,8 +152,24 @@ export default {
     // leagueId () {
     //   return this.leagueid
     // }
+  },
+  beforeCreate () {
+    currency
+      .then((response) => {
+        this.currencyMap = response.collection
+        // this.getSelectedCurrencies()
+      })
+    league
+      .then((response) => {
+        this.leagueMap = response.collection
+      })
   }
-
+  // created () {
+  //   const currencies = saved.get(this.keys.saveAs)
+  //   if (currencies) {
+  //     this.preselected = parseParams(currencies)
+  //   }
+  // }
 }
 </script>
 
