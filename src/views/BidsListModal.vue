@@ -10,8 +10,7 @@
           <div class="grid-block">
             <div class="grid-block">
               <div class="grid-content">
-                <h4 class="body-font float-left"><strong class="success">{{bidLabel}}</strong>
-                  at <strong>{{raw.key}}</strong></h4>
+                <h4 class="body-font float-left"><strong class="success">Contact Seller</strong></h4>
               </div>
             </div>
             <div class="grid-block shrink">
@@ -78,19 +77,20 @@
             class="trade-text"
             v-model="message"></textarea>
 
-          <div class="modal-body scroll grid-block">
-            <section class="bid-list">
-              <ul>
-                <li class="bid"
-                    @click="setActiveOrder(order)"
-                    v-for="order in raw.list">
-                  <h6 class="body-font title">{{order.lastChar}}&nbsp;&bullet;&nbsp;<span
-                    class="right warning-color">{{order.accountName}}</span>&nbsp;&bullet;&nbsp;{{order.lastSeenUTC | fromNowFilter}}
-                  </h6>
-                </li>
-              </ul>
-            </section>
-          </div>
+          <table class="seller-list">
+            <thead>
+            <th>Seller</th>
+            <th class="text-right">Stock</th>
+            <th class="text-right">Last Seen</th>
+            </thead>
+            <tbody>
+            <tr v-for="order in raw.list" @click="setActiveOrder(order)">
+              <td>{{order.lastChar}}</td>
+              <td class="text-right">{{order.bid_stock}}</td>
+              <td class="text-right">{{order.lastSeenUTC | fromNowFilter}}</td>
+            </tr>
+            </tbody>
+          </table>
 
         </div>
       </div>
@@ -162,7 +162,7 @@
       setData: function (data) {
         this.showModal = true
         this.raw = data
-        this.activeOrder = this.raw.list[0]
+        this.setActiveOrder(this.raw.list[0])
         this.leagueName = this.raw.leagueName
       },
       closeModal: function () {
@@ -194,7 +194,6 @@
         if (data && Object.keys(data)) {
           that.selectedMultiplier = 1
           that.setData(data)
-          console.log('data', data)
         }
       })
       bus.$on('modal.traderlist.close', function (data) {
@@ -251,6 +250,84 @@
     cursor: pointer;
     @include hovershadow($secondary-color);
 
+  }
+
+  .seller-list {
+    /*
+    http://stackoverflow.com/questions/23989463/how-to-set-tbody-height-with-overflow-scroll
+    https://vuejs.org/v2/examples/grid-component.html
+    http://stackoverflow.com/questions/29164556/absolute-div-block-with-header-and-scrollable-list-container
+    */
+    table {
+      border: 2px solid #42b983;
+      border-radius: 3px;
+      background-color: #fff;
+      width: 33rem;
+    }
+
+    thead, tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    th {
+      background-color: $gray-dark;
+      color: rgba(255, 255, 255, 0.66);
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    tr {
+      display: table;
+      cursor: pointer;
+      background-color: $dark-color;
+
+      &:nth-child(even) {
+        background-color: lighten($dark-color, 5);
+      }
+      &:nth-child(odd) {
+        background-color: lighten($dark-color, 8);
+      }
+      &:hover {
+        background-color: $blocklist-item-background-hover;
+      }
+    }
+
+    tbody {
+      display: block;
+      max-height: 33rem;
+      overflow-y: auto;
+    }
+
+    td {
+
+    }
+
+    th, td {
+      min-width: 120px;
+      padding: 10px 20px;
+    }
+
+    th.active {
+      color: #fff;
+    }
+
+    th.active .arrow {
+      opacity: 1;
+    }
+
+    .arrow {
+      display: inline-block;
+      vertical-align: middle;
+      width: 0;
+      height: 0;
+      margin-left: 5px;
+      opacity: 0.66;
+    }
   }
 
   .bid-list {
