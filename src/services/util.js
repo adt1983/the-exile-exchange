@@ -126,20 +126,24 @@ export function parseParams (ids) {
     params.forEach(function (a) {
       let temp = {}
       item = cleanPairs(a, settings.paramDiv)
+      // use for exchange view
       temp.asks = item[0]
       temp.bids = item[1]
+      // for selected currencies
+      temp.id = item[0] // use for currency item
       items.push(temp)
     })
   } else {
     params = cleanPairs(params, settings.paramDiv)
     items.push({
+      id: params[0],
+      selected: true,
       asks: params[0],
       bids: params[1]
     })
   }
   return items
 }
-
 export function createParams (ids, currencyMap) {
   let all = []
   ids.forEach(function (id) {

@@ -6,7 +6,7 @@ const keys = settings.keys.currency
 const mapId = keys.id
 
 const storageType = 'localStorage'
-const storageId = 'breachCurrency'
+const storageId = 'poe-currency'
 // const 'data' = 'global'
 
 let items = []

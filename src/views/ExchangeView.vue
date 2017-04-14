@@ -22,7 +22,6 @@
             :bid-id="item.bidId"></exchange>
         </div>
       </transition-group>
-      <loader v-if="loading"></loader>
       <bids-list-modal></bids-list-modal>
   </section>
 </template>
@@ -31,6 +30,7 @@
 // import { bus } from '../services/bus'
 import settings from '../settings'
 import { parseParams } from '../services/util'
+import saved from '../services/selected'
 // import { http } from '../services'
 // import { league } from '../services/league'
 // import { currency } from '../services/currency'
@@ -48,6 +48,8 @@ export default {
   data () {
     return {
       settings,
+      currencySaveKey: settings.keys.currency.saveAs,
+      leagueSaveKey: settings.keys.league.saveAs,
 
       loading: true,
 
@@ -81,9 +83,20 @@ export default {
   methods: {
     refresh () {
       this.getSelectedOffers()
+      saved.set(this.leagueSaveKey, this.leagueid)
     },
     getSelectedAsks: function () {
+      let ids = []
+      console.log('this.askids', this.askids)
       let params = parseParams(this.askids)
+      console.log('params', params)
+      if (params && params.length) {
+        for (let param of params) {
+          ids.push(param.id)
+        }
+        saved.set(this.currencySaveKey, ids)
+        console.log('saved ids', ids)
+      }
       return params
     },
     getSelectedOffers: function () {
@@ -94,20 +107,18 @@ export default {
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })
-
       return exchanges.reduce(function (chain, exchangePromise) {
         return chain.then(function () {
           return exchangePromise
         }).then(function (value) {
-          console.log('value', value)
           if (value.askList.length || value.bidList.length) {
             dis.activeExchanges.push(value)
           }
         })
       }, Promise.resolve()).then(function () {
-        console.log('All done')
+        // console.log('All done')
       }).catch(function (err) {
-        console.log('err', err)
+        console.warn('err', err)
       }).then(function () {
         // finally
         dis.loading = false
@@ -132,11 +143,6 @@ export default {
   width: 100%;
   overflow-y: scroll;
   display: flex;
-  // flex-direction: column nowrap;
-  // .currency-item {
-  //   display: flex-list;
-  //   flex-direction: row wrap;
-  // }
   .grid-content {
     margin: 0;
     padding: 0;
@@ -154,10 +160,6 @@ export default {
 .view-loader {
   margin-top: $global-padding;
 }
-// .exchange-list-item {
-//   padding-top: $global-padding;
-//   border-bottom: 1px solid $secondary-color;
-// }
 
 // /* Enter and leave animations can use different */
 /* durations and timing functions.              */

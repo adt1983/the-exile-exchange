@@ -12,11 +12,10 @@
           <div class="grid-content align-center">
             <ul class="button-group segmented">
               <li v-for="leag in league">
-                <router-link 
-                  :to="{ name: 'exchange', params: { leagueid: leag.$slug, askids: selectedCurrencies() }}" 
-                  tag="button" 
+                <button
+                  @click="setLeague(leag.$slug)"
                   type="button" 
-                  class="button"><h1>{{leag.name}}</h1></router-link>
+                  class="button"><h1>{{leag.name}}</h1></button>
               </li>
             </ul>
           </div>
@@ -33,7 +32,7 @@
 
 <script>
 import settings from '../settings'
-import saved from '../services/selected'
+import selected from '../services/selected'
 import { league } from '../services/league'
 import { currency } from '../services/currency'
 import { createParams } from '../services/util'
@@ -49,18 +48,18 @@ export default {
   data () {
     return {
       settings,
+      currencySaveKey: settings.keys.currency.saveAs,
+      accountNameSaveKey: settings.keys.exchange.saveAs,
+      leagueSaveKey: settings.keys.league.saveAs,
 
       editName: false,
-      accountNameSaveKey: settings.keys.exchange.user,
 
       currencyMap: {},
 
-      currencySaveKey: settings.keys.currency.type,
       lastAsks: undefined,
 
       league,
       title: 'Select League.',
-      leagueSaveKey: settings.keys.league.type,
       selectedLeague: undefined
     }
   },
@@ -73,24 +72,19 @@ export default {
     selectedCurrencies () {
       let currency
       if (this.lastAsks && this.lastAsks.length) {
-        currency = this.lastAsks
+        currency = createParams(this.lastAsks, this.currencyMap)
       } else {
         currency = createParams(this.settings.defaults.currencyIndexes, this.currencyMap)
       }
       return currency
     },
-    // isEdit () {
-    //   return !editName || accountName !== ''
-    // },
-    submitName (v) {
-      saved.set(this.accountNameSaveKey, this.accountName)
-      this.editName = false
-    },
-    submitLeague (v) {
-      saved.set(this.accountNameSaveKey, this.selectedLeague)
-    },
     isLoaded () {
       return Object.keys(this.currencyMap) && Object.keys(this.currencyMap).length
+    },
+    setLeague (leagueid) {
+      this.selectedLeague = leagueid
+      selected.set(this.leagueSaveKey, this.selectedLeague)
+      this.gotoExchange()
     },
     isSet () {
       return this.selectedLeague
@@ -114,15 +108,15 @@ export default {
         that.currencyMap = response.collection
         this.gotoExchange()
       })
-    let name = saved.get(this.accountNameSaveKey)
+    let name = selected.get(this.accountNameSaveKey)
     if (name) {
       this.accountName = name
     }
-    let currencies = saved.get(this.currencySaveKey)
+    let currencies = selected.get(this.currencySaveKey)
     if (currencies) {
       this.lastAsks = currencies
     }
-    let league = saved.get(this.leagueSaveKey)
+    let league = selected.get(this.leagueSaveKey)
     if (league) {
       this.selectedLeague = league
     }
@@ -131,13 +125,9 @@ export default {
     league
       .then((response) => {
         this.league = response.items
+        console.log('this.league', this.league)
       })
   },
-  // beforeDestroy: function () {
-  //   const id = this.title
-  //   const value = this.askParams()
-  //   saved.set(id, value)
-  // },
   components: {
     Loader,
     'header-section': Header,

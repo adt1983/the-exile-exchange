@@ -23,55 +23,6 @@
               :to="{ name: 'currency', params: { leagueid: leagueid }}"
               tag="a" >Currencies</router-link></li>
     </ul>
-    <!-- <div class="grid-block"> -->
-      <!-- <div class="grid-content text-center"> -->
-        <!-- todo // convert asks to string -->
-        <!-- <router-link 
-          :to="{ name: 'home'}" 
-          tag="button" 
-          type="button" 
-          class="button call-to-action"><div class="svg-icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="32" viewBox="0 0 12 32">
-            <path d="M11.196 9.714q0 0.232-0.179 0.411l-7.018 7.018 7.018 7.018q0.179 0.179 0.179 0.411t-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
-            </svg></div></router-link> -->
-      <!-- </div> -->
-    <!-- </div> -->
-<!--     <div class="grid-block v-align noscroll">
-      <div class="grid-content align-center noscroll">
-        <account-name></account-name>
-      </div>
-    </div> -->
-
-    <!-- SHOW SELECTED -->
-    <!-- <ul class="no-bullet grid-block horizontal shrink">
-      <li class="grid-content" v-for="(v,id) in selectedAsks" :key="id">
-        <currency-item
-          :input="false"
-          :id="id" 
-          class="small-icon ask-icon"
-          ></currency-item>
-        <currency-item
-          :input="false"
-          :id="v.$preset" 
-          class="small-icon bid-icon"
-          ></currency-item>
-      </li>
-    </ul> -->
-    <!-- <div class="grid-block v-align noscroll">
-      <div class="grid-content align-center text-right noscroll"> --> 
-        <!-- todo // convert asks to string -->
-      
-     <!--    <router-link 
-          v-show="askParams() !== '' && params.length"
-          :to="{ name: 'exchange', params: { leagueid: leagueid, askids: askParams() }}"
-          tag="button" 
-          type="button" 
-          class="button">{{searchText}}</router-link>
-        <button class="button" 
-          v-show="askParams() === '' && params.length"
-          disabled="disabled">
-          {{searchText}}
-        </button> -->
-      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -79,7 +30,6 @@
 <script>
 import router from '../router'
 import settings from '../settings'
-// import saved from '../services/selected'
 
 import { league } from '../services/league'
 import { currency } from '../services/currency'
@@ -93,8 +43,6 @@ export default {
     return {
       settings,
 
-      // accountName: '',
-      // accountNameSaveKey: settings.keys.exchange.user,
       router,
       search: 'Search',
 

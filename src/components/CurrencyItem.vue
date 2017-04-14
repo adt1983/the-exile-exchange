@@ -1,54 +1,26 @@
 <template>
-  <!-- <div class="shell"> -->
-    <transition name="fade-in">
-<!--       <div v-if="preloader === false" class="currency-item vertical nowrap align-center justify-center">
-        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-         width="78px" height="78px" viewBox="0 0 78 78" enable-background="new 0 0 78 78" xml:space="preserve">
-        <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
-          s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
-          c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
-        <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
-          C22.32,8.481,24.301,9.057,26.013,10.047z">
-          <animateTransform attributeType="xml"
-            attributeName="transform"
-            type="rotate"
-            from="0 34 34"
-            to="360 34 34"
-            dur="0.5s"
-            repeatCount="indefinite"/>
-          </path>
-        </svg>
-      </div> -->
-      <figure v-if="input && preloader"
-        class="currency-item is-input"
-        :class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
-        @:mouseleave="activeSelection = false"
-        @:click="selectItem">
-         <img 
-
-          :src="imgUrl" :alt="name"
+  <transition name="fade-in">
+    <figure v-if="input && preloader"
+      class="currency-item is-input"
+      v-bind:class="{ 'is-selected': selected, 'is-active': activeSelection, 'is-disabled': isDisabled }"
+      v-on:mouseleave="activeSelection = false"
+      v-on:click="selectItem">
+       <img 
+        :src="imgUrl" :alt="name"
+        v-tooltip.top-center="ttmsg">
+    </figure>
+    <div
+      v-if="!input && preloader"
+      class="currency-item text-center is-display">
+        <img :src="imgUrl" :alt="name"
           v-tooltip.top-center="ttmsg">
-<!--          <img 
-          class="show-for-small-only"
-          :src="imgUrl" :alt="name">
-        <small class="show-for-small-only currency-name" v-html="ttmsg"></small> -->
-      </figure>
-      <div
-        v-if="!input && preloader"
-        class="currency-item text-center is-display">
-         <!-- <figure class="grid-content noscroll"> -->
-          <img :src="imgUrl" :alt="name"
-            v-tooltip.top-center="ttmsg">
-          <!-- <h6 class="show-for-small-only currency-name text-center" v-html="ttmsg"></h6> -->
-         <!-- </figure> -->
-      </div>
-    </transition>
-  <!-- </div> -->
+    </div>
+  </transition>
 </template>
 
 <script>
-import { bus } from '../services/bus'
 import settings from '../settings'
+import saved from '../services/selected'
 import { currency } from '../services/currency'
 
 export default {
@@ -56,11 +28,11 @@ export default {
   data () {
     return {
       keys: settings.keys.currency,
-      // currency: [],
       currencyMap: {},
       settings,
       selected: false,
-      activeSelection: false
+      activeSelection: false,
+      animate: null
     }
   },
   props: {
@@ -68,10 +40,6 @@ export default {
       type: Boolean,
       default: false
     },
-    // make these option
-    // name: String,
-    // imgUrl: String,
-    // value: Number,
 
     id: [String, Number]
   },
@@ -126,15 +94,17 @@ export default {
     // Instead of updating the value directly, this
     // method is used to format and place constraints
     // on the input's value
-    selectItemUI: function () {
+    selectItemUI: function (isClick) {
       if (this.isDisabled) {
         return
       }
       this.selected = !this.selected
-      this.activeSelection = this.selected
+      if (isClick) {
+        this.activeSelection = this.selected
+      }
     },
-    selectItem: function () {
-      this.selectItemUI()
+    selectItem: function (isClick) {
+      this.selectItemUI(isClick)
       this.$emit('select', { id: this.id, selected: this.selected })
     }
   },
@@ -144,14 +114,19 @@ export default {
         this.currencyMap = response.collection
       })
   },
-  created () {
-    bus.$on('select.preset', function (data) {
-      console.log('data', data)
-      console.log('data.id === this.id', data.id === this.id)
-      if (data.id === this.id) {
-        this.selectItemUI()
-      }
-    })
+  created: function () {
+    const currencies = saved.get(this.keys.saveAs)
+    const id = typeof (this.id) === 'string' ? this.id : this.id.toString()
+    let index = currencies.indexOf(id)
+    if (index !== -1) {
+      let dis = this
+      this.animate = setTimeout(function () {
+        dis.selectItem()
+      }, 180 * index)
+    }
+  },
+  beforeDestory () {
+    clearTimeout(this.animate)
   }
 }
 </script>
@@ -162,11 +137,6 @@ export default {
 @import '../assets/styles/tooltip';
 
 $icon-size: rem-calc(46) !default;
-
-// .shell {
-//   display: block;
-//   padding: rem-calc(3);
-// }
 .fade-in-enter-active, 
 .fade-in-leave-active {
   transition: opacity $default-animation-speed*2;
@@ -202,29 +172,16 @@ $icon-size: rem-calc(46) !default;
       border-color: $success-color;
     }
   }
-  // active styles
-  // width: 100%;
-  // height: 100%;
-  // width: rem-calc(78);
-  // height: rem-calc(78);
-  // line-height: 1;
   text-align: center;
-  // float: left;
-  // margin-right: .2em;
-  // margin-bottom: .2em;
   &.is-display {
     border: none;
     background-color: transparent;
-    // margin: auto;
-    // filter: drop-shadow(rem-calc(-1) rem-calc(2) rem-calc(1) rgba($primary-color, 0.6));
   }
   img {
     margin: 0;
     padding: rem-calc(1);
     width: $icon-size;
     height: $icon-size;
-    // width: rem-calc(78);
-    // height: rem-calc(78);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     .small-icon & {
@@ -233,26 +190,11 @@ $icon-size: rem-calc(46) !default;
     }
   }
   &.is-disabled {
-    // cursor: not-allowed !important;
     cursor: no-drop !important;
-    // border-color: $gray;
     &:hover {
       border-color: $gray-dark;
     }
-    // img {
-    //   filter: grayscale(100%);
-    // }
   }
-  // svg path,
-  // svg rect {
-  //   margin: auto;
-  //   width: rem-calc(78);
-  //   height: rem-calc(78);
-  //   fill: $primary-color;
-  //   .small-icon & {
-
-  //   }
-  // }
   
 }
 .currency-name {
