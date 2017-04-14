@@ -5,8 +5,8 @@
             <router-link 
               class="alt-font"
               active-class="is-active"
-              :to="{ params: { leagueid: league[settings.keys.league.slug] }}" 
-              tag="a">{{league[settings.keys.league.name]}}</router-link>
+              :to="{ params: { leagueid: league[keys.slug] }}" 
+              tag="a">{{league[keys.name]}}</router-link>
           </li>
     </ul>
     <div class="grid-block expand">
@@ -42,6 +42,7 @@ export default {
   data () {
     return {
       settings,
+      keys: settings.keys.league,
 
       router,
       search: 'Search',

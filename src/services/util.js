@@ -39,7 +39,7 @@ export function buildKey (name) {
   let key = ''
   if (name !== undefined) {
     key = name
-    key = key.replace(/ /g, '') // purge spaces
+    key = key.replace(' ', '%20') // purge spaces
   }
   return key
 }
