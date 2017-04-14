@@ -3,24 +3,18 @@
     <ol>
       <li class="currency-item-wrapper" 
         v-for="item in currency" :key="item[keys.id]">
-       <!--  <div class="grid-block">
-          <div class="grid-content text-center"> -->
-            <currency-item
-              v-on:select="selectItem"
-              :input="true"
-              :id="item[keys.id]"
-              ></currency-item>
-          <!-- </div>
-        </div> -->
+        <currency-item
+          v-on:select="selectItem"
+          :input="true"
+          :id="item[keys.id]"
+          ></currency-item>
       </li>
     </ol>
   </div>
 </template>
 
 <script>
-// import { bus } from '../services/bus'
 import settings from '../settings'
-// import { timeAgo } from '../filters'
 import { currency } from '../services/currency'
 import CurrencyItem from './CurrencyItem'
 
@@ -53,31 +47,14 @@ export default {
       }
       this.$emit('selected', this.selected)
     }
-    // makeSelections () {
-    //   if (this.preselected && this.preselected.length) {
-    //     for (let item of this.preselected) {
-    //       // console.log('cur', item)
-    //       // let cur = item
-    //       // cur.selected = true
-    //       bus.$emit('selectitem', this.currencyMap[item.id])
-    //       // this.selectItem(this.currencyMap[item.id])
-    //       // bus.$emit('select-preset', cur)
-    //     }
-    //   }
-    // }
   },
   beforeCreate: function () {
-    // console.log('beforeCreate getSelectedAsks', this.getSelectedAsks)
     currency
       .then((response) => {
         this.currencyMap = response.collection
         this.currency = response.items
-        // this.makeSelections()
       })
   }
-  // filters: {
-  //   timeAgo
-  // }
 }
 </script>
 
@@ -86,14 +63,11 @@ export default {
 @import '../assets/styles/settings';
 
 .currency-list {
-  // padding: 0 $global-padding*3;
   ol {
     @include base-panel;
     padding: 0;
     margin: auto;
     list-style: none;
-    // display: flex;
-    // flex-flow: row wrap;
   }
   .currency-item-wrapper {
     display: inline-block;

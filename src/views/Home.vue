@@ -16,11 +16,6 @@
                   @click="setLeague(leag.$slug)"
                   type="button" 
                   class="button"><h1>{{leag.name}}</h1></button>
-                <!-- <router-link 
-                  :to="{ name: 'exchange', params: { leagueid: leag.$slug, askids: selectedCurrencies() }}" 
-                  tag="button" 
-                  type="button" 
-                  class="button"><h1>{{leag.name}}</h1></router-link> -->
               </li>
             </ul>
           </div>
@@ -133,9 +128,6 @@ export default {
         console.log('this.league', this.league)
       })
   },
-  // beforeDestroy: function () {
-  //   selected.set(this.leagueSaveKey, this.selectedLeague)
-  // },
   components: {
     Loader,
     'header-section': Header,

@@ -76,9 +76,6 @@ export default {
   created: function () {
     return this.getSelectedOffers()
   },
-  // beforeDestroy: function () {
-  //   return this.getSelectedOffers()
-  // },
   watch: {
     // call again the method if the route changes
     '$route': 'refresh'
@@ -110,12 +107,10 @@ export default {
       params.forEach(function (value) {
         exchanges.push(new ExchangeModel(value.asks, value.bids, dis.leagueid))
       })
-      // bus.$emit('data:loading') // send promise?
       return exchanges.reduce(function (chain, exchangePromise) {
         return chain.then(function () {
           return exchangePromise
         }).then(function (value) {
-          console.log('value', value)
           if (value.askList.length || value.bidList.length) {
             dis.activeExchanges.push(value)
           }
@@ -123,7 +118,7 @@ export default {
       }, Promise.resolve()).then(function () {
         // console.log('All done')
       }).catch(function (err) {
-        console.log('err', err)
+        console.warn('err', err)
       }).then(function () {
         // finally
         dis.loading = false
@@ -148,11 +143,6 @@ export default {
   width: 100%;
   overflow-y: scroll;
   display: flex;
-  // flex-direction: column nowrap;
-  // .currency-item {
-  //   display: flex-list;
-  //   flex-direction: row wrap;
-  // }
   .grid-content {
     margin: 0;
     padding: 0;
@@ -170,10 +160,6 @@ export default {
 .view-loader {
   margin-top: $global-padding;
 }
-// .exchange-list-item {
-//   padding-top: $global-padding;
-//   border-bottom: 1px solid $secondary-color;
-// }
 
 // /* Enter and leave animations can use different */
 /* durations and timing functions.              */

@@ -108,13 +108,6 @@ export default {
     }
   },
   computed: {
-    // get only, just need a function
-    // highestAsk: function () {
-    //   return filters.highest(this.isCurrentAsk, this.keys.ask)
-    // },
-    // highestBid: function () {
-    //   return filters.highest(this.isCurrentBid, this.keys.bid)
-    // },
     isLoaded: function () {
       if (this.renderView && this.askList && this.bidList) {
         if (this.loading > 2) { // 2 reqs
@@ -123,9 +116,6 @@ export default {
         }
       }
     }
-    // openModal: function (data) {
-    //   bus.$emit('open-modal', data)
-    // }
   },
   methods: {
     applyBackgroundColorClass (asks, bids) {
@@ -161,20 +151,10 @@ export default {
       })
       return valid
     },
-    // toggleOffer: function (key) {
-    //   this.selected[key] = !this.selected[key]
-    // },
     showOffer: function (key, list, type) {
       const config = { key, list, type }
       bus.$emit('modal.traderlist.open', config)
     },
-    // keep the template clean
-    // hasTrade: function (key) {
-    //   return this.exchangeMap[key].bids && this.exchangeMap[key].bids.length && this.exchangeMap[key].asks && this.exchangeMap[key].asks.length
-    // },
-    // renderKeyRow: function (key) {
-    //   return this.exchangeMap[key].asks && this.exchangeMap[key].asks.length
-    // },
     hasData: function () {
       const data = Object.keys(this.exchangeMap)
       return data && data.length
@@ -197,9 +177,6 @@ export default {
     this.setAccountName()
     bus.$on('saved.accountName', this.setAccountName)
   }
-  // beforeDestroy: function () {
-  //   clearTimeout(this.refreshInterval)
-  // }
 }
 </script>
 
@@ -228,26 +205,14 @@ export default {
   .badge {
     margin-top: ($global-padding/3)*2;
   }
-  // // This gets you basic styles
-  // @include block-list-container(
-  //   $font-size: 1rem, // Base font size for entire list
-  //   $full-bleed: true // If true, negative margins are added on the left and right to push the list to the edge of the container
-  // );
-
-  // margin: 0;
-  // ul {
-  //   padding: 0;
-  //   margin: 0;
-    // margin-bottom: 0;
-    .exchange-row {
-      &:nth-child(even) {
-        background-color: lighten($dark-color, 5);
-      }
-      &:nth-child(odd) {
-        background-color: lighten($dark-color, 8);
-      }
+  .exchange-row {
+    &:nth-child(even) {
+      background-color: lighten($dark-color, 5);
     }
-  // }
+    &:nth-child(odd) {
+      background-color: lighten($dark-color, 8);
+    }
+  }
   
 }
 .exchange-item {
@@ -264,15 +229,8 @@ export default {
   @include menu-bar-style(
     $background: transparent, // Background color of items
     $background-hover: $primary-color // Background color of item on hover
-    // $background-active: #666, // Background color of an active item
-    // $color: #fff, // Text color of items
-    // $color-hover, // Text color of item on hover
-    // $color-active, // Text color of item when active
-    // $autocolor: false // When true, all the above colors will be derived from $background
   );
-  // li {
-  //   border-top: 0;
-  // }
+
   .exchange-ratio {
     flex-flow: column nowrap;
     flex: 1 0 0;
@@ -283,12 +241,7 @@ export default {
     line-height: 1;
   }
  .has-account {
-    // cursor: pointer;
-      color: $warning-color;
-    // background-color: $warning-dark;
-    // &:hover {
-    //   background-color: $blocklist-item-background-hover;
-    // }
+    color: $warning-color;
   }
 
 }

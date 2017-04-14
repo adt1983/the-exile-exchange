@@ -23,7 +23,6 @@ export default {
       showModal: false,
       keys: settings.keys.exchange,
       showOffers: false
-      // time: 1000 * 60 * 10
     }
   },
   props: {
@@ -40,7 +39,6 @@ export default {
   methods: {
     showContactInfo: function (info) {
       bus.$emit('modal.contactinfo.open', info)
-      // bus.$emit('modal.traderlist.close')
     },
     toggleList: function () {
       this.showOfferInfo = !this.showOfferInfo
@@ -48,10 +46,6 @@ export default {
     itemId: function (item) {
       return item[this.keys.user]
     }
-    // showOfferInfo: function (offer) {
-    //   console.log('showOfferInfo', offer)
-    //   alert(JSON.strigify(offer))
-    // }
   }
 }
 </script>
@@ -82,15 +76,7 @@ export default {
     /* property name | duration | timing function | delay */
     margin: 0;
     padding: rem-calc(10);
-    @include block-list-item(
-      // $color: #000, // Color of items
-      // $color-hover, // Color of items on hover
-      // $color-disabled, // Color of items when disabled
-      // $background: transparent, // Background color
-      // $background-hover: #ccc, // Background color on hover
-      // $border: 1px solid #ccc, // Top and bottom border of items
-      // $padding: 1rem
-    );
+    @include block-list-item();
     cursor: pointer;
     background-color: $dark-color;
     &:hover {
