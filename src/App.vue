@@ -1,50 +1,15 @@
 <!-- App view -->
-<template>
-
-  <div id="app" class="grid-frame vertical">
-      <!-- <modal></modal> -->
-    <!-- <article class="grid-container"> -->
-        <!-- <section class="grid-block align-left"> -->
-            <!-- <div class="grid-container vertical medium-horizontal"> -->
-          <!-- <div class="grid-block small-2 medium-3"> -->
-              <!-- <page-header class="grid-content noscroll"></page-header> -->
-          <!-- </div> -->
-   <!--        <div class="grid-block">
-            <div class="grid-content">
-              <h1>App Layer</h1>
-            </div>
-          </div> -->
-          <div class="grid-block">
-            <transition name="route-transition">
-              <!-- <keep-alive> -->
-                <router-view></router-view>
-              <!-- </keep-alive> -->
-            </transition>
-          </div>
-          <!-- <modal></modal> -->
-            <!-- </div> -->
-        <!-- </section> -->
-        <!-- <page-footer class="grid-block shrink align-center"></page-footer> -->
-    <!-- </article> -->
-
-  </div>
-
+<template lang="pug">
+  #app.grid-frame.vertical
+    .grid-block
+      transition(name="route-transition")
+        router-view
 </template>
 
 <!-- App Ctrl -->
 <script>
-// import pageHeader from './components/Header'
-// import pageFooter from './components/Footer'
-// import Modal from './components/Modal'
-// import Exchange from './components/Exchange'
 export default {
-  name: 'app',
-  data () {
-    return {
-      league: '',
-      loading: false
-    }
-  }
+  name: 'app'
 }
 </script>
 
@@ -69,14 +34,6 @@ body {
   border-top: rem-calc(3) solid $primary-color;
 }
 
-.stage {
-  // display: block;
-  // flex-direction: row;
-  // align-content:stretch;
-  // justify-content:stretch;
-}
-// html { overflow-y: scroll; }
-
 // /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .route-transition-enter-active {
@@ -95,9 +52,4 @@ body {
 
   transform: translateY(-80%);
 }
-// .route-transition-leave {
-//   transform: translateX(0);
-// }
-
-
 </style>

@@ -2,9 +2,10 @@
   <section class="bid-list">
     <ul>
       <li class="bid"
-        @click="showContactInfo(order)"
-        v-for="order in orders">
-          <h6 class="body-font title">{{order[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{order[keys.user]}}</span><!-- &nbsp;<strong>{{ratio}}</strong> --></h6>
+        @click="showContactInfo(item)"
+        v-for="item in items"
+        :key="item[keys.lastSeenTime]">
+          <h6 class="body-font title">{{item[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{item[keys.user]}}<!-- </span>&nbsp;<strong>{{ratio}}</strong> --></h6>
       </li>
     </ul>
   </section>
@@ -22,17 +23,22 @@ export default {
       showModal: false,
       keys: settings.keys.exchange,
       showOffers: false
-      // time: 1000 * 60 * 10
     }
   },
   props: {
-    orders: Array,
+    items: Array,
     ratio: String
   },
+  computed: {
+    sortedItems () {
+      return this.items.sort(function (a, b) {
+        return a[this.keys.lastSeenTime] - b[this.keys.lastSeenTime]
+      })
+    }
+  },
   methods: {
-    showContactInfo: function (order) {
-      bus.$emit('modal.contactinfo.open', order)
-      // bus.$emit('modal.traderlist.close')
+    showContactInfo: function (info) {
+      bus.$emit('modal.contactinfo.open', info)
     },
     toggleList: function () {
       this.showOfferInfo = !this.showOfferInfo
@@ -40,10 +46,6 @@ export default {
     itemId: function (item) {
       return item[this.keys.user]
     }
-    // showOfferInfo: function (offer) {
-    //   console.log('showOfferInfo', offer)
-    //   alert(JSON.strigify(offer))
-    // }
   }
 }
 </script>
@@ -74,15 +76,7 @@ export default {
     /* property name | duration | timing function | delay */
     margin: 0;
     padding: rem-calc(10);
-    @include block-list-item(
-      // $color: #000, // Color of items
-      // $color-hover, // Color of items on hover
-      // $color-disabled, // Color of items when disabled
-      // $background: transparent, // Background color
-      // $background-hover: #ccc, // Background color on hover
-      // $border: 1px solid #ccc, // Top and bottom border of items
-      // $padding: 1rem
-    );
+    @include block-list-item();
     cursor: pointer;
     background-color: $dark-color;
     &:hover {

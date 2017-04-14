@@ -32,7 +32,6 @@ function createRatio (item, isAskOrder) {
   let base = item.isAsk ? keys.bid : keys.ask
   let quote = item.isAsk ? keys.ask : keys.bid
   item[keys.ratio] = item[base] + ':' + item[quote]
-
   //
   // create ratio in format of
   // PERCENTAGE.GCD (greatest common denom)
@@ -88,8 +87,7 @@ export class ExchangeModel {
     // ids and arrays
     this.askId = ask.id || ask
     this.bidId = bid.id || bid
-    console.log('this.bidId', this.bidId)
-    console.log('this.askId', this.askId)
+
     this.askList = []
     this.bidList = []
 
@@ -102,7 +100,7 @@ export class ExchangeModel {
     this.exchangeMap = {}
 
     this.leagueId = leagueId || settings.defaults.leagueId
-    this.league = 'init'
+    this.league = ''
 
     return this.instantiate()
   }

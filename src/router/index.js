@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import { parseParams } from '../services/util'
 // import settings from 'settings'
+// import selected from '../services/selected'
+// import { parseParams } from '../services/util'
 
 import Home from 'views/Home'
 import CurrencyView from 'views/CurrencyView'
@@ -42,14 +43,34 @@ Vue.use(Router)
 
 // }
 
+// const league = selected.get(settings.keys.league.saveAs)
+// const currency = selected.get(settings.keys.currency.saveAs)
 export default new Router({
   // mode: 'history',
   // base: __dirname,
   routes: [
     {
       path: '/',
-      props: true,
+      // props: true,
       name: 'home',
+      component: Home
+      // redirect: to => {
+      //   // console.log('league', league)
+      //   // console.log('currency', currency)
+      //   // console.log('this', this)
+      //   // if (league) {
+      //   //   this.selectedLeague = league
+      //   // }
+      //   // console.log('to', to)
+      //   // the function receives the target route as the argument
+      //   // return redirect path/location here.
+      //   return '/league'
+      // }
+    },
+    {
+      path: '/league',
+      props: true,
+      name: 'league',
       component: Home
     },
     {

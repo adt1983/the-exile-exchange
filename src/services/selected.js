@@ -1,17 +1,27 @@
 import { storageAvailable } from 'services/util'
 
 const storageType = 'localStorage'
-const storageId = 'selected'
+const storageId = 'poe-selected'
 
 function setSelected (uniqueId, value) {
+  let data = value
   if (storageAvailable(storageType)) {
-    localStorage.setItem(storageId + ':' + uniqueId + ':json', JSON.stringify(value))
+    if (typeof (value) !== 'string') {
+      data = JSON.stringify(value)
+    }
+    localStorage.setItem(storageId + ':' + uniqueId + ':json', data)
   }
 }
 function getSelected (uniqueId) {
+  const name = storageId + ':' + uniqueId + ':json'
   let value = false
-  if (storageAvailable(storageType) && localStorage[storageId + ':' + uniqueId + ':json']) {
-    value = JSON.parse(localStorage[storageId + ':' + uniqueId + ':json'])
+  if (localStorage[name]) {
+    const data = localStorage[name]
+    if (data.match(/\{.*\}/g) || data.match(/\[.*\]/g)) {
+      value = JSON.parse(data)
+    } else {
+      value = data
+    }
   }
   return value
 }

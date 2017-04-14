@@ -8,7 +8,7 @@ const keys = settings.keys.league
 const mapId = keys.slug
 
 const storageType = 'localStorage'
-const storageId = 'league'
+const storageId = 'poe-league'
 // const 'data' = 'global'
 
 let items = []

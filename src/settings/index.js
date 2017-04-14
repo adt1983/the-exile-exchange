@@ -6,7 +6,7 @@ export default {
   selected: {}, // active settings
   keys: {
     currency: {
-      type: 'currency', // for saving self
+      saveAs: 'currency', // for saving self
       id: 'id', // since values are unique they will be our ID
       name: 'name',
       value: 'id',
@@ -17,7 +17,7 @@ export default {
     },
     // bids: asks and offers
     exchange: {
-      type: 'exchange', // for saving self
+      saveAs: 'exchange', // for saving self
       id: 'lastChar', // since values are unique they will be our ID
       user: 'accountName',
       name: 'lastChar',
@@ -34,7 +34,7 @@ export default {
       // key: '__key'
     },
     league: {
-      type: 'league', // for saving self
+      saveAs: 'league', // for saving self
       name: 'name',
       slug: '$slug', // used for UI routes
       id: '$id' // use for API routes
