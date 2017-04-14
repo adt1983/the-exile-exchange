@@ -66,18 +66,17 @@ function setStats (items, isAskOrder, collection) {
   })
   return items
 }
-// askList, bidList, askId, exchangeMap
-export function exchange (askList, bidList, askId, league) {
+
+export function exchange (askList, bidList, askId, bidId, league) {
   let exchangeMap = {} // new map for each exchange query
-  let exchange = {askList, bidList, askId, league}
-  console.log('askId', askId)
+  let exchange = {askList, bidList, askId, bidId, league}
+
   setStats(exchange.askList, true, exchangeMap)
   // set states for bids
   setStats(exchange.bidList, false, exchangeMap)
   // set an array of keys so they have a set order
   exchange.exchangeMap = exchangeMap
   exchange.orderBy = arrangeCollection(exchangeMap)
-  exchange.bidId = exchange.bidList[0][keys.bidId] // TODO: don't assume bids exist
   return exchange
 }
 
@@ -135,10 +134,12 @@ export class ExchangeModel {
       function getCurrency () {
         return currency
       }
+
       function getLeague () {
         return league
       }
-      httpAll([ getCurrency(), getLeague() ])
+
+      httpAll([getCurrency(), getLeague()])
         .then(httpSpread(function (currency, league) {
           dis.currencyMap = currency.collection
           dis.leagueMap = league.collection
@@ -170,6 +171,7 @@ export class ExchangeModel {
       function getAskData () {
         return http.get(instance.askReq)
       }
+
       function getBidData () {
         return http.get(instance.bidReq)
       }
@@ -194,7 +196,7 @@ export class ExchangeModel {
         resolve(instance)
       } else {
         // resolve that ish!
-        resolve(exchange(instance.askList, instance.bidList, instance.askId, instance.league))
+        resolve(exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league))
       }
     })
   }
@@ -204,15 +206,15 @@ export class ExchangeModel {
   // auto refresh data
   // this.refreshInterval = setTimeout(function () {
   //   dis.reqData
-        // .then(dis.indexData)
-        // .then(function (instance) {
-        //   console.log('refresh completed', instance)
-        //   resolve(instance)
-        // })
-        // .catch(function (error) {
-        //   console.log('something went wrong', error)
-        //   reject(error)
-        // })
+  // .then(dis.indexData)
+  // .then(function (instance) {
+  //   console.log('refresh completed', instance)
+  //   resolve(instance)
+  // })
+  // .catch(function (error) {
+  //   console.log('something went wrong', error)
+  //   reject(error)
+  // })
   //   if (settings.defaults.autoRefresh) {
   //     this.refreshInterval()
   //   }

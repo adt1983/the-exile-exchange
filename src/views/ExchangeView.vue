@@ -10,7 +10,6 @@
           v-if="activeExchanges.length"
           v-for="item in activeExchanges"
           :key="item.exchangeMap">
-
           <exchange
             :league-map="item.leagueMap"
             :currency-map="item.currencyMap"
