@@ -4,12 +4,12 @@
         <div class="grid-block text-center noscroll">
             <currency-item
               :input="false"
-              :id="askId" 
+              :id="askId"
               class="ask-icon"
               ></currency-item>
             <currency-item
               :input="false"
-              :id="bidId" 
+              :id="bidId"
               class="ask-icon"
               ></currency-item>
         </div>
@@ -19,13 +19,13 @@
       </div>
       <div v-else class="grid-block shrink noscroll align-center preferences">
         <div class="grid-block noscroll">
-          <div class="grid-content noscroll text-right">
-            <small>Ask</small>
+          <div class="grid-content noscroll text-left">
+            <small>Bid</small>
           </div>
         </div>
         <!-- <div class="grid-block noscroll">
           <div class="grid-content noscroll text-center"> -->
-           <!--      <div 
+           <!--      <div
                   :show="loading < 2"
                   v-on:click="refreshData()"
                   class="svg-icon">
@@ -37,9 +37,9 @@
             <label for="Bids">Auto Refresh</label> -->
           <!-- </div>
         </div> -->
-        <div class="grid-block noscroll text-left">
+        <div class="grid-block noscroll text-right">
           <div class="grid-content noscroll">
-            <small>Bid</small>
+            <small>Ask</small>
           </div>
         </div>
       </div>
@@ -47,25 +47,25 @@
           <div
             class="exchange-row"
             :class="[{ 'has-bids': hasBids(key) }]"
-            v-for="(key, increments) in orderBy" 
+            v-for="(key, increments) in orderBy"
             :key="key">
-              <ul class="exchange-item"
-                  :class="applyBackgroundColorClass(exchangeMap[key].asks, exchangeMap[key].bids)">
-                <li><a href=""
-                  :class="applyColorClass(exchangeMap[key].asks)"
-                  @click.prevent="showOffer(key, exchangeMap[key].asks, 'ask')"
-                  v-if="exchangeMap[key].asks && exchangeMap[key].asks.length">{{exchangeMap[key].asks.length}}</a></li>
-                <li
-                  class="exchange-ratio"
-                  :class="[{'small-font': (key.length > 4) },{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}]"><span class="secondary-color body-font text-center">{{key}}</span></li>
+              <ul class="exchange-item">
                 <li><a href=""
                   :class="applyColorClass(exchangeMap[key].bids)"
                   @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid')"
                   v-if="exchangeMap[key].bids && exchangeMap[key].bids.length">{{exchangeMap[key].bids.length}}</a></li>
+                <li
+                  class="exchange-ratio"
+                  :class="[{'small-font': (key.length > 4) },{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}]"><span class="secondary-color body-font text-center">{{key}}</span></li>
+                <li><a href=""
+                  :class="applyColorClass(exchangeMap[key].asks)"
+                  @click.prevent="showOffer(key, exchangeMap[key].asks, 'ask')"
+                  v-if="exchangeMap[key].asks && exchangeMap[key].asks.length">{{exchangeMap[key].asks.length}}</a></li>
+
               </ul>
           </div>
       </section>
-  </div> 
+  </div>
 </template>
 
 <script>
@@ -138,15 +138,11 @@ export default {
         return className
       }
     },
-    applyColorClass (bids) {
-      const count = bids && bids.length
-      let className = 'info-color'
-      if (count) {
-        if (count >= 2) {
-          className = 'success-color'
-        }
+    applyColorClass (orders) {
+      if (this.isAccount(orders)) {
+        return 'success-color warning-dark-bg'
       }
-      return className
+      return 'success-color'
     },
     setAccountName () {
       let name = saved.get(this.accountNameSaveKey)
@@ -155,12 +151,12 @@ export default {
       }
     },
     // highlight account name
-    isAccount: function (bids) {
+    isAccount: function (orders) {
       const that = this
       let valid = false
-      bids.forEach(function (val) {
-        if (val && val.accountName === that.accountName) {
-          valid = true
+      orders.forEach(function (order) {
+        if (order && order.accountName === that.accountName) {
+          valid = true // TODO: Break? Short-circuit return? Array.some()?
         }
       })
       return valid
@@ -294,7 +290,7 @@ export default {
     //   background-color: $blocklist-item-background-hover;
     // }
   }
-   
+
 }
 .preferences {
   background-color: $gray-dark;
