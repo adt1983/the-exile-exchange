@@ -32,6 +32,7 @@ function createRatio (item, isAskOrder) {
   let base = item.isAsk ? keys.bid : keys.ask
   let quote = item.isAsk ? keys.ask : keys.bid
   item[keys.ratio] = item[base] + ':' + item[quote]
+
   //
   // create ratio in format of
   // PERCENTAGE.GCD (greatest common denom)
@@ -67,9 +68,9 @@ function setStats (items, isAskOrder, collection) {
   return items
 }
 // askList, bidList, askId, exchangeMap
-export function exchange (askList, bidList, askId) {
+export function exchange (askList, bidList, askId, league) {
   let exchangeMap = {} // new map for each exchange query
-  let exchange = {askList, bidList, askId}
+  let exchange = {askList, bidList, askId, league}
   console.log('askId', askId)
   setStats(exchange.askList, true, exchangeMap)
   // set states for bids
@@ -101,7 +102,7 @@ export class ExchangeModel {
     this.exchangeMap = {}
 
     this.leagueId = leagueId || settings.defaults.leagueId
-    this.league = ''
+    this.league = 'init'
 
     return this.instantiate()
   }
@@ -195,7 +196,7 @@ export class ExchangeModel {
         resolve(instance)
       } else {
         // resolve that ish!
-        resolve(exchange(instance.askList, instance.bidList, instance.askId))
+        resolve(exchange(instance.askList, instance.bidList, instance.askId, instance.league))
       }
     })
   }

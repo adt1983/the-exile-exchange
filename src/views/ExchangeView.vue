@@ -5,16 +5,17 @@
       :leagueid="leagueid"
       ></header-section>
       <transition-group class="exchange-view" name="slide-fade">
-        <div 
+        <div
           class="exchange-column grid-content"
           v-if="activeExchanges.length"
           v-for="item in activeExchanges"
           :key="item.exchangeMap">
-          <exchange 
+
+          <exchange
             :league-map="item.leagueMap"
             :currency-map="item.currencyMap"
             :exchange-map="item.exchangeMap"
-            :league-id="item.leagueId"
+            :leagueName="item.league"
             :order-by="item.orderBy"
             :ask-list="item.askList"
             :bid-list="item.bidList"

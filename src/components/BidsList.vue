@@ -2,9 +2,9 @@
   <section class="bid-list">
     <ul>
       <li class="bid"
-        @click="showContactInfo(item)"
-        v-for="item in items">
-          <h6 class="body-font title">{{item[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{item[keys.user]}}</span><!-- &nbsp;<strong>{{ratio}}</strong> --></h6>
+        @click="showContactInfo(order)"
+        v-for="order in orders">
+          <h6 class="body-font title">{{order[keys.name]}}&nbsp;&bullet;&nbsp;<span class="right warning-color">{{order[keys.user]}}</span><!-- &nbsp;<strong>{{ratio}}</strong> --></h6>
       </li>
     </ul>
   </section>
@@ -26,12 +26,12 @@ export default {
     }
   },
   props: {
-    items: Array,
+    orders: Array,
     ratio: String
   },
   methods: {
-    showContactInfo: function (info) {
-      bus.$emit('modal.contactinfo.open', info)
+    showContactInfo: function (order) {
+      bus.$emit('modal.contactinfo.open', order)
       // bus.$emit('modal.traderlist.close')
     },
     toggleList: function () {

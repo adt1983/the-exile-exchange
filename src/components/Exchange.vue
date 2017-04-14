@@ -43,6 +43,7 @@
           </div>
         </div>
       </div>
+
       <section class="block-list exchange-list">
           <div
             class="exchange-row"
@@ -52,14 +53,14 @@
               <ul class="exchange-item">
                 <li><a href=""
                   :class="applyColorClass(exchangeMap[key].bids)"
-                  @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid')"
+                  @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid', leagueName)"
                   v-if="exchangeMap[key].bids && exchangeMap[key].bids.length">{{exchangeMap[key].bids.length}}</a></li>
                 <li
                   class="exchange-ratio"
                   :class="{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}"><span class="secondary-color body-font text-center">{{key}}</span></li>
                 <li><a href=""
                   :class="applyColorClass(exchangeMap[key].asks)"
-                  @click.prevent="showOffer(key, exchangeMap[key].asks, 'ask')"
+                  @click.prevent="showOffer(key, exchangeMap[key].asks, 'ask', leagueName)"
                   v-if="exchangeMap[key].asks && exchangeMap[key].asks.length">{{exchangeMap[key].asks.length}}</a></li>
 
               </ul>
@@ -78,7 +79,7 @@ import CurrencyItem from '../components/CurrencyItem'
 export default {
   name: 'exchange',
   props: {
-    leagueId: [String, Number],
+    leagueName: [String, Number],
     askId: [String, Number],
     bidId: [String, Number],
 
@@ -164,8 +165,9 @@ export default {
     // toggleOffer: function (key) {
     //   this.selected[key] = !this.selected[key]
     // },
-    showOffer: function (key, list, type) {
-      const config = { key, list, type }
+    showOffer: function (key, list, type, leagueName) {
+      const config = { key, list, type, leagueName }
+      console.log('config', config)
       bus.$emit('modal.traderlist.open', config)
     },
     // keep the template clean

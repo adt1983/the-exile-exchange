@@ -5,14 +5,14 @@
         <div class="modal-container right">
 
           <div class="grid-block">
-            <div class="grid-block noscroll">
-              <div class="grid-content noscroll">
-               <h6 class="body-font title">{{raw[keys.name]}}<br>
-                <span class="warning-color">{{raw[keys.user]}}</span></h6>
-              </div>
-            </div>
-            <div class="grid-block shrink text-right">
-              <div class="grid-content">
+               <!--<div class="grid-block noscroll">-->
+                 <div class="grid-content noscroll">
+                  <h6 class="body-font title">{{raw[keys.name]}}<br>
+                   <span class="warning-color">{{raw[keys.user]}}</span></h6>
+                 </div>
+               <!--</div>-->
+            <!--<div class="grid-block shrink text-right">-->
+              <div class="grid-content text-right">
                 <button class="button hollow info text-right"
                   @click="closeModal()">
                   <div class="svg-icon">
@@ -22,16 +22,51 @@
                   </div>
                 </button>
               </div>
-            </div>
+            <!--</div>-->
           </div>
 
           <div class="grid-block">
-            <div class="modal-body grid-content text-center">
-              <h2 class="body-font">
-                <strong>Buying</strong><br>
-                <strong class="alt-font success-color">{{bidName}}</strong> for<br>  <!-- TODO: This is wrong and needs to be reworked -->
-                <strong class="alt-font success-color">{{askName}}</strong> at</h2>
-              <h1 class="body-font">{{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h1>
+            <div class="modal-body grid-content">
+                <div class="grid-block"> <!-- TODO: Justify left -->
+                    <div class="grid-content">
+                        <h2 class="body-font"><strong>Buy {{raw[keys.bid] * correctedMultiplier}}</strong></h2>
+                    </div>
+                    <div class="grid-content">
+                        <currency-item
+                          :input="false"
+                          :id=raw.bid_id
+                          class="ask-icon"
+                          ></currency-item>
+                    </div>
+                    <div class="grid-content">
+                        <h2 class="body-font"><strong> for {{raw[keys.ask] * correctedMultiplier}}</strong></h2>
+                    </div>
+                    <div class="grid-content">
+                      <currency-item
+                          :input="false"
+                          :id=raw.ask_id
+                          class="ask-icon"
+                          ></currency-item>
+                    </div>
+                </div>
+                <div class="grid-block v-align noscroll">
+                    <section class="small-12 medium-6 grid-content noscroll align-top">
+                        <label for="multi">
+                <span class="inline-label">
+                  <span class="form-label">Multiplier</span>
+                    <input
+                        id="multi"
+                        name="multi"
+                        v-model.number="selectedMultiplier"
+                        type="number"
+                        min="1">
+                </span>
+                        </label>
+                    </section>
+                    <section class="small-12 medium-6 grid-content noscroll text-center">
+                        <small class="age"><em>Last seen</em> {{raw[keys.lastSeenTime] | lastSeen }}</small>
+                    </section>
+                </div>
 
               <span
                 v-if="isCopied"
@@ -44,24 +79,7 @@
                 v-model="message"></textarea>
             </div>
           </div>
-          <div class="grid-block v-align noscroll">
-            <section class="small-12 medium-6 grid-content noscroll align-top">
-              <label for="multi">
-                <span class="inline-label">
-                  <span class="form-label">Multiplier</span>
-                    <input
-                      id="multi"
-                      name="multi"
-                      v-model.number="selectedMultiplier"
-                      type="number"
-                      min="1">
-                </span>
-              </label>
-            </section>
-            <section class="small-12 medium-6 grid-content noscroll align-top text-center">
-              <small class="age"><em>Last seen</em> {{raw[keys.lastSeenTime] | lastSeen }}</small>
-            </section>
-          </div>
+
         </div>
       <!-- </div> -->
     <!-- </div> -->
@@ -87,8 +105,8 @@ export default {
       currencyMap: {},
       isCopied: false,
       showModal: false,
-      selectedMultiplier: 1,
       keys: settings.keys.exchange,
+      selectedMultiplier: 1,
       currencyKeys: settings.keys.currency,
       bus,
       leagueMap: {},
@@ -220,6 +238,9 @@ export default {
   padding: $global-padding/2 $global-padding;
   line-height: 2;
   border-radius: $global-radius;
+}
+.trade-review-text {
+    justify-content: flex-start;
 }
 
 // .multiplier-list {
