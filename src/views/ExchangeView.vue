@@ -5,16 +5,17 @@
       :leagueid="leagueid"
       ></header-section>
       <transition-group class="exchange-view" name="slide-fade">
-        <div 
-          class="exchange-column grid-content"
+        <div
+          class="exchange-column"
           v-if="activeExchanges.length"
           v-for="item in activeExchanges"
           :key="item.exchangeMap">
-          <exchange 
+
+          <exchange
             :league-map="item.leagueMap"
             :currency-map="item.currencyMap"
             :exchange-map="item.exchangeMap"
-            :league-id="item.leagueId"
+            :leagueName="item.league"
             :order-by="item.orderBy"
             :ask-list="item.askList"
             :bid-list="item.bidList"
@@ -140,8 +141,9 @@ export default {
   }
 }
 .exchange-view {
-  width: 100%;
-  overflow-y: scroll;
+  //width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
   display: flex;
   .grid-content {
     margin: 0;
@@ -149,8 +151,9 @@ export default {
   }
 }
 .exchange-column {
-  flex: 0 1 rem-calc(200);
-  // width: ;
+  flex: 0 0 192px; // 192px fits 10 panels on 1920x1080. Better way to calc while preserving width?
+  flex-shrink: 0;
+  overflow-y: hidden;
 }
 .asks-panel,
 .offers-panel {

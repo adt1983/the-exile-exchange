@@ -67,10 +67,10 @@ function setStats (items, isAskOrder, collection) {
   return items
 }
 // askList, bidList, askId, exchangeMap
-export function exchange (askList, bidList, askId) {
+export function exchange (askList, bidList, askId, league) {
   let exchangeMap = {} // new map for each exchange query
-  let exchange = {askList, bidList, askId}
-
+  let exchange = {askList, bidList, askId, league}
+  console.log('askId', askId)
   setStats(exchange.askList, true, exchangeMap)
   // set states for bids
   setStats(exchange.bidList, false, exchangeMap)
@@ -194,7 +194,7 @@ export class ExchangeModel {
         resolve(instance)
       } else {
         // resolve that ish!
-        resolve(exchange(instance.askList, instance.bidList, instance.askId))
+        resolve(exchange(instance.askList, instance.bidList, instance.askId, instance.league))
       }
     })
   }
