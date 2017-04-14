@@ -51,7 +51,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      props: true,
+      // props: true,
       name: 'home',
       component: Home
       // redirect: to => {

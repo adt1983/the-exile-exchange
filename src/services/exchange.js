@@ -70,7 +70,7 @@ function setStats (items, isAskOrder, collection) {
 export function exchange (askList, bidList, askId) {
   let exchangeMap = {} // new map for each exchange query
   let exchange = {askList, bidList, askId}
-  console.log('askId', askId)
+
   setStats(exchange.askList, true, exchangeMap)
   // set states for bids
   setStats(exchange.bidList, false, exchangeMap)
@@ -87,8 +87,7 @@ export class ExchangeModel {
     // ids and arrays
     this.askId = ask.id || ask
     this.bidId = bid.id || bid
-    console.log('this.bidId', this.bidId)
-    console.log('this.askId', this.askId)
+
     this.askList = []
     this.bidList = []
 

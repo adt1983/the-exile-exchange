@@ -5,12 +5,13 @@
         <h1 v-once>{{title}}</h1>
       </header>
       <ul class="grid-block shrink no-bullet">
-        <li v-if="!this.league.length">
+        <li v-if="!league.length">
           <loader></loader>
         </li>
         <div class="grid-block v-align">
           <div class="grid-content align-center">
-            <ul class="button-group segmented">
+            <ul v-if="league.length"
+              class="button-group segmented">
               <li v-for="leag in league">
                 <button
                   @click="setLeague(leag.$slug)"
@@ -58,7 +59,7 @@ export default {
 
       lastAsks: undefined,
 
-      league,
+      league: [],
       title: 'Select League.',
       selectedLeague: undefined
     }

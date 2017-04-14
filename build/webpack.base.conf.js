@@ -42,6 +42,11 @@ module.exports = {
           formatter: require('eslint-friendly-formatter')
         }
       },
+      // {
+      //   test: /\.(pug|vue)$/,
+      //   loader: 'pug-loader',
+      //   include: [resolve('src/views'),resolve('src/components')]
+      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader',

@@ -1,12 +1,9 @@
 <!-- App view -->
-<template>
-  <div id="app" class="grid-frame vertical">
-    <div class="grid-block">
-      <transition name="route-transition">
-        <router-view></router-view>
-      </transition>
-    </div>
-  </div>
+<template lang="pug">
+  #app.grid-frame.vertical
+    .grid-block
+      transition(name="route-transition")
+        router-view
 </template>
 
 <!-- App Ctrl -->
