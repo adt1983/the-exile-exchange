@@ -15,37 +15,32 @@ function getGCD (a, b) { // greatest common denom
 
 function arrangeCollection (collection) {
   let orderBy = Object.keys(collection).sort(function (a, b) {
-    let aa = collection[a] && collection[a][keys.ratio + '_base']
-    let bb = collection[b] && collection[b][keys.ratio + '_base']
-    return aa - bb
+    // Sort by floating-point to avoid Integer truncation
+    let ratioStringA = a.split(':')
+    let ratioStringB = b.split(':')
+    let ratioA = parseInt(ratioStringA[0], 10) / parseInt(ratioStringA[1], 10)
+    let ratioB = parseInt(ratioStringB[0], 10) / parseInt(ratioStringB[1], 10)
+    return ratioA - ratioB
   })
   return orderBy
 }
 
-function createRatio (item, askId) {
-  let ask = null
-  let bid = null
-  // let isBid = false
-  let gcd = 1
-  // give all items same orientation to avoid confusion
-  if (typeof (item[keys.askId].toString) === 'function') {
-    item.isBid = (item[keys.askId].toString() === askId)
-  } else {
-    item.isBid = (item[keys.askId] === askId)
-  }
+function createRatio (item, isAskOrder) {
   // so we dont have to think about ask vs bid
-  ask = item.isBid ? keys.ask : keys.bid
-  bid = item.isBid ? keys.bid : keys.ask
-  item[keys.ratio] = item[ask] + ':' + item[bid]
+  // http://www.investopedia.com/terms/c/currencypair.asp
+  item.isAsk = isAskOrder
+  let base = item.isAsk ? keys.bid : keys.ask
+  let quote = item.isAsk ? keys.ask : keys.bid
+  item[keys.ratio] = item[base] + ':' + item[quote]
   //
-  // crete ratio in format of
+  // create ratio in format of
   // PERCENTAGE.GCD (greatest common denom)
   // example:
   // raw ratios [1:2, 1:3, 2:4, 3:9]
   // converted [50.1, 33.1, 50.2, 33.3]
   //
-  gcd = getGCD(item[ask], item[bid])
-  item[keys.ratio + '_base'] = parseInt((item[ask] / item[bid]) * 100, 10) + '.' + gcd
+  let gcd = getGCD(item[base], item[quote])
+  item[keys.ratio + '_base'] = parseInt((item[base] / item[quote]) * 100, 10) + '.' + gcd
   return item
 }
 
@@ -57,16 +52,16 @@ function addItemToIndex (item, index, collection) {
     }
     collection[index][keys.ratio + '_base'] = item[keys.ratio + '_base']
   }
-  if (item.isBid) {
-    collection[index].bids.push(item)
-  } else {
+  if (item.isAsk) {
     collection[index].asks.push(item)
+  } else {
+    collection[index].bids.push(item)
   }
 }
 
-function setStats (items, askId, collection) {
+function setStats (items, isAskOrder, collection) {
   items.forEach(function (item) {
-    let ratio = createRatio(item, askId)
+    let ratio = createRatio(item, isAskOrder)
     addItemToIndex(ratio, item[keys.ratio], collection)
   })
   return items
@@ -76,13 +71,13 @@ export function exchange (askList, bidList, askId) {
   let exchangeMap = {} // new map for each exchange query
   let exchange = {askList, bidList, askId}
   console.log('askId', askId)
-  setStats(exchange.askList, exchange.askId, exchangeMap)
+  setStats(exchange.askList, true, exchangeMap)
   // set states for bids
-  setStats(exchange.bidList, exchange.askId, exchangeMap)
+  setStats(exchange.bidList, false, exchangeMap)
   // set an array of keys so they have a set order
   exchange.exchangeMap = exchangeMap
   exchange.orderBy = arrangeCollection(exchangeMap)
-  exchange.bidId = exchange.askList[0][keys.askId]
+  exchange.bidId = exchange.bidList[0][keys.bidId] // TODO: don't assume bids exist
   return exchange
 }
 
@@ -195,8 +190,8 @@ export class ExchangeModel {
   // finally :: set and arrange the data !!
   indexData (instance) {
     return new Promise(function (resolve, reject) {
-      if (instance.askList.length === 0 || instance.bidList.length === 0) {
-        instance.noData = true
+      if (instance.askList.length === 0 && instance.bidList.length === 0) {
+        instance.noData = true // TODO: Allow markets to have only sellers/buyers. Does this break anything?
         resolve(instance)
       } else {
         // resolve that ish!

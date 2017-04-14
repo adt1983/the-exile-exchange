@@ -3,7 +3,7 @@
     <!-- <div class="modal-mask"> -->
       <!-- <div class="modal-wrapper"> -->
         <div class="modal-container right">
-          
+
           <div class="grid-block">
             <div class="grid-block noscroll">
               <div class="grid-content noscroll">
@@ -13,7 +13,7 @@
             </div>
             <div class="grid-block shrink text-right">
               <div class="grid-content">
-                <button class="button hollow info text-right" 
+                <button class="button hollow info text-right"
                   @click="closeModal()">
                   <div class="svg-icon">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="32" viewBox="0 0 25 32">
@@ -29,18 +29,18 @@
             <div class="modal-body grid-content text-center">
               <h2 class="body-font">
                 <strong>Buying</strong><br>
-                <strong class="alt-font success-color">{{bidName}}</strong> for<br>
+                <strong class="alt-font success-color">{{bidName}}</strong> for<br>  <!-- TODO: This is wrong and needs to be reworked -->
                 <strong class="alt-font success-color">{{askName}}</strong> at</h2>
               <h1 class="body-font">{{raw[keys.ask] * correctedMultiplier}}:{{raw[keys.bid] * correctedMultiplier}}</h1>
 
-              <span 
+              <span
                 v-if="isCopied"
                 class="label success">Message Copied!</span>
-              <textarea 
+              <textarea
                 onclick="this.focus();this.select()"
                 readonly
                 @keyup.meta.67="isCopied = true"
-                class="trade-text" 
+                class="trade-text"
                 v-model="message"></textarea>
             </div>
           </div>
@@ -49,13 +49,12 @@
               <label for="multi">
                 <span class="inline-label">
                   <span class="form-label">Multiplier</span>
-                    <input 
+                    <input
                       id="multi"
                       name="multi"
-                      v-model.number="selectedMultiplier" 
-                      type="number" 
+                      v-model.number="selectedMultiplier"
+                      type="number"
                       min="1">
-                  </span>
                 </span>
               </label>
             </section>
@@ -113,8 +112,8 @@ export default {
   },
   computed: {
     message: function () {
-      // `Hi @${this.raw[this.keys.name]}, I'd like to buy your (${this.raw[this.keys.bid] * this.correctedMultiplier}) ${this.bidName}`
-      return 'Hi @' + this.raw[this.keys.name] + ', I\'d like to buy your ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
+      // `@${this.raw[this.keys.name]} Hi, I'd like to buy your (${this.raw[this.keys.bid] * this.correctedMultiplier}) ${this.bidName}`
+      return '@' + this.raw[this.keys.name] + ' Hi, I\'d like to buy your ' + (this.raw[this.keys.bid] * this.correctedMultiplier) +
         ' ' + this.bidName +
         ' for my ' + (this.raw[this.keys.ask] * this.correctedMultiplier) +
         ' ' + this.askName +
@@ -238,7 +237,7 @@ export default {
 //       // label {
 //       //   width: 100%;
 //       // }
-//     } 
+//     }
 //   }
 // }
 </style>
