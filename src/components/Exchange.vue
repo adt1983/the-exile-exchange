@@ -35,7 +35,7 @@
       <tr
         :class="[{ 'has-bids': hasBids(key) }]"
         v-for="(key, increments) in orderBy"
-        :key="key">
+        :key="key"> <!-- TODO: Can 'increments' be removed? -->
         <td :class="applyColorClass(exchangeMap[key].bids)"
             @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid', leagueName)"
         ><a href=""
@@ -101,7 +101,7 @@
     },
     computed: {
       isLoaded: function () {
-        if (this.renderView && this.askList && this.bidList) {
+        if (this.renderView && this.askList && this.bidList) { // TODO: What's the purpose of isLoaded? Where does it get used?
           if (this.loading > 2) { // 2 reqs
             // this.exchangeMap
             return true
@@ -175,8 +175,6 @@
 <style lang="scss" scoped>
   // call settings for global SCSS access
   @import '../assets/styles/settings';
-  @import './node_modules/angular-base-apps/scss/components/block-list';
-  @import './node_modules/angular-base-apps/scss/components/menu-bar';
 
   .wrapper {
     @include base-panel;
@@ -192,53 +190,6 @@
   .small-font > {
     padding-top: 0.15rem;
     font-size: 0.7rem;
-  }
-
-  .exchange-list {
-    // width: rem-calc(210);
-    filter: drop-shadow(rem-calc(1) rem-calc(2) rem-calc(2) rgba(0, 0, 0, 0.7));
-    .badge {
-      margin-top: ($global-padding/3)*2;
-    }
-    .exchange-row {
-      &:nth-child(even) {
-        background-color: lighten($dark-color, 5);
-      }
-      &:nth-child(odd) {
-        background-color: lighten($dark-color, 8);
-      }
-    }
-  }
-
-  .exchange-item {
-    // This placeholder selector gets you the core structural styles for the menu
-    @extend %menu-bar;
-    text-align: center;
-    // Set the orientation and sizing of the menu bar
-    @include menu-bar-layout(
-      $orientation: horizontal, // Can be horizontal or vertical
-      $stretch: true // Set to false for a condensed menu
-    );
-
-    // Add styles for the menu bar items and text
-    @include menu-bar-style(
-      $background: transparent, // Background color of items
-      $background-hover: $primary-color // Background color of item on hover
-    );
-
-    .exchange-ratio {
-      flex-flow: column nowrap;
-      flex: 1 0 0;
-      display: flex;
-      align-items: center;
-      padding: $menubar-item-padding;
-      font-size: $menubar-fontsize;
-      line-height: 1;
-    }
-    .has-account {
-      color: $warning-color;
-    }
-
   }
 
   .preferences {

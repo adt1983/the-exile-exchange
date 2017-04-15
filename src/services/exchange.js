@@ -14,7 +14,7 @@ function getGCD (a, b) { // greatest common denom
 }
 
 function arrangeCollection (collection) {
-  let orderBy = Object.keys(collection).sort(function (a, b) {
+  return Object.keys(collection).sort(function (a, b) {
     // Sort by floating-point to avoid Integer truncation
     let ratioStringA = a.split(':')
     let ratioStringB = b.split(':')
@@ -22,11 +22,10 @@ function arrangeCollection (collection) {
     let ratioB = parseInt(ratioStringB[0], 10) / parseInt(ratioStringB[1], 10)
     return ratioA - ratioB
   })
-  return orderBy
 }
 
 function createRatio (item, isAskOrder) {
-  // so we dont have to think about ask vs bid
+  // so we don't have to think about ask vs bid
   // http://www.investopedia.com/terms/c/currencypair.asp
   item.isAsk = isAskOrder
   let base = item.isAsk ? keys.bid : keys.ask
@@ -103,28 +102,6 @@ export class ExchangeModel {
 
     return this.instantiate()
   }
-
-  // get asklist () {
-  //   console.log('this.askList', this.askList)
-  //   return this.askList
-  // }
-  // get bidlist () {
-  //   console.log('this.bidList', this.bidList)
-  //   return this.bidList
-  // }
-
-  // set asklist (list) {
-  //   this.askList = list
-  // }
-  // set bidlist (list) {
-  //   this.bidList = list
-  // }
-  // set addask (item) {
-  //   this.askList.push(item)
-  // }
-  // set addbid (list) {
-  //   this.bidList.push(list)
-  // }
 
   // first :: get the prerequisite data
   //          for league & currency
