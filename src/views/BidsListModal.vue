@@ -31,7 +31,7 @@
 
           <div class="grid-block"> <!-- TODO: Justify left -->
             <div class="grid-content">
-              <h2 class="body-font"><strong>Buy {{this.getBuyQty()}}</strong>
+              <h2 class="body-font"><strong>Buy {{buyQty}}</strong>
               </h2>
             </div>
             <div class="grid-content">
@@ -42,7 +42,7 @@
               ></currency-item>
             </div>
             <div class="grid-content">
-              <h2 class="body-font"><strong> for {{this.getPayQty()}}</strong>
+              <h2 class="body-font"><strong> for {{payQty}}</strong>
               </h2>
             </div>
             <div class="grid-content">
@@ -143,9 +143,9 @@
     computed: {
       message: function () {
         const ao = this.activeOrder
-        return '@' + ao.lastChar + ' Hi, I\'d like to buy your ' + this.getBuyQty() +
+        return '@' + ao.lastChar + ' Hi, I\'d like to buy your ' + this.buyQty +
           ' ' + this.getCurrencyName(ao.bid_id) +
-          ' for my ' + this.getPayQty() +
+          ' for my ' + this.payQty +
           ' ' + this.getCurrencyName(ao.ask_id) +
           ' in ' + this.leagueName + '.'
       },
@@ -156,6 +156,19 @@
         if (this.raw.list) {
           return pluralize(this.raw.list.length, ' ' + this.raw.type)
         }
+      },
+      correctedMultiplier: function () {
+        if (typeof (this.selectedMultiplier) === 'number') {
+          return this.selectedMultiplier
+        } else {
+          return 1
+        }
+      },
+      buyQty: function () {
+        return this.activeOrder.bid_qty * this.correctedMultiplier
+      },
+      payQty: function () {
+        return this.activeOrder.ask_qty * this.correctedMultiplier
       }
     },
     methods: {
@@ -168,21 +181,8 @@
       closeModal: function () {
         this.showModal = false
       },
-      correctedMultiplier: function () {
-        if (typeof (this.selectedMultiplier) === 'number') {
-          return this.selectedMultiplier
-        } else {
-          return 1
-        }
-      },
       setActiveOrder: function (order) {
         this.activeOrder = order
-      },
-      getBuyQty: function () {
-        return this.activeOrder.bid_qty * this.correctedMultiplier()
-      },
-      getPayQty: function () {
-        return this.activeOrder.ask_qty * this.correctedMultiplier()
       },
       getCurrencyName (id) {
         return this.currencyMap[id].name
