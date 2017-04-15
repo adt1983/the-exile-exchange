@@ -21,7 +21,14 @@
     <table class="order-book">
       <thead>
       <th class="text-center">Bid</th>
-      <th></th>
+      <th><!--<div TODO: Refresh
+        :show="loading < 2"
+        v-on:click="refreshData()"
+        class="svg-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
+          <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
+        </svg>
+      </div>--></th>
       <th>Ask</th>
       </thead>
       <tbody>
@@ -50,57 +57,6 @@
       </tr>
       </tbody>
     </table>
-
-
-    <!--    <div v-else class="grid-block shrink noscroll align-center preferences">
-          <div class="grid-block noscroll">
-            <div class="grid-content noscroll text-left">
-              <small>Bid</small>
-            </div>
-          </div>
-          <!-- <div class="grid-block noscroll">
-            <div class="grid-content noscroll text-center"> -->
-    <!--      <div
-           :show="loading < 2"
-           v-on:click="refreshData()"
-           class="svg-icon">
-           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
-             <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
-           </svg>
-         </div> -->
-    <!-- <input type="checkbox" id="Bids" v-model="settings.defaults.autoRefresh">&nbsp;
-    <label for="Bids">Auto Refresh</label> -->
-    <!-- </div>
-  </div> -->
-    <!--     <div class="grid-block noscroll text-right">
-           <div class="grid-content noscroll">
-             <small>Ask</small>
-           </div>
-         </div>
-       </div>
-
-       <section class="block-list exchange-list">
-           <div
-             class="exchange-row"
-             :class="[{ 'has-bids': hasBids(key) }]"
-             v-for="(key, increments) in orderBy"
-             :key="key">
-               <ul class="exchange-item">
-                 <li><a href=""
-                   :class="applyColorClass(exchangeMap[key].bids)"
-                   @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid', leagueName)"
-                   v-if="exchangeMap[key].bids && exchangeMap[key].bids.length">{{exchangeMap[key].bids.length}}</a></li>
-                 <li
-                   class="exchange-ratio"
-                   :class="{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}"><span class="secondary-color body-font text-center">{{key}}</span></li>
-                 <li><a href=""
-                   :class="applyColorClass(exchangeMap[key].asks)"
-                   @click.prevent="showOffer(key, exchangeMap[key].asks, 'ask', leagueName)"
-                   v-if="exchangeMap[key].asks && exchangeMap[key].asks.length">{{exchangeMap[key].asks.length}}</a></li>
-
-               </ul>
-           </div>
-       </section>-->
   </div>
 </template>
 
@@ -341,7 +297,7 @@
     tbody {
       display: block;
       overflow-y: auto;
-      max-height: calc(100vh - 153px); // FIXME: Avoid magic number
+      max-height: calc(100vh - 153px); // TODO: Avoid magic number
     }
 
     td {
