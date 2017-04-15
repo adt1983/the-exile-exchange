@@ -121,10 +121,16 @@
         }
       },
       applyColorClass (orders) {
-        if (this.isAccount(orders)) {
-          return 'success-color warning-dark-bg'
+        let className = 'info-color'
+        if (orders.some(function (order) {
+          return order.bid_stock >= order.bid_qty
+        })) {
+          className = 'success-color'
         }
-        return 'success-color'
+        if (this.isAccount(orders)) {
+          className = className + ' warning-dark-bg'
+        }
+        return className
       },
       setAccountName () {
         let name = saved.get(this.accountNameSaveKey)
