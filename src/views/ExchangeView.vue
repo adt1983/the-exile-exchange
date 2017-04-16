@@ -142,16 +142,17 @@ export default {
 }
 .exchange-view {
   height: 100%;
-  overflow-y: hidden;
-  overflow-x: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
+  flex-wrap: wrap;
   .grid-content {
     margin: 0;
     padding: 0;
   }
 }
 .exchange-column {
-  flex: 0 0 192px; // 192px fits 10 panels on 1920x1080. Better way to calc while preserving width?
+  flex: 0 0 calc((1920px - 17px)/ 10); // 10 horizontal panels with room for y-scrollbar on 1920x1080.
   flex-shrink: 0;
   overflow-y: hidden;
 }

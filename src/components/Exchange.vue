@@ -251,7 +251,7 @@
     tbody {
       display: block;
       overflow-y: auto;
-      max-height: calc(100vh - 153px); // TODO: Avoid magic number
+      max-height: calc(50vh - 112px); // TODO: Avoid magic number
     }
 
     td {
