@@ -21,14 +21,14 @@
     <table class="order-book">
       <thead>
       <th class="text-center">Bid</th>
-      <th><!--<div TODO: Refresh
+      <th><div
         :show="loading < 2"
         v-on:click="refreshData()"
         class="svg-icon">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
           <path d="M26.982 18.857q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402zM27.429 4.571v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804z"></path>
         </svg>
-      </div>--></th>
+      </div></th>
       <th>Ask</th>
       </thead>
       <tbody>
@@ -64,6 +64,7 @@
   import settings from '../settings'
   import { bus } from '../services/bus'
   import saved from '../services/selected'
+  import { ExchangeModel } from '../services/exchange'
 
   import CurrencyItem from '../components/CurrencyItem'
 
@@ -80,7 +81,12 @@
 
       exchangeMap: Object,
       leagueMap: Object,
-      currencyMap: Object
+      currencyMap: Object,
+
+      exc: {
+        type: ExchangeModel,
+        required: true
+      }
     },
     data () {
       return {
@@ -110,21 +116,15 @@
       }
     },
     methods: {
-      applyBackgroundColorClass (asks, bids) {
-        let isAccount = this.isAccount(asks)
-        if (!isAccount) {
-          isAccount = this.isAccount(bids)
-        }
-        if (isAccount) {
-          let className = 'warning-dark-bg'
-          return className
-        }
-      },
       applyColorClass (orders) {
-        if (this.isAccount(orders)) {
-          return 'success-color warning-dark-bg'
+        let className = 'info-color'
+        if (this.hasStock(orders)) {
+          className = 'success-color'
         }
-        return 'success-color'
+        if (this.isAccount(orders)) {
+          className = className + ' warning-dark-bg' // highlight account name
+        }
+        return className
       },
       setAccountName () {
         let name = saved.get(this.accountNameSaveKey)
@@ -132,16 +132,16 @@
           this.accountName = name
         }
       },
-      // highlight account name
-      isAccount: function (orders) {
-        const that = this
-        let valid = false
-        orders.forEach(function (order) {
-          if (order && order.accountName === that.accountName) {
-            valid = true // TODO: Break? Short-circuit return? Array.some()?
-          }
+      hasStock (orders) {
+        return orders.some(function (order) {
+          return order.bid_stock >= order.bid_qty
         })
-        return valid
+      },
+      isAccount: function (orders) {
+        const _accountName = this.accountName
+        return orders.some(function (order) {
+          return order.accountName === _accountName
+        })
       },
       showOffer: function (key, list, type, leagueName) {
         const config = {key, list, type, leagueName}
@@ -159,6 +159,9 @@
       },
       showEmptyBids: function (key) {
         return this.filterBids === false || (this.exchangeMap[key].bids && this.exchangeMap[key].bids.length)
+      },
+      refreshData: function () {
+        this.exc.refresh()
       }
     },
     components: {
@@ -248,7 +251,7 @@
     tbody {
       display: block;
       overflow-y: auto;
-      max-height: calc(100vh - 153px); // TODO: Avoid magic number
+      max-height: calc(50vh - 112px); // TODO: Avoid magic number
     }
 
     td {

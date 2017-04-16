@@ -2,23 +2,23 @@
   <div class="grid-block header shrink">
     <ul class="header-nav grid-block shrink">
           <li v-for="league in leagueMap">
-            <router-link 
+            <router-link
               class="alt-font"
               active-class="is-active"
-              :to="{ params: { leagueid: league[keys.slug] }}" 
+              :to="{ params: { leagueid: league[keys.slug] }}"
               tag="a">{{league[keys.name]}}</router-link>
           </li>
     </ul>
     <div class="grid-block expand">
-      
+
     </div>
     <ul class="header-nav grid-block shrink float-right">
       <li>
-        <account-name 
+        <account-name
           class="account-name"></account-name>
       </li>
-          <li>  
-            <router-link 
+          <li>
+            <router-link
               active-class="is-active"
               :to="{ name: 'currency', params: { leagueid: leagueid }}"
               tag="a" >Currencies</router-link></li>
@@ -96,6 +96,7 @@ export default {
 .header {
   background-color: $gray;
   border-bottom: rem-calc(1) solid $black;
+  // TODO: calc height so we can set exchange-panel height later on
   .inline-list {
     margin-bottom: 0;
   }
