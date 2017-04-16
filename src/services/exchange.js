@@ -96,6 +96,7 @@ export class ExchangeModel {
     this.leagueMap = {}
     this.currencyMap = {}
     this.exchangeMap = {}
+    this.orderBy = {}
 
     this.leagueId = leagueId || settings.defaults.leagueId
     this.league = ''
@@ -173,8 +174,32 @@ export class ExchangeModel {
         resolve(instance)
       } else {
         // resolve that ish!
-        resolve(exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league))
+        let exc = exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league)
+        instance.askList = exc.askList
+        instance.bidList = exc.bidList
+        instance.askId = exc.askId
+        instance.bidId = exc.bidId
+        instance.league = exc.league
+        instance.exchangeMap = exc.exchangeMap
+        instance.orderBy = exc.orderBy
+        resolve(instance)
       }
+    })
+  }
+
+  refresh () {
+    let dis = this
+    return new Promise(function (resolve, reject) {
+      dis.reqData(dis)
+        .then(dis.indexData)
+        .then(function (instance) {
+          console.log('refresh: completed', instance)
+          resolve(instance)
+        })
+        .catch(function (error) {
+          console.log('refresh: something went wrong', error)
+          reject(error)
+        })
     })
   }
 
