@@ -110,25 +110,13 @@
       }
     },
     methods: {
-      applyBackgroundColorClass (asks, bids) {
-        let isAccount = this.isAccount(asks)
-        if (!isAccount) {
-          isAccount = this.isAccount(bids)
-        }
-        if (isAccount) {
-          let className = 'warning-dark-bg'
-          return className
-        }
-      },
       applyColorClass (orders) {
         let className = 'info-color'
-        if (orders.some(function (order) {
-          return order.bid_stock >= order.bid_qty
-        })) {
+        if (this.hasStock(orders)) {
           className = 'success-color'
         }
         if (this.isAccount(orders)) {
-          className = className + ' warning-dark-bg'
+          className = className + ' warning-dark-bg' // highlight account name
         }
         return className
       },
@@ -138,16 +126,16 @@
           this.accountName = name
         }
       },
-      // highlight account name
-      isAccount: function (orders) {
-        const that = this
-        let valid = false
-        orders.forEach(function (order) {
-          if (order && order.accountName === that.accountName) {
-            valid = true // TODO: Break? Short-circuit return? Array.some()?
-          }
+      hasStock (orders) {
+        return orders.some(function (order) {
+          return order.bid_stock >= order.bid_qty
         })
-        return valid
+      },
+      isAccount: function (orders) {
+        const _accountName = this.accountName
+        return orders.some(function (order) {
+          return order.accountName === _accountName
+        })
       },
       showOffer: function (key, list, type, leagueName) {
         const config = {key, list, type, leagueName}
