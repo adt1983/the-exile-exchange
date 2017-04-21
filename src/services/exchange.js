@@ -174,17 +174,7 @@ export class ExchangeModel {
         resolve(instance)
       } else {
         // resolve that ish!
-        // let exc = exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league)
-        // instance.askList = exc.askList
-        // instance.bidList = exc.bidList
-        // instance.askId = exc.askId
-        // instance.bidId = exc.bidId
-        // instance.league = exc.league
-        // instance.exchangeMap = exc.exchangeMap
-        // instance.orderBy = exc.orderBy
-        console.log('instance', instance)
         Object.assign(instance, exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league))
-        console.log('instance', instance)
         resolve(instance)
       }
     })
