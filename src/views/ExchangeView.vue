@@ -20,7 +20,7 @@
             :bid-list="item.bidList"
             :ask-id="item.askId"
             :bid-id="item.bidId"
-            :exc="item"></exchange>
+            :model="item"></exchange>
         </div>
       </transition-group>
       <bids-list-modal></bids-list-modal>
@@ -152,7 +152,7 @@ export default {
   }
 }
 .exchange-column {
-  flex: 0 0 calc((1920px - 17px)/ 10); // 10 horizontal panels with room for y-scrollbar on 1920x1080.
+  flex: 0 0 calc((1920px - 16px)/ 10); // 10 horizontal panels with room for y-scrollbar on 1920x1080.
   flex-shrink: 0;
   overflow-y: hidden;
 }
