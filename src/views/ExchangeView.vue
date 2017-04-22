@@ -143,11 +143,10 @@ export default {
   }
 }
 // `$breakpoints, xxlarge` in src/assets/styles/_settings.scss
-$columns-width: (rem-calc(1920) - rem-calc(16)) / 10;
+$columns-width: (rem-calc(1920) - rem-calc(18)) / 10;
 .exchange-column {
   flex: 0 0 $columns-width; // 10 horizontal panels with room for y-scrollbar on 1920x1080.
   flex-shrink: 0;
-  // flex-basis
   overflow-y: hidden;
 }
 .asks-panel,

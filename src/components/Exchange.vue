@@ -33,7 +33,7 @@
       <tbody>
       <tr
         :class="[{ 'has-bids': hasBids(key) }]"
-        v-for="(key, increments) in model.orderBy"
+        v-for="key in model.orderBy"
         :key="key"> <!-- TODO: Can 'increments' be removed? -->
         <td :class="applyColorClass(model.exchangeMap[key].bids)"
         ><a href=""
@@ -44,7 +44,7 @@
         <td :class="{'has-account': isAccount(model.exchangeMap[key].asks) || isAccount(model.exchangeMap[key].bids)}"><span
           class="secondary-color body-font text-center">{{key}}</span></td>
         <td :class="applyColorClass(model.exchangeMap[key].asks)"
-        ><a href="" 
+        ><a href=""
           :class="applyColorClass(model.exchangeMap[key].asks)"
           v-if="model.exchangeMap[key].asks && model.exchangeMap[key].asks.length"
           @click.prevent="showOffer(key, model.exchangeMap[key].asks, 'ask', model.leagueName)"
