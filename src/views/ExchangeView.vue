@@ -11,15 +11,6 @@
           v-for="item in activeExchanges"
           :key="item.exchangeMap">
           <exchange
-            :league-map="item.leagueMap"
-            :currency-map="item.currencyMap"
-            :exchange-map="item.exchangeMap"
-            :leagueName="item.league"
-            :order-by="item.orderBy"
-            :ask-list="item.askList"
-            :bid-list="item.bidList"
-            :ask-id="item.askId"
-            :bid-id="item.bidId"
             :model="item"></exchange>
         </div>
       </transition-group>
@@ -151,9 +142,12 @@ export default {
     padding: 0;
   }
 }
+// `$breakpoints, xxlarge` in src/assets/styles/_settings.scss
+$columns-width: (rem-calc(1920) - rem-calc(16)) / 10;
 .exchange-column {
-  flex: 0 0 calc((1920px - 16px)/ 10); // 10 horizontal panels with room for y-scrollbar on 1920x1080.
+  flex: 0 0 $columns-width; // 10 horizontal panels with room for y-scrollbar on 1920x1080.
   flex-shrink: 0;
+  // flex-basis
   overflow-y: hidden;
 }
 .asks-panel,
@@ -168,19 +162,18 @@ export default {
 // /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slide-fade-enter-active {
-  transition: transform $default-animation-speed*2 linear $default-animation-speed*3;
+  transition: flex-basis $default-animation-speed*2 linear $default-animation-speed*3;
 }
 .slide-fade-leave-active {
-  transition: transform $default-animation-speed*2 linear;
+  transition: flex-basis $default-animation-speed*2 linear;
 }
 .slide-fade-enter
 /* .slide-fade-leave-active for <2.1.8 */ {
-  transform: translateY(-100%);
+  flex-basis: 0;
 }
 .slide-fade-leave-to {
-  opacity: 0;
   overflow: hidden;
 
-  transform: translateY(80%);
+  flex-basis: 0;
 }
 </style>
