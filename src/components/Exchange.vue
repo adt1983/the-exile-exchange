@@ -4,12 +4,12 @@
       <div class="grid-block text-center noscroll">
         <currency-item
           :input="false"
-          :id="model.askId"
+          :id="askId"
           class="ask-icon"
         ></currency-item>
         <currency-item
           :input="false"
-          :id="model.bidId"
+          :id="bidId"
           class="ask-icon"
         ></currency-item>
       </div>
@@ -17,6 +17,7 @@
     <div v-if="!hasData" class="grid-block shrink noscroll align-center preferences">
       No Data!
     </div>
+
     <table class="order-book">
       <thead>
       <th class="text-center">Bid</th>
@@ -33,22 +34,25 @@
       <tbody>
       <tr
         :class="[{ 'has-bids': hasBids(key) }]"
-        v-for="(key, increments) in model.orderBy"
+        v-for="(key, increments) in orderBy"
         :key="key"> <!-- TODO: Can 'increments' be removed? -->
-        <td :class="applyColorClass(model.exchangeMap[key].bids)"
+        <td :class="applyColorClass(exchangeMap[key].bids)"
+            @click.prevent="showOffer(key, exchangeMap[key].bids, 'bid', leagueName)"
         ><a href=""
-          :class="applyColorClass(model.exchangeMap[key].bids)"
-          v-if="model.exchangeMap[key].bids && model.exchangeMap[key].bids.length"
-          @click.prevent="showOffer(key, model.exchangeMap[key].bids, 'bid', model.leagueName)"
-          >{{model.exchangeMap[key].bids.length}}</a></td>
-        <td :class="{'has-account': isAccount(model.exchangeMap[key].asks) || isAccount(model.exchangeMap[key].bids)}"><span
+            :class="applyColorClass(exchangeMap[key].bids)"
+            v-if="exchangeMap[key].bids && exchangeMap[key].bids.length"
+
+        >{{exchangeMap[key].bids.length}}</a></td>
+        <td :class="{'has-account': isAccount(exchangeMap[key].asks) || isAccount(exchangeMap[key].bids)}"><span
           class="secondary-color body-font text-center">{{key}}</span></td>
-        <td :class="applyColorClass(model.exchangeMap[key].asks)"
-        ><a href="" 
-          :class="applyColorClass(model.exchangeMap[key].asks)"
-          v-if="model.exchangeMap[key].asks && model.exchangeMap[key].asks.length"
-          @click.prevent="showOffer(key, model.exchangeMap[key].asks, 'ask', model.leagueName)"
-          >{{model.exchangeMap[key].asks.length}}</a>
+        <td :class="applyColorClass(exchangeMap[key].asks)"
+
+            @click.prevent="showOffer(key, exchangeMap[key].asks, 'ask', leagueName)"
+        ><a href="" :class="applyColorClass(exchangeMap[key].asks)"
+            v-if="exchangeMap[key].asks && exchangeMap[key].asks.length"
+
+
+        >{{exchangeMap[key].asks.length}}</a>
         </td>
       </tr>
       </tbody>
@@ -67,7 +71,19 @@
   export default {
     name: 'exchange',
     props: {
-      model: {
+      leagueName: [String, Number],
+      askId: [String, Number],
+      bidId: [String, Number],
+
+      askList: Array,
+      bidList: Array,
+      orderBy: Array,
+
+      exchangeMap: Object,
+      leagueMap: Object,
+      currencyMap: Object,
+
+      exc: {
         type: ExchangeModel,
         required: true
       }
@@ -87,6 +103,16 @@
         accountNameSaveKey: settings.keys.exchange.user,
 
         title: 'The Exile Exchange'
+      }
+    },
+    computed: {
+      isLoaded: function () {
+        if (this.renderView && this.askList && this.bidList) { // TODO: What's the purpose of isLoaded? Where does it get used?
+          if (this.loading > 2) { // 2 reqs
+            // this.exchangeMap
+            return true
+          }
+        }
       }
     },
     methods: {
@@ -122,20 +148,20 @@
         bus.$emit('modal.traderlist.open', config)
       },
       hasData: function () {
-        const data = Object.keys(this.model.exchangeMap)
+        const data = Object.keys(this.exchangeMap)
         return data && data.length
       },
       hasBids: function (key) {
-        return this.model.exchangeMap[key] && this.model.exchangeMap[key].bids && this.model.exchangeMap[key].bids.length
+        return this.exchangeMap[key] && this.exchangeMap[key].bids && this.exchangeMap[key].bids.length
       },
       hasAsks: function (key) {
-        return this.model.exchangeMap[key] && this.model.exchangeMap[key].asks && this.model.exchangeMap[key].asks.length
+        return this.exchangeMap[key] && this.exchangeMap[key].asks && this.exchangeMap[key].asks.length
       },
       showEmptyBids: function (key) {
-        return this.filterBids === false || (this.model.exchangeMap[key].bids && this.model.exchangeMap[key].bids.length)
+        return this.filterBids === false || (this.exchangeMap[key].bids && this.exchangeMap[key].bids.length)
       },
       refreshData: function () {
-        this.model.refresh()
+        this.exc.refresh()
       }
     },
     components: {
@@ -210,6 +236,7 @@
 
     tr {
       display: table;
+      cursor: pointer;
       background-color: $dark-color;
 
       &:nth-child(even) {
@@ -229,21 +256,14 @@
 
     td {
       text-align: center;
-      a {
-        padding: 2px 5px;
-        display: block;
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-        &:hover {
-          background-color: $blocklist-item-background-hover;
-        }
+      &:hover {
+        background-color: $blocklist-item-background-hover;
       }
     }
 
     th, td {
-      vertical-align: center;
       min-width: 120px;
+      padding: 2px 5px;
     }
 
     th.active {
