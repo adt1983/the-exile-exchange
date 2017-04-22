@@ -8,6 +8,7 @@
 
 <!-- App Ctrl -->
 <script>
+import './services/polyfills'
 export default {
   name: 'app'
 }

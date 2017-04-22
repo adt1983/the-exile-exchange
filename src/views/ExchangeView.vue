@@ -20,7 +20,7 @@
             :bid-list="item.bidList"
             :ask-id="item.askId"
             :bid-id="item.bidId"
-            :exc="item"></exchange>
+            :model="item"></exchange>
         </div>
       </transition-group>
       <bids-list-modal></bids-list-modal>

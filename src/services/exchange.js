@@ -96,7 +96,7 @@ export class ExchangeModel {
     this.leagueMap = {}
     this.currencyMap = {}
     this.exchangeMap = {}
-    this.orderBy = {}
+    this.orderBy = []
 
     this.leagueId = leagueId || settings.defaults.leagueId
     this.league = ''
@@ -174,14 +174,7 @@ export class ExchangeModel {
         resolve(instance)
       } else {
         // resolve that ish!
-        let exc = exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league)
-        instance.askList = exc.askList
-        instance.bidList = exc.bidList
-        instance.askId = exc.askId
-        instance.bidId = exc.bidId
-        instance.league = exc.league
-        instance.exchangeMap = exc.exchangeMap
-        instance.orderBy = exc.orderBy
+        Object.assign(instance, exchange(instance.askList, instance.bidList, instance.askId, instance.bidId, instance.league))
         resolve(instance)
       }
     })

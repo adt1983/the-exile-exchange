@@ -152,6 +152,7 @@ describe('ExchangeFactory', () => {
     })
   })
 
+
   it('should return object', () => {
     const results = exchange(askList, bidList, settings.alpha)
     expect(results).to.be.an('object')
@@ -290,3 +291,10 @@ describe('ExchangeFactory', () => {
   // if doesnt have data returned
   // should have all required attribs for views to render
 })
+
+// describe('ExchangeFactory', () => {
+//   it('ExchangeModel instance', () => {
+//     const results = exchange(askList, bidList, settings.alpha)
+//     expect(results).to.be.instanceof(ExchangeModel);
+//   })
+// })

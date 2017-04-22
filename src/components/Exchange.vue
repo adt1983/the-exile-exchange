@@ -22,6 +22,7 @@
       <thead>
       <th class="text-center">Bid</th>
       <th><div
+        :show="hasData"
         v-on:click="refreshData()"
         class="svg-icon">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="32" viewBox="0 0 27 32">
