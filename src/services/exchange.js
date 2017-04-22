@@ -58,7 +58,7 @@ function addItemToIndex (item, index, collection) {
   }
 }
 
-function setStats (items, isAskOrder, collection) {
+function setStats (items, collection, isAskOrder) {
   items.forEach(function (item) {
     let ratio = createRatio(item, isAskOrder)
     addItemToIndex(ratio, item[keys.ratio], collection)
@@ -70,9 +70,9 @@ export function exchange (askList, bidList, askId, bidId, league) {
   let exchangeMap = {} // new map for each exchange query
   let exchange = {askList, bidList, askId, bidId, league}
 
-  setStats(exchange.askList, true, exchangeMap)
+  setStats(exchange.askList, exchangeMap, true)
   // set states for bids
-  setStats(exchange.bidList, false, exchangeMap)
+  setStats(exchange.bidList, exchangeMap)
   // set an array of keys so they have a set order
   exchange.exchangeMap = exchangeMap
   exchange.orderBy = arrangeCollection(exchangeMap)
@@ -190,31 +190,11 @@ export class ExchangeModel {
           resolve(instance)
         })
         .catch(function (error) {
-          console.log('refresh: something went wrong', error)
+          console.warn('refresh: something went wrong', error)
           reject(error)
         })
     })
   }
-
-  // refresh?
-  // refreshReq() {
-  // auto refresh data
-  // this.refreshInterval = setTimeout(function () {
-  //   dis.reqData
-  // .then(dis.indexData)
-  // .then(function (instance) {
-  //   console.log('refresh completed', instance)
-  //   resolve(instance)
-  // })
-  // .catch(function (error) {
-  //   console.log('something went wrong', error)
-  //   reject(error)
-  // })
-  //   if (settings.defaults.autoRefresh) {
-  //     this.refreshInterval()
-  //   }
-  // }, settings.defaults.refreshInterval)
-  // }
 
   instantiate () {
     let dis = this
@@ -228,7 +208,7 @@ export class ExchangeModel {
           resolve(instance)
         })
         .catch(function (error) {
-          console.log('something went wrong', error)
+          console.warn('something went wrong', error)
           reject(error)
         })
     })

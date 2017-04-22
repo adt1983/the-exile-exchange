@@ -43,6 +43,7 @@ describe('ExchangeFactory', () => {
     bidList = []
     settings.alpha = 'jack'
     settings.beta = 'joan'
+    settings.gamma = 'some-league'
     // exchangeMap = [] // reset
     settings.ask = [
       {
@@ -154,27 +155,27 @@ describe('ExchangeFactory', () => {
 
 
   it('should return object', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     expect(results).to.be.an('object')
   })
 
   it('should render `askId`', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     expect(results.askId).to.be.ok
   })
 
   it('should render `bidId`', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     expect(results.bidId).to.be.ok
   })
 
   it('should render `exchangeMap`', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     expect(results.exchangeMap).to.be.an('object')
   })
 
   it('should render all asks', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const map = Object.keys(results.exchangeMap)
     let total = askList.length
     // check there is data to test
@@ -188,7 +189,7 @@ describe('ExchangeFactory', () => {
   })
 
   it('should render all bids', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const map = Object.keys(results.exchangeMap)
     let total = bidList.length
     // check there is data to test
@@ -202,12 +203,12 @@ describe('ExchangeFactory', () => {
   })
 
   it('should have `orderBy` array', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     expect(results.orderBy).to.be.an('array')
   })
 
   it('should have `orderBy` in the correct (decending) order', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const originalOrder = results.orderBy
     let testOrder = results.orderBy.slice(0)
     // decending order
@@ -218,7 +219,7 @@ describe('ExchangeFactory', () => {
   })
 
   it('should group asks by unmixed `$ratio_base`', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const map = Object.keys(results.exchangeMap)
     for (let i = map.length - 1; i >= 0; i--) {
       let key = map[i]
@@ -236,7 +237,7 @@ describe('ExchangeFactory', () => {
   })
 
   it('should group bids by unmixed `$ratio_base`', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const map = Object.keys(results.exchangeMap)
     for (let i = map.length - 1; i >= 0; i--) {
       let key = map[i]
@@ -254,7 +255,7 @@ describe('ExchangeFactory', () => {
   })
 
   it('should seperate asks of same `$ratio` and different multipliers', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const map = Object.keys(results.exchangeMap)
     for (let i = map.length - 1; i >= 0; i--) {
       let key = map[i]
@@ -272,7 +273,7 @@ describe('ExchangeFactory', () => {
   })
 
   it('should seperate bids of same `$ratio` and different multipliers', () => {
-    const results = exchange(askList, bidList, settings.alpha)
+    const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     const map = Object.keys(results.exchangeMap)
     for (let i = map.length - 1; i >= 0; i--) {
       let key = map[i]
@@ -294,7 +295,7 @@ describe('ExchangeFactory', () => {
 
 // describe('ExchangeFactory', () => {
 //   it('ExchangeModel instance', () => {
-//     const results = exchange(askList, bidList, settings.alpha)
+//     const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
 //     expect(results).to.be.instanceof(ExchangeModel);
 //   })
 // })
