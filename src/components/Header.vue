@@ -1,29 +1,44 @@
 <template>
   <div class="grid-block header shrink">
-    <ul class="header-nav grid-block shrink">
+    <div class="nav-column">
+      <div class="nav-row-1">
+        <ul class="header-nav grid-block shrink float-right">
+          <li>
+            <router-link
+              active-class="is-active"
+              :to="{ name: 'currency', params: { leagueid: leagueid }}"
+              tag="a">Currencies
+            </router-link>
+          </li>
+          <li>
+            <account-name
+              class="account-name"></account-name>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-row-2">
+        <ul class="header-nav grid-block shrink">
           <li v-for="league in leagueMap">
             <router-link
               class="alt-font"
               active-class="is-active"
               :to="{ params: { leagueid: league[keys.slug] }}"
-              tag="a">{{league[keys.name]}}</router-link>
+              tag="a"><span>{{league[keys.name]}}</span>
+            </router-link>
           </li>
-    </ul>
-    <div class="grid-block expand">
+        </ul>
+      </div>
+    </div>
 
+    <div class="grid-block expand">
+      <!-- poe-header -->
+      <ins class="adsbygoogle"
+           :data-ad-client=adClient
+           :data-ad-slot="4684391884"
+           :style=adStyle></ins>
     </div>
-    <ul class="header-nav grid-block shrink float-right">
-      <li>
-        <account-name
-          class="account-name"></account-name>
-      </li>
-          <li>
-            <router-link
-              active-class="is-active"
-              :to="{ name: 'currency', params: { leagueid: leagueid }}"
-              tag="a" >Currencies</router-link></li>
-    </ul>
-    </div>
+
+  </div>
 </template>
 
 <script>
@@ -50,6 +65,10 @@ export default {
       leagueMap: {}
     }
   },
+  mounted () {
+    // https://github.com/darrynten/vue-adsense/blob/master/VueAdsense.vue
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
+  },
   components: {
     'account-name': AccountNameInput
   },
@@ -65,6 +84,15 @@ export default {
     },
     searchText: function () {
       return this.search + ' ' + this.leagueName
+    },
+    adClient () {
+      return 'ca-pub-9522356965206611'
+    },
+    adStyle () {
+      return 'display:inline-block;width:728px;height:90px'
+    },
+    adFormat () {
+      return 'auto'
     }
   },
   methods: {
@@ -94,6 +122,7 @@ export default {
 
 .header {
   background-color: $gray;
+  height: 95px;
   border-bottom: rem-calc(1) solid $black;
   // TODO: calc height so we can set exchange-panel height later on
   .inline-list {
@@ -134,6 +163,7 @@ export default {
     padding: 1rem;
     font-size: 1rem;
     line-height: 1;
+    justify-content: center;
   }
  .is-active {
     background-color: $dark-color;
@@ -145,9 +175,34 @@ export default {
   .float-right {
     align-self: flex-end;
   }
+
+  // diplay: flex;
+  // align-items: flex-start;
+  //justify-content: center;
+}
+
+.nav-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 100%;
+}
+
+.nav-row-1 {
+  display: flex;
+  align-items: flex-start;
+  height: 50%;
+}
+
+.nav-row-2 {
+  display: flex;
+  align-items: flex-end;
+  height: 50%;
+  justify-content: flex-end;
 }
 .account-name {
   // display: block;
   margin: auto $global-spacing;
+  align-items: flex-start;
 }
 </style>
