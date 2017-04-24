@@ -153,7 +153,6 @@ describe('ExchangeFactory', () => {
     })
   })
 
-
   it('should return object', () => {
     const results = exchange(askList, bidList, settings.alpha, settings.beta, settings.league)
     expect(results).to.be.an('object')
