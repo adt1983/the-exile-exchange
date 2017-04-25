@@ -39,7 +39,7 @@
         ><a href=""
           :class="applyColorClass(model.exchangeMap[key].bids)"
           v-if="model.exchangeMap[key].bids && model.exchangeMap[key].bids.length"
-          @click.prevent="showOffer(key, model.exchangeMap[key].bids, 'bid', model.leagueName)"
+          @click.prevent="showOffer(key, model.exchangeMap[key].bids, 'bid', model.league)"
           >{{model.exchangeMap[key].bids.length}}</a></td>
         <td :class="{'has-account': isAccount(model.exchangeMap[key].asks) || isAccount(model.exchangeMap[key].bids)}"><span
           class="secondary-color body-font text-center">{{key}}</span></td>
@@ -47,7 +47,7 @@
         ><a href=""
           :class="applyColorClass(model.exchangeMap[key].asks)"
           v-if="model.exchangeMap[key].asks && model.exchangeMap[key].asks.length"
-          @click.prevent="showOffer(key, model.exchangeMap[key].asks, 'ask', model.leagueName)"
+          @click.prevent="showOffer(key, model.exchangeMap[key].asks, 'ask', model.league)"
           >{{model.exchangeMap[key].asks.length}}</a>
         </td>
       </tr>

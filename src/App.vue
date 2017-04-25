@@ -32,7 +32,7 @@ body {
 }
 
 #app {
-  border-top: rem-calc(3) solid $primary-color;
+  //border-top: rem-calc(3) solid $primary-color;
 }
 
 // /* Enter and leave animations can use different */

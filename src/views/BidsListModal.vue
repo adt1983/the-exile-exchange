@@ -105,6 +105,7 @@
   import settings from '../settings'
   import { league } from '../services/league'
   import { currency } from '../services/currency'
+  import { assert } from '../services/util'
 
   import CurrencyItem from '../components/CurrencyItem'
 
@@ -176,7 +177,8 @@
         this.showModal = true
         this.raw = data
         this.setActiveOrder(this.raw.list[0])
-        this.leagueName = this.raw.leagueName
+        assert(this.raw.leagueName)
+        this.leagueName = this.raw.leagueName.replace('%20', ' ') // TODO: Move fix for 'Hardcore Legacy' upstream
       },
       closeModal: function () {
         this.showModal = false
