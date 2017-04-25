@@ -90,9 +90,6 @@ export default {
     },
     adStyle () {
       return 'display:inline-block;width:728px;height:90px'
-    },
-    adFormat () {
-      return 'auto'
     }
   },
   methods: {
@@ -163,7 +160,6 @@ export default {
     padding: 1rem;
     font-size: 1rem;
     line-height: 1;
-    justify-content: center;
   }
  .is-active {
     background-color: $dark-color;
@@ -175,25 +171,18 @@ export default {
   .float-right {
     align-self: flex-end;
   }
-
-  // diplay: flex;
-  // align-items: flex-start;
-  //justify-content: center;
 }
-
 .nav-column {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   height: 100%;
 }
-
 .nav-row-1 {
   display: flex;
   align-items: flex-start;
   height: 50%;
 }
-
 .nav-row-2 {
   display: flex;
   align-items: flex-end;
@@ -201,7 +190,6 @@ export default {
   justify-content: flex-end;
 }
 .account-name {
-  // display: block;
   margin: auto $global-spacing;
   align-items: flex-start;
 }
