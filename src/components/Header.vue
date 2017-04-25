@@ -122,7 +122,7 @@ export default {
 
 .header {
   background-color: $gray;
-  height: 95px;
+  height: 95px; // TODO: Unwanted y-scrollbar if less than 95px. Reduce border/margin/padding to get down to 90px?
   border-bottom: rem-calc(1) solid $black;
   // TODO: calc height so we can set exchange-panel height later on
   .inline-list {
