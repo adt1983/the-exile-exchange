@@ -161,18 +161,19 @@ $columns-width: (rem-calc(1920) - rem-calc(18)) / 10;
 // /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slide-fade-enter-active {
-  transition: flex-basis $default-animation-speed*2 linear $default-animation-speed*3;
+  transition: transform $default-animation-speed*2 linear $default-animation-speed*3;
 }
 .slide-fade-leave-active {
-  transition: flex-basis $default-animation-speed*2 linear;
+  transition: transform $default-animation-speed*2 linear;
 }
 .slide-fade-enter
-/* .slide-fade-leave-active for <2.1.8 */ {
-  flex-basis: 0;
+  /* .slide-fade-leave-active for <2.1.8 */ {
+  transform: translateY(-100%);
 }
 .slide-fade-leave-to {
+  opacity: 0;
   overflow: hidden;
 
-  flex-basis: 0;
+  //transform: translateY(80%);
 }
 </style>
