@@ -40,6 +40,7 @@
           :class="applyColorClass(model.exchangeMap[key].bids)"
           v-if="model.exchangeMap[key].bids && model.exchangeMap[key].bids.length"
           @click.prevent="showOffer(key, model.exchangeMap[key].bids, 'bid', model.league)"
+          v-tooltip.left-middle="getOrderTooltip(model.exchangeMap[key].bids[0])"
           >{{model.exchangeMap[key].bids.length}}</a></td>
         <td :class="{'has-account': isAccount(model.exchangeMap[key].asks) || isAccount(model.exchangeMap[key].bids)}"><span
           class="secondary-color body-font text-center">{{key}}</span></td>
@@ -48,6 +49,7 @@
           :class="applyColorClass(model.exchangeMap[key].asks)"
           v-if="model.exchangeMap[key].asks && model.exchangeMap[key].asks.length"
           @click.prevent="showOffer(key, model.exchangeMap[key].asks, 'ask', model.league)"
+          v-tooltip.right-middle="getOrderTooltip(model.exchangeMap[key].asks[0])"
           >{{model.exchangeMap[key].asks.length}}</a>
         </td>
       </tr>
@@ -61,6 +63,8 @@
   import { bus } from '../services/bus'
   import saved from '../services/selected'
   import { ExchangeModel } from '../services/exchange'
+  import { assert } from '../services/util'
+  import { currency } from '../services/currency'
 
   import CurrencyItem from '../components/CurrencyItem'
 
@@ -75,7 +79,7 @@
     data () {
       return {
         settings,
-
+        currencyMap: {},
         refreshInterval: undefined,
 
         filterBids: true,
@@ -88,6 +92,13 @@
 
         title: 'The Exile Exchange'
       }
+    },
+    beforeCreate: function () {
+      const that = this
+      currency
+        .then((response) => {
+          that.currencyMap = response.collection
+        })
     },
     methods: {
       applyColorClass (orders) {
@@ -136,6 +147,10 @@
       },
       refreshData: function () {
         this.model.refresh()
+      },
+      getOrderTooltip: function (order) {
+        assert(order)
+        return 'Buy ' + order.bid_qty + ' ' + this.currencyMap[order.bid_id].name + ' for your ' + order.ask_qty + ' ' + this.currencyMap[order.ask_id].name
       }
     },
     components: {
