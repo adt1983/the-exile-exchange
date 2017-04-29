@@ -150,7 +150,7 @@
       },
       getOrderTooltip: function (order) {
         assert(order)
-        return 'Buy ' + order.bid_qty + ' ' + this.currencyMap[order.bid_id].name + ' for your ' + order.ask_qty + ' ' + this.currencyMap[order.ask_id].name
+        return 'Buy ' + order.bid_qty + ' ' + this.currencyMap[order.bid_id].name + '<br />Pay ' + order.ask_qty + ' ' + this.currencyMap[order.ask_id].name
       }
     },
     components: {
